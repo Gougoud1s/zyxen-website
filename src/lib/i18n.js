@@ -73,12 +73,6 @@ const translations = {
       { to: 3, suffix: '+', label: 'Countries' },
       { to: 1, suffix: ' day', label: 'Response SLA' },
     ],
-    teamTitle: 'The Team',
-    teamSub: 'A focused studio with deep, production-tested expertise.',
-    team: [
-      { initials: 'IG', name: 'Iraklis Gougoudis', role: 'Software Engineer', bio: 'Full-stack engineer leading .NET, Umbraco and Flutter delivery. Focused on architecture and technical decisions that hold up in production.' },
-      { initials: 'TM', name: 'Thanos Martinis', role: 'Software Engineer', bio: 'Platform and commerce specialist. Leads nopCommerce implementations, cloud infrastructure and third-party integrations.' },
-    ],
     faqTitle: 'Common Questions',
     faqSub: 'Practical answers before you reach out.',
     faq: [
@@ -161,12 +155,6 @@ const translations = {
       { to: 4, suffix: '', label: 'Τομείς' },
       { to: 3, suffix: '+', label: 'Χώρες' },
       { to: 1, suffix: ' ημέρα', label: 'SLA Απόκρισης' },
-    ],
-    teamTitle: 'Η Ομάδα',
-    teamSub: 'Επικεντρωμένο studio με βαθιά, production-tested τεχνογνωσία.',
-    team: [
-      { initials: 'IG', name: 'Iraklis Gougoudis', role: 'Software Engineer', bio: 'Full-stack engineer που ηγείται .NET, Umbraco και Flutter παράδοσης. Εστίαση σε αρχιτεκτονική και τεχνικές αποφάσεις που αντέχουν στην παραγωγή.' },
-      { initials: 'TM', name: 'Thanos Martinis', role: 'Software Engineer', bio: 'Ειδικός πλατφορμών και commerce. Ηγείται υλοποιήσεων nopCommerce, cloud υποδομής και integrations τρίτων.' },
     ],
     faqTitle: 'Συχνές Ερωτήσεις',
     faqSub: 'Πρακτικές απαντήσεις πριν επικοινωνήσετε.',
