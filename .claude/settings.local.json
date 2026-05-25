@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npx vite *)",
+      "Bash(npm instal)",
+      "Bash(./node_modules/.bin/vite build *)",
+      "Bash(echo \"Exit: $?\")",
+      "Bash(npm install *)",
+      "Read(//Users/iraklisgougoudis/Desktop/**)",
+      "Bash(gh auth *)",
+      "Bash(vercel whoami *)",
+      "Bash(brew install *)",
+      "Bash(git -C /Users/iraklisgougoudis/Desktop/Code/Zyxen.gr/zyxen-digital-flow init)",
+      "Bash(git -C /Users/iraklisgougoudis/Desktop/Code/Zyxen.gr/zyxen-digital-flow add .)",
+      "Bash(git -C /Users/iraklisgougoudis/Desktop/Code/Zyxen.gr/zyxen-digital-flow status --short)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "resend"
+  ]
+}

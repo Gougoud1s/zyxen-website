@@ -1,0 +1,135 @@
+/* Google Fonts loaded non-blocking via <link> in index.html */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-inter: 'Inter', sans-serif;
+    --font-display: 'Space Grotesk', sans-serif;
+    --background: 240 6% 4%;
+    --foreground: 0 0% 96%;
+    --card: 240 5% 7%;
+    --card-foreground: 0 0% 96%;
+    --popover: 240 5% 7%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 20 100% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 4% 12%;
+    --secondary-foreground: 0 0% 90%;
+    --muted: 240 4% 14%;
+    --muted-foreground: 240 4% 55%;
+    --accent: 20 100% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 20 100% 55%;
+    --chart-1: 20 100% 55%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 240 5% 6%;
+    --sidebar-foreground: 240 5% 90%;
+    --sidebar-primary: 20 100% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 4% 12%;
+    --sidebar-accent-foreground: 240 5% 90%;
+    --sidebar-border: 240 4% 16%;
+    --sidebar-ring: 20 100% 55%;
+    --gold: #AF994D;
+    --gold-muted: rgba(175, 153, 77, 0.15);
+  }
+
+  *,
+  *::before,
+  *::after {
+    @apply border-border outline-ring/50 box-border;
+  }
+
+  html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-inter);
+    overflow-x: hidden;
+    word-break: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  img, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.5); }
+  * { scrollbar-width: thin; scrollbar-color: hsl(var(--border)) transparent; }
+
+  /* Remove default browser form chrome */
+  input, textarea, button, select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  /* Custom focus ring */
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary) / 0.7);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  :focus:not(:focus-visible) { outline: none; }
+
+  /* Kill browser red invalid states */
+  input:invalid, textarea:invalid, select:invalid {
+    box-shadow: none;
+    outline: none;
+  }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .transform-gpu {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
