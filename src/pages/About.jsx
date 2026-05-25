@@ -87,8 +87,42 @@ export default function About() {
         </div>
       </section>
 
+      {/* Team */}
+      <section className="py-20 sm:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <AnimatedSection variant="depth">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-px w-8" style={{ background: '#AF994D' }} />
+              <p className="text-xs font-medium tracking-[0.22em] uppercase" style={{ color: '#AF994D' }}>{t('teamTitle')}</p>
+            </div>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-2">{t('teamSub')}</h2>
+          </AnimatedSection>
+          <div className="mt-10 grid sm:grid-cols-2 gap-5 max-w-2xl">
+            {Array.isArray(t('team')) && t('team').map((member, i) => (
+              <AnimatedSection key={i} delay={i * 0.1} variant="depth">
+                <TiltCard intensity={4} className="h-full">
+                  <div className="bg-card border border-border/60 rounded-2xl p-6 sm:p-7 h-full flex flex-col gap-5 hover:border-primary/30 transition-colors duration-300">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center font-display font-bold text-sm flex-shrink-0"
+                        style={{ background: 'rgba(175,153,77,0.1)', border: '1px solid rgba(175,153,77,0.25)', color: '#AF994D' }}>
+                        {member.initials}
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm">{member.name}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5 tracking-wide">{member.role}</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{member.bio}</p>
+                  </div>
+                </TiltCard>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
-      <section className="py-28 sm:py-36">
+      <section className="py-28 sm:py-36 bg-card border-t border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
           <AnimatedSection variant="depth">
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold max-w-2xl mx-auto">

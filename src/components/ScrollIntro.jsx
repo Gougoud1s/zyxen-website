@@ -10,7 +10,6 @@ gsap.registerPlugin(ScrollTrigger);
 const isTouchDevice = () =>
   typeof navigator !== 'undefined' && (navigator.maxTouchPoints > 0 || 'ontouchstart' in window);
 
-/* ─── Three.js scene ─── */
 function CrystalCanvas({ chapter }) {
   const mountRef = useRef(null);
   const stateRef = useRef(null);
@@ -106,13 +105,13 @@ function CrystalCanvas({ chapter }) {
     stateRef.current = { meshes, rings: ringGroup.children, particles, pt1, pt2, ptRim, mouse, frame: null };
 
     const FRAME_MS = 1000 / 30;
-    let lastFrame = 0, t = 0;
+    let lastFrame = 0, loopT = 0;
 
     const loop = (ts) => {
       stateRef.current.frame = requestAnimationFrame(loop);
       if (ts - lastFrame < FRAME_MS) return;
       lastFrame = ts;
-      t += 0.0055;
+      loopT += 0.0055;
 
       mouse.x += (mouse.tx - mouse.x) * 0.04;
       mouse.y += (mouse.ty - mouse.y) * 0.04;
@@ -121,16 +120,16 @@ function CrystalCanvas({ chapter }) {
       camera.lookAt(0, 0, 0);
 
       meshes.forEach(({ mesh, wire }, i) => {
-        mesh.rotation.y = t * (0.9 + i * 0.08);
-        mesh.rotation.x = Math.sin(t * 0.35 + i * 1.2) * 0.25;
+        mesh.rotation.y = loopT * (0.9 + i * 0.08);
+        mesh.rotation.x = Math.sin(loopT * 0.35 + i * 1.2) * 0.25;
         wire.rotation.copy(mesh.rotation);
-        const p = 1 + Math.sin(t * 1.65 + i) * 0.016;
+        const p = 1 + Math.sin(loopT * 1.65 + i) * 0.016;
         mesh.scale.setScalar(p);
         wire.scale.setScalar(p);
       });
 
       ringGroup.children.forEach(r => { r.rotation.z += r.userData.spd * 0.011; });
-      ringGroup.rotation.y = Math.sin(t * 0.12) * 0.08;
+      ringGroup.rotation.y = Math.sin(loopT * 0.12) * 0.08;
 
       const pos = particles.geometry.attributes.position;
       for (let i = 0; i < pCount; i++) {
@@ -140,11 +139,11 @@ function CrystalCanvas({ chapter }) {
         if (Math.abs(pos.array[i*3+1]) > 6) pVel[i*3+1] *= -1;
       }
       pos.needsUpdate = true;
-      particles.rotation.y = t * 0.025;
+      particles.rotation.y = loopT * 0.025;
 
-      pt1.intensity = 4.5 + Math.sin(t * 2.0) * 0.9;
-      pt2.intensity = 3.5 + Math.sin(t * 1.5 + 1.2) * 0.7;
-      ptRim.position.x = Math.sin(t * 0.4) * 2;
+      pt1.intensity = 4.5 + Math.sin(loopT * 2.0) * 0.9;
+      pt2.intensity = 3.5 + Math.sin(loopT * 1.5 + 1.2) * 0.7;
+      ptRim.position.x = Math.sin(loopT * 0.4) * 2;
 
       renderer.render(scene, camera);
     };
@@ -183,7 +182,59 @@ function CrystalCanvas({ chapter }) {
   return <div ref={mountRef} className="w-full h-full" />;
 }
 
-/* ─── Chapters ─── */
+const CHAPTER_VISUALS = [
+  {
+    glowColor: 'rgba(175,153,77,0.18)',
+    shape: (
+      <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.42 }}>
+        <circle cx="150" cy="150" r="110" stroke="#AF994D" strokeWidth="0.5" strokeDasharray="4 8" />
+        <circle cx="150" cy="150" r="72" stroke="#AF994D" strokeWidth="0.5" strokeDasharray="2 6" />
+        <circle cx="150" cy="150" r="36" stroke="#AF994D" strokeWidth="1" />
+        <line x1="40" y1="150" x2="260" y2="150" stroke="#AF994D" strokeWidth="0.4" />
+        <line x1="150" y1="40" x2="150" y2="260" stroke="#AF994D" strokeWidth="0.4" />
+        <circle cx="150" cy="150" r="5" fill="#AF994D" fillOpacity="0.7" />
+        <circle cx="150" cy="78" r="3" fill="#AF994D" fillOpacity="0.45" />
+        <circle cx="222" cy="150" r="3" fill="#AF994D" fillOpacity="0.45" />
+        <circle cx="150" cy="222" r="3" fill="#AF994D" fillOpacity="0.45" />
+        <circle cx="78" cy="150" r="3" fill="#AF994D" fillOpacity="0.45" />
+      </svg>
+    ),
+  },
+  {
+    glowColor: 'rgba(255,107,44,0.16)',
+    shape: (
+      <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.36 }}>
+        {[...Array(6)].map((_, row) =>
+          [...Array(6)].map((_, col) => (
+            <rect key={`${row}-${col}`} x={20 + col * 44} y={20 + row * 44} width={28} height={28} rx="4"
+              stroke="#FF6B2C" strokeWidth="0.6"
+              opacity={((row + col) % 3 === 0) ? 0.6 : ((row + col) % 3 === 1) ? 0.22 : 0.08} />
+          ))
+        )}
+        <rect x="96" y="96" width="108" height="108" rx="8" stroke="#FF6B2C" strokeWidth="1.5" opacity="0.5" />
+        <circle cx="150" cy="150" r="10" fill="#FF6B2C" fillOpacity="0.4" />
+      </svg>
+    ),
+  },
+  {
+    glowColor: 'rgba(136,153,255,0.16)',
+    shape: (
+      <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.42 }}>
+        <rect x="40" y="60" width="220" height="180" rx="10" stroke="#8899ff" strokeWidth="0.8" />
+        <rect x="40" y="60" width="220" height="26" rx="10" fill="#8899ff" fillOpacity="0.06" stroke="#8899ff" strokeWidth="0.8" />
+        <circle cx="58" cy="73" r="4" fill="#8899ff" fillOpacity="0.5" />
+        <circle cx="74" cy="73" r="4" fill="#8899ff" fillOpacity="0.35" />
+        <circle cx="90" cy="73" r="4" fill="#8899ff" fillOpacity="0.18" />
+        {[0,1,2,3,4].map(i => (
+          <line key={i} x1="60" y1={106 + i * 26} x2={60 + [90,150,65,120,75][i]} y2={106 + i * 26}
+            stroke="#8899ff" strokeWidth="1.2" strokeLinecap="round" opacity={0.5 - i * 0.06} />
+        ))}
+        <rect x="60" y="228" width="50" height="8" rx="3" fill="#8899ff" fillOpacity="0.3" />
+      </svg>
+    ),
+  },
+];
+
 const CHAPTERS_EN = [
   { tag: 'ZYXEN · Software Engineering', headline: ['Systems,'], sub: 'Premium software engineering studio.', color: '#AF994D', accentBg: 'rgba(175,153,77,0.08)' },
   { tag: 'Precision · Scale · Impact',   headline: ['Engineered.'], sub: 'Enterprise platforms. Mobile apps. Commerce.', color: 'hsl(20 100% 55%)', accentBg: 'rgba(255,107,44,0.08)' },
@@ -195,7 +246,6 @@ const CHAPTERS_EL = [
   { tag: 'Συστήματα, Σχεδιασμένα.',             headline: ['Χτίζουμε ό,τι', 'άλλοι δεν μπορούν.'], sub: 'Συνεχίστε για να μπείτε.', color: '#8899ff', accentBg: 'rgba(136,153,255,0.08)' },
 ];
 
-/* ─── Main ─── */
 export default function ScrollIntro({ onComplete }) {
   const isGreek = typeof navigator !== 'undefined' && navigator.language?.toLowerCase().startsWith('el');
   const CHAPTERS = isGreek ? CHAPTERS_EL : CHAPTERS_EN;
@@ -205,84 +255,91 @@ export default function ScrollIntro({ onComplete }) {
   const [exiting, setExiting] = useState(false);
   const [showSkip, setShowSkip] = useState(false);
 
-  /* GSAP animation refs */
   const tagRef    = useRef(null);
   const headRef   = useRef(null);
   const subRef    = useRef(null);
   const barRef    = useRef(null);
   const logoRef   = useRef(null);
 
-  const locked      = useRef(false);
-  const chapterRef  = useRef(0);
-  const animating   = useRef(false);
+  const locked     = useRef(false);
+  const chapterRef = useRef(0);
+  const animating  = useRef(false);
 
-  /* Skip hint appears after 2.2 s */
   useEffect(() => {
     const id = setTimeout(() => setShowSkip(true), 2200);
     return () => clearTimeout(id);
   }, []);
 
-  /* Keep chapterRef in sync */
   useEffect(() => { chapterRef.current = chapter; }, [chapter]);
 
-  /* Intro-in: animate first chapter on mount */
   useEffect(() => {
-    if (!tagRef.current) return;
-    gsap.set([tagRef.current, headRef.current, subRef.current, logoRef.current], { opacity: 0 });
+    if (!tagRef.current || !headRef.current) return;
+    const chars = headRef.current.querySelectorAll('.intro-char');
+    gsap.set([tagRef.current, subRef.current, logoRef.current], { opacity: 0 });
+    gsap.set(chars, { opacity: 0, y: 60, rotationX: -18 });
+
     const tl = gsap.timeline();
     tl.to(logoRef.current, { opacity: 1, duration: 1.2, ease: 'power2.out' }, 0.3)
-      .fromTo(tagRef.current,
-        { opacity: 0, x: -24 },
-        { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out' }, 0.5)
-      .fromTo(headRef.current,
-        { opacity: 0, y: 60, rotationX: -18 },
-        { opacity: 1, y: 0, rotationX: 0, duration: 1, ease: 'power3.out' }, 0.65)
-      .fromTo(subRef.current,
-        { opacity: 0, y: 22 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.0);
-  }, []); // run once
+      .fromTo(tagRef.current, { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out' }, 0.5)
+      .to(chars, { opacity: 1, y: 0, rotationX: 0, duration: 0.75, stagger: 0.025, ease: 'power3.out' }, 0.65)
+      .fromTo(subRef.current, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.05);
+  }, []);
 
-  /* Chapter change: animate out → setState → animate in */
   const changeChapter = useCallback((next, dir) => {
     if (animating.current) return;
     animating.current = true;
 
     const yOut = dir > 0 ? -36 : 36;
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setChapter(next);
-      },
-    });
-    tl.to([subRef.current, headRef.current, tagRef.current], {
+    const chars = headRef.current?.querySelectorAll('.intro-char');
+
+    const tl = gsap.timeline({ onComplete: () => { setChapter(next); } });
+
+    if (chars && chars.length > 0) {
+      tl.to(headRef.current, {
+        keyframes: [
+          { x: -6, skewX: -3, filter: 'blur(1px)', duration: 0.04 },
+          { x: 5, skewX: 2, filter: 'blur(0px)', duration: 0.03 },
+          { x: 0, skewX: 0, duration: 0.03 },
+        ],
+      }, 0);
+    }
+
+    tl.to([subRef.current, tagRef.current], {
       opacity: 0, y: yOut * 0.6, filter: 'blur(8px)',
-      duration: 0.32, stagger: 0.04, ease: 'power2.in',
-    })
-    .to(logoRef.current, { opacity: 0, scale: 0.88, duration: 0.28, ease: 'power2.in' }, '<');
+      duration: 0.28, stagger: 0.04, ease: 'power2.in',
+    }, 0.06);
+
+    if (chars && chars.length > 0) {
+      tl.to(chars, {
+        opacity: 0, y: yOut, filter: 'blur(6px)',
+        duration: 0.26, stagger: { each: 0.01, from: dir > 0 ? 'end' : 'start' },
+        ease: 'power2.in',
+      }, 0.06);
+    }
+
+    tl.to(logoRef.current, { opacity: 0, scale: 0.88, duration: 0.28, ease: 'power2.in' }, '<');
   }, []);
 
-  /* After chapter state changes → animate in new content */
   const isFirstRender = useRef(true);
   useEffect(() => {
     if (isFirstRender.current) { isFirstRender.current = false; return; }
-    if (!tagRef.current) return;
+    if (!tagRef.current || !headRef.current) return;
 
     const c = CHAPTERS[chapter];
-    /* Update progress bar colour */
     if (barRef.current) barRef.current.style.background = `linear-gradient(90deg, rgba(175,153,77,0.4), ${c.color})`;
 
-    gsap.set([tagRef.current, headRef.current, subRef.current], { y: 36, filter: 'blur(8px)' });
+    const chars = headRef.current.querySelectorAll('.intro-char');
+    gsap.set([tagRef.current, subRef.current], { y: 36, filter: 'blur(8px)' });
+    gsap.set(chars, { y: 36, opacity: 0, filter: 'blur(6px)' });
     gsap.set(logoRef.current, { scale: 1.06 });
 
-    const tl = gsap.timeline({
-      onComplete: () => { animating.current = false; },
-    });
-    tl.to(tagRef.current,  { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.55, ease: 'power3.out' }, 0)
-      .to(headRef.current, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7,  ease: 'power3.out' }, 0.08)
-      .to(subRef.current,  { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.55, ease: 'power3.out' }, 0.22)
+    const tl = gsap.timeline({ onComplete: () => { animating.current = false; } });
+    tl.to(tagRef.current, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.5, ease: 'power3.out' }, 0)
+      .to(chars, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, stagger: 0.022, ease: 'power3.out' }, 0.08)
+      .to(subRef.current, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.5, ease: 'power3.out' }, 0.24)
       .to(logoRef.current, { opacity: 1, scale: 1, duration: 0.65, ease: 'back.out(1.4)' }, 0.05);
   }, [chapter, CHAPTERS]);
 
-  /* Complete / exit */
   const completeIntro = useCallback(() => {
     if (locked.current) return;
     locked.current = true;
@@ -293,7 +350,6 @@ export default function ScrollIntro({ onComplete }) {
     }, 1000);
   }, [onComplete]);
 
-  /* Advance chapter */
   const advanceChapter = useCallback((dir) => {
     if (locked.current || animating.current) return;
     const cur = chapterRef.current;
@@ -305,11 +361,9 @@ export default function ScrollIntro({ onComplete }) {
     }
   }, [CHAPTERS.length, changeChapter, completeIntro]);
 
-  /* ── GSAP ScrollTrigger.observe — replaces all manual wheel/touch listeners ── */
   useEffect(() => {
     document.body.style.overflow = 'hidden';
 
-    /* Wheel + touch swipe handled by ScrollTrigger.observe */
     const observer = ScrollTrigger.observe({
       type: 'wheel,touch',
       onDown: () => advanceChapter(1),
@@ -319,7 +373,6 @@ export default function ScrollIntro({ onComplete }) {
       debounce: false,
     });
 
-    /* Tap to advance on touch devices (distinct from swipe) */
     let tapY = 0;
     const onTouchStart = (e) => { tapY = e.touches[0].clientY; };
     const onTouchEnd = (e) => {
@@ -341,194 +394,139 @@ export default function ScrollIntro({ onComplete }) {
   }, [advanceChapter, isTouch]);
 
   const c = CHAPTERS[chapter];
+  const visual = CHAPTER_VISUALS[chapter];
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{
-        opacity: exiting ? 0 : 1,
-        scale: exiting ? 1.06 : 1,
-        filter: exiting ? 'blur(8px)' : 'blur(0px)',
-      }}
+      animate={{ opacity: exiting ? 0 : 1, scale: exiting ? 1.06 : 1, filter: exiting ? 'blur(8px)' : 'blur(0px)' }}
       transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
       className="fixed inset-0 z-50 bg-background overflow-hidden"
     >
-      {/* Animated per-chapter glow */}
       <AnimatePresence>
-        <motion.div
-          key={`glow-${chapter}`}
-          className="absolute inset-0 pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+        <motion.div key={`glow-${chapter}`} className="absolute inset-0 pointer-events-none"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           transition={{ duration: 1.4, ease: 'easeInOut' }}
-          style={{ background: `radial-gradient(ellipse 65% 65% at 65% 42%, ${c.accentBg}, transparent 70%)` }}
-        />
+          style={{ background: `radial-gradient(ellipse 65% 65% at 65% 42%, ${c.accentBg}, transparent 70%)` }} />
       </AnimatePresence>
 
-      {/* Vignette */}
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 100% 100% at 50% 50%, transparent 30%, rgba(0,0,0,0.72) 100%)' }} />
-
-      {/* Noise grain */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.018]"
         style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")', backgroundSize: '200px 200px' }} />
-
-      {/* Dot grid */}
       <div className="absolute inset-0 opacity-[0.022] pointer-events-none"
         style={{ backgroundImage: 'radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)', backgroundSize: '52px 52px' }} />
 
-      {/* 3D Canvas */}
       <div className="absolute inset-0">
         <CrystalCanvas chapter={chapter} />
       </div>
 
-      {/* OG / brand image — right-side atmospheric accent */}
-      <div
-        ref={logoRef}
-        className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none hidden md:block"
-        style={{ opacity: 0 }}
-        aria-hidden="true"
-      >
-        <img
-          src="/og-image.png"
-          alt=""
-          className="w-[380px] lg:w-[460px] xl:w-[520px] object-cover select-none"
-          style={{
-            maskImage: 'radial-gradient(ellipse 70% 80% at 60% 50%, black 30%, transparent 75%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 70% 80% at 60% 50%, black 30%, transparent 75%)',
-            filter: 'saturate(1.15) brightness(0.75)',
-            mixBlendMode: 'luminosity',
-            opacity: 0.32,
-          }}
-          draggable={false}
-        />
+      {/* Chapter-specific right panel */}
+      <div ref={logoRef} className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none hidden md:block" style={{ opacity: 0 }} aria-hidden="true">
+        <div className="relative w-[320px] lg:w-[400px] xl:w-[460px]">
+          <img src="/og-image.png" alt="" className="w-full object-cover select-none"
+            style={{
+              maskImage: 'radial-gradient(ellipse 70% 80% at 60% 50%, black 30%, transparent 75%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 70% 80% at 60% 50%, black 30%, transparent 75%)',
+              filter: 'saturate(1.15) brightness(0.65)',
+              mixBlendMode: 'luminosity',
+              opacity: 0.28,
+            }} draggable={false} />
+          <AnimatePresence mode="wait">
+            <motion.div key={`shape-${chapter}`}
+              className="absolute inset-0 flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.08 }}
+              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}>
+              {visual.shape}
+            </motion.div>
+          </AnimatePresence>
+          <AnimatePresence mode="wait">
+            <motion.div key={`glow2-${chapter}`}
+              className="absolute inset-0 pointer-events-none"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.9 }}
+              style={{ background: `radial-gradient(ellipse at center, ${visual.glowColor} 0%, transparent 70%)`, filter: 'blur(20px)' }} />
+          </AnimatePresence>
+        </div>
       </div>
 
-      {/* GSAP progress bar */}
-      <motion.div
-        ref={barRef}
-        className="absolute top-0 left-0 h-[2px] z-10 transition-none"
+      <motion.div ref={barRef} className="absolute top-0 left-0 h-[2px] z-10 transition-none"
         animate={{ width: `${((chapter + 1) / CHAPTERS.length) * 100}%` }}
         transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-        style={{ background: `linear-gradient(90deg, rgba(175,153,77,0.4), ${c.color})` }}
-      />
+        style={{ background: `linear-gradient(90deg, rgba(175,153,77,0.4), ${c.color})` }} />
 
-      {/* Skip button */}
       <AnimatePresence>
         {showSkip && !exiting && (
           <motion.button
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             onClick={completeIntro}
             className="absolute top-5 right-5 z-20 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-[10px] tracking-[0.2em] uppercase font-medium cursor-pointer select-none hover:bg-white/5 transition-colors duration-200"
             style={{ borderColor: `${c.color}44`, color: c.color, backdropFilter: 'blur(8px)' }}
-            aria-label={isGreek ? 'Παράλειψη intro' : 'Skip intro'}
-          >
+            aria-label={isGreek ? 'Παράλειψη intro' : 'Skip intro'}>
             {isGreek ? 'Παράλειψη' : 'Skip'} ›
           </motion.button>
         )}
       </AnimatePresence>
 
-      {/* Text content — GSAP-animated via refs */}
       <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-14 lg:px-24 pointer-events-none">
         <div className="max-w-2xl">
-          {/* Eyebrow */}
           <div ref={tagRef} className="flex items-center gap-3 mb-5 sm:mb-7" style={{ opacity: 0 }}>
-            <div className="h-px w-7 flex-shrink-0 transition-colors duration-700" style={{ background: c.color }} />
+            <div className="h-px w-7 flex-shrink-0" style={{ background: c.color }} />
             <p className="text-[10px] sm:text-[11px] font-medium tracking-[0.28em] uppercase leading-none" style={{ color: c.color }}>
               {c.tag}
             </p>
           </div>
 
-          {/* Headline */}
-          <h2
-            ref={headRef}
+          <h2 ref={headRef}
             className="font-display font-bold leading-[0.92] tracking-tight"
-            style={{
-              fontSize: 'clamp(2.6rem, 10.5vw, 8rem)',
-              transformStyle: 'preserve-3d',
-              perspective: '1000px',
-              opacity: 0,
-              color: 'hsl(var(--foreground))',
-            }}
-          >
-            {c.headline.map((line, i) => (
-              <span key={i} className="block">{line}</span>
+            style={{ fontSize: 'clamp(2.6rem, 10.5vw, 8rem)', transformStyle: 'preserve-3d', perspective: '1000px', color: 'hsl(var(--foreground))' }}>
+            {c.headline.map((line, lineIdx) => (
+              <span key={lineIdx} className="block overflow-hidden">
+                {[...line].map((char, charIdx) => (
+                  <span key={charIdx} className="intro-char inline-block" style={{ opacity: 0, willChange: 'transform, opacity' }}>
+                    {char === ' ' ? ' ' : char}
+                  </span>
+                ))}
+              </span>
             ))}
           </h2>
 
-          {/* Sub */}
-          <p
-            ref={subRef}
-            className="text-sm sm:text-[0.95rem] text-muted-foreground mt-5 sm:mt-8 max-w-sm leading-relaxed"
-            style={{ opacity: 0 }}
-          >
+          <p ref={subRef} className="text-sm sm:text-[0.95rem] text-muted-foreground mt-5 sm:mt-8 max-w-sm leading-relaxed" style={{ opacity: 0 }}>
             {c.sub}
           </p>
         </div>
       </div>
 
-      {/* Bottom bar */}
       <div className="absolute bottom-8 left-0 right-0 flex items-end justify-between px-6 sm:px-14 lg:px-24 z-10">
-        {/* Chapter counter */}
         <AnimatePresence mode="wait">
-          <motion.p
-            key={chapter}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 0.35, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+          <motion.p key={chapter}
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 0.35, y: 0 }} exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.38 }}
-            className="text-[11px] font-mono tracking-[0.22em] text-muted-foreground tabular-nums"
-          >
+            className="text-[11px] font-mono tracking-[0.22em] text-muted-foreground tabular-nums">
             0{chapter + 1} — 0{CHAPTERS.length}
           </motion.p>
         </AnimatePresence>
 
-        {/* Right: chapter indicators + scroll hint */}
         <div className="flex flex-col items-center gap-3">
-          {/* Dots */}
           <div className="flex flex-col gap-2.5 items-center">
             {CHAPTERS.map((ch, i) => (
-              <motion.div
-                key={i}
-                className="rounded-full"
-                animate={{
-                  height: i === chapter ? 22 : 5,
-                  width: 2,
-                  opacity: i === chapter ? 1 : i < chapter ? 0.5 : 0.2,
-                  backgroundColor: i === chapter ? ch.color : i < chapter ? ch.color : 'hsl(var(--muted-foreground))',
-                }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              />
+              <motion.div key={i} className="rounded-full"
+                animate={{ height: i === chapter ? 22 : 5, width: 2, opacity: i === chapter ? 1 : i < chapter ? 0.5 : 0.2, backgroundColor: i === chapter ? ch.color : i < chapter ? ch.color : 'hsl(var(--muted-foreground))' }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} />
             ))}
           </div>
-
-          {/* Scroll/tap hint */}
           <AnimatePresence>
             {!exiting && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                 transition={{ delay: chapter === 0 ? 1.6 : 0 }}
-                className="flex flex-col items-center gap-1.5"
-              >
-                <motion.div
-                  animate={{ scaleY: [1, 1.9, 1], opacity: [0.3, 0.75, 0.3] }}
+                className="flex flex-col items-center gap-1.5">
+                <motion.div animate={{ scaleY: [1, 1.9, 1], opacity: [0.3, 0.75, 0.3] }}
                   transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
                   className="w-px h-7"
-                  style={{ background: `linear-gradient(to bottom, transparent, ${c.color}, transparent)` }}
-                />
+                  style={{ background: `linear-gradient(to bottom, transparent, ${c.color}, transparent)` }} />
                 <p className="text-[9px] tracking-[0.3em] uppercase font-medium" style={{ color: c.color, opacity: 0.55 }}>
-                  {isTouch
-                    ? (isGreek ? 'πατήστε' : 'tap')
-                    : chapter === CHAPTERS.length - 1
-                      ? (isGreek ? 'είσοδος' : 'enter')
-                      : (isGreek ? 'κύλιση' : 'scroll')
-                  }
+                  {isTouch ? (isGreek ? 'πατήστε' : 'tap') : chapter === CHAPTERS.length - 1 ? (isGreek ? 'είσοδος' : 'enter') : (isGreek ? 'κύλιση' : 'scroll')}
                 </p>
               </motion.div>
             )}

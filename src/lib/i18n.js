@@ -57,6 +57,37 @@ const translations = {
     footer: { tagline: 'Software engineering, AI integration and platform delivery based in Greece.', nav: 'Navigation', connect: 'Connect', rights: 'All rights reserved.' },
     viewProject: 'View Case Study', visitSite: 'Visit Website', learnMore: 'Learn More',
     back: 'Back', overview: 'Overview', problem: 'Challenge', solution: 'Solution', tech: 'Technologies', results: 'Results', relatedProjects: 'Related Projects',
+    homeProcess: {
+      label: 'How We Work',
+      title: 'Four steps, zero ambiguity.',
+      steps: [
+        { num: '01', title: 'Discover', desc: 'Written scope, stakeholder alignment and KPIs defined before any code is written.' },
+        { num: '02', title: 'Blueprint', desc: 'Architecture decisions, user flows and component model agreed with your team.' },
+        { num: '03', title: 'Build', desc: 'Sprint milestones, QA gates and staging demos keep you in the loop.' },
+        { num: '04', title: 'Ship & Tune', desc: 'Production rollout with monitoring, performance checks and conversion improvements.' },
+      ],
+    },
+    homeMetrics: [
+      { to: 7, suffix: '+', label: 'Platforms Shipped' },
+      { to: 4, suffix: '', label: 'Sectors' },
+      { to: 3, suffix: '+', label: 'Countries' },
+      { to: 1, suffix: ' day', label: 'Response SLA' },
+    ],
+    teamTitle: 'The Team',
+    teamSub: 'A focused studio with deep, production-tested expertise.',
+    team: [
+      { initials: 'IG', name: 'Iraklis Gougoudis', role: 'Software Engineer', bio: 'Full-stack engineer leading .NET, Umbraco and Flutter delivery. Focused on architecture and technical decisions that hold up in production.' },
+      { initials: 'TM', name: 'Thanos Martinis', role: 'Software Engineer', bio: 'Platform and commerce specialist. Leads nopCommerce implementations, cloud infrastructure and third-party integrations.' },
+    ],
+    faqTitle: 'Common Questions',
+    faqSub: 'Practical answers before you reach out.',
+    faq: [
+      { q: 'How do we start?', a: "Fill in the contact form with your goals, budget range and timeline. We review every submission and respond within one business day with clear scope options and next steps." },
+      { q: 'What is the minimum project budget?', a: "We typically engage from €5,000. Below that threshold, coordination overhead makes it difficult to deliver quality results. We're happy to discuss what fits your budget." },
+      { q: 'Do you work remotely?', a: "Yes — remote-first. We work with clients across Europe using structured async communication and clear milestone reviews. Geography is never a bottleneck." },
+      { q: 'What does "contribution-based" mean in your portfolio?', a: "It means we contributed technically as part of a team or as a vendor. These entries demonstrate real-world expertise in specific sectors — not necessarily full ownership of the product." },
+      { q: 'Do you offer post-launch support?', a: "Yes. Support and maintenance arrangements are tailored per project — from ad hoc fixes to monthly retainers. We discuss this during scoping." },
+    ],
     focus: 'Focus', status: 'Status'
   },
   el: {
@@ -65,7 +96,7 @@ const translations = {
       tag: 'Software Engineering · AI · Automation',
       title1: 'Χτίζουμε πλατφόρμες',
       title2: 'που κλιμακώνουν επιχειρήσεις.',
-      desc: 'Umbraco, Flutter και commerce execution με βάση πραγματικά έργα. Από βιομηχανικές πλατφόρμες σε hospitality ecosystems και λύσεις δημόσιου τομέα.',
+      desc: 'Από βιομηχανικές πλατφόρμες ως δημόσιες υπηρεσίες, παραδίδουμε με μετρήσιμα αποτελέσματα. Umbraco, Flutter και AI integration σε ένα ενοποιημένο delivery stack.',
       cta1: 'Δείτε Έργα', cta2: 'Υπηρεσίες'
     },
     stats: { projects: 'Αναφορές Έργων', tech: 'Umbraco + Flutter', scope: 'B2B έως Public', projectsDesc: 'Πλατφόρμες σε βιομηχανία, υγεία, hospitality, τέχνη και commerce', techDesc: 'Ενοποιημένη παράδοση CMS και εφαρμογών στο ίδιο execution layer', scopeDesc: 'Από enterprise portals έως citizen-facing πλατφόρμες' },
@@ -115,6 +146,37 @@ const translations = {
     footer: { tagline: 'Software engineering, AI integration και platform delivery από την Ελλάδα.', nav: 'Πλοήγηση', connect: 'Σύνδεση', rights: 'Με επιφύλαξη παντός δικαιώματος.' },
     viewProject: 'Δείτε Case Study', visitSite: 'Επίσκεψη Ιστοσελίδας', learnMore: 'Μάθετε Περισσότερα',
     back: 'Πίσω', overview: 'Επισκόπηση', problem: 'Πρόκληση', solution: 'Λύση', tech: 'Τεχνολογίες', results: 'Αποτελέσματα', relatedProjects: 'Σχετικά Έργα',
+    homeProcess: {
+      label: 'Πώς Δουλεύουμε',
+      title: 'Τέσσερα βήματα, μηδέν ασάφεια.',
+      steps: [
+        { num: '01', title: 'Discover', desc: 'Γραπτό scope, ευθυγράμμιση stakeholders και KPIs πριν γραφτεί κώδικας.' },
+        { num: '02', title: 'Blueprint', desc: 'Αρχιτεκτονικές αποφάσεις, user flows και component model συμφωνημένα με την ομάδα σας.' },
+        { num: '03', title: 'Build', desc: 'Sprint milestones, QA gates και staging demos σας κρατούν ενήμερους.' },
+        { num: '04', title: 'Ship & Tune', desc: 'Production rollout με monitoring, performance checks και βελτιώσεις conversion.' },
+      ],
+    },
+    homeMetrics: [
+      { to: 7, suffix: '+', label: 'Πλατφόρμες' },
+      { to: 4, suffix: '', label: 'Τομείς' },
+      { to: 3, suffix: '+', label: 'Χώρες' },
+      { to: 1, suffix: ' ημέρα', label: 'SLA Απόκρισης' },
+    ],
+    teamTitle: 'Η Ομάδα',
+    teamSub: 'Επικεντρωμένο studio με βαθιά, production-tested τεχνογνωσία.',
+    team: [
+      { initials: 'IG', name: 'Iraklis Gougoudis', role: 'Software Engineer', bio: 'Full-stack engineer που ηγείται .NET, Umbraco και Flutter παράδοσης. Εστίαση σε αρχιτεκτονική και τεχνικές αποφάσεις που αντέχουν στην παραγωγή.' },
+      { initials: 'TM', name: 'Thanos Martinis', role: 'Software Engineer', bio: 'Ειδικός πλατφορμών και commerce. Ηγείται υλοποιήσεων nopCommerce, cloud υποδομής και integrations τρίτων.' },
+    ],
+    faqTitle: 'Συχνές Ερωτήσεις',
+    faqSub: 'Πρακτικές απαντήσεις πριν επικοινωνήσετε.',
+    faq: [
+      { q: 'Πώς ξεκινάμε;', a: 'Συμπληρώστε τη φόρμα επικοινωνίας με στόχους, budget range και χρονοδιάγραμμα. Ελέγχουμε κάθε υποβολή και απαντάμε εντός μίας εργάσιμης ημέρας με επιλογές scope.' },
+      { q: 'Ποιο είναι το ελάχιστο budget;', a: 'Συνήθως ξεκινάμε από €5.000. Κάτω από αυτό το όριο, το coordination overhead δυσκολεύει την παράδοση ποιοτικών αποτελεσμάτων. Χαρούμενα συζητάμε τι ταιριάζει στο budget σας.' },
+      { q: 'Δουλεύετε εξ αποστάσεως;', a: 'Ναι — remote-first. Εργαζόμαστε με πελάτες σε όλη την Ευρώπη με δομημένη async επικοινωνία και καθαρές milestone reviews. Η γεωγραφία δεν είναι ποτέ εμπόδιο.' },
+      { q: 'Τι σημαίνει "contribution-based" στο portfolio;', a: 'Σημαίνει ότι συμβάλαμε τεχνικά ως μέλος ομάδας ή ως vendor. Αυτές οι αναφορές αποδεικνύουν πρακτική εμπειρία σε συγκεκριμένους τομείς — χωρίς να σημαίνουν απαραίτητα πλήρη ιδιοκτησία.' },
+      { q: 'Προσφέρετε υποστήριξη μετά την κυκλοφορία;', a: 'Ναι. Διαμορφώνουμε υποστήριξη και συντήρηση ανά project — από ad hoc διορθώσεις σε μηνιαία retainers. Το συζητάμε κατά το scoping.' },
+    ],
     focus: 'Εστίαση', status: 'Κατάσταση'
   }
 };
