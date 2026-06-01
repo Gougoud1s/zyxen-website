@@ -21,14 +21,6 @@ if (!existsSync(join(DIST, 'index.html'))) {
   process.exit(0);
 }
 
-let puppeteer;
-try {
-  puppeteer = (await import('puppeteer')).default;
-} catch {
-  console.warn('⚠ prerender: puppeteer not available — skipping prerender (SPA fallback serves). Build continues.');
-  process.exit(0);
-}
-
 // In-process static file server with SPA fallback (async — safe with Puppeteer).
 const indexHtml = readFileSync(join(DIST, 'index.html'));
 const MIME = {
@@ -50,12 +42,26 @@ const server = createServer((req, res) => {
 });
 await new Promise((r) => server.listen(PORT, r));
 
+// Launch a browser. On Linux (Vercel's build container) the system lacks Chromium's
+// shared libs, so use @sparticuz/chromium (bundles them). Locally, use full puppeteer.
 let browser;
 try {
-  browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', '--disable-dev-shm-usage', '--hide-scrollbars'],
-  });
+  if (process.platform === 'linux') {
+    const chromium = (await import('@sparticuz/chromium')).default;
+    const puppeteerCore = (await import('puppeteer-core')).default;
+    chromium.setGraphicsMode = false;
+    browser = await puppeteerCore.launch({
+      args: [...chromium.args, '--hide-scrollbars'],
+      executablePath: await chromium.executablePath(),
+      headless: true,
+    });
+  } else {
+    const puppeteer = (await import('puppeteer')).default;
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', '--disable-dev-shm-usage', '--hide-scrollbars'],
+    });
+  }
 } catch (e) {
   console.warn(`⚠ prerender: could not launch Chromium (${e.message}) — skipping. Build continues.`);
   server.close();
