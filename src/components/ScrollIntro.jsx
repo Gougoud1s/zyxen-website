@@ -240,14 +240,14 @@ const CHAPTER_VISUALS = [
 ];
 
 const CHAPTERS_EN = [
-  { tag: 'ZYXEN · Software Engineering', headline: ['Systems,'], sub: 'Premium software engineering studio.', color: '#AF994D', accentBg: 'rgba(175,153,77,0.08)' },
-  { tag: 'Precision · Scale · Impact',   headline: ['Engineered.'], sub: 'Enterprise platforms. Mobile apps. Commerce.', color: 'hsl(20 100% 55%)', accentBg: 'rgba(255,107,44,0.08)' },
-  { tag: 'Systems, Engineered.',          headline: ["We build", "what others can't."], sub: 'Keep scrolling to enter.', color: '#8899ff', accentBg: 'rgba(136,153,255,0.08)' },
+  { tag: 'ZYXEN · Software Engineering', headline: ['Systems,', 'Engineered.'], accentLine: 1, sub: 'A premium software engineering studio.', color: '#AF994D', accentBg: 'rgba(175,153,77,0.08)' },
+  { tag: 'Precision · Scale · Impact',   headline: ['Built to', 'outperform.'], accentLine: 1, sub: 'Enterprise platforms. Mobile apps. Commerce.', color: 'hsl(20 100% 55%)', accentBg: 'rgba(255,107,44,0.08)' },
+  { tag: 'Systems, Engineered.',          headline: ['We build', 'the impossible.'], accentLine: 1, sub: 'Keep scrolling to enter.', color: '#8899ff', accentBg: 'rgba(136,153,255,0.08)' },
 ];
 const CHAPTERS_EL = [
-  { tag: 'ZYXEN · Software Engineering',       headline: ['Συστήματα,'], sub: 'Premium studio λογισμικού.', color: '#AF994D', accentBg: 'rgba(175,153,77,0.08)' },
-  { tag: 'Ακρίβεια · Κλιμάκωση · Αποτέλεσμα', headline: ['Σχεδιασμένα.'], sub: 'Enterprise πλατφόρμες. Mobile εφαρμογές.', color: 'hsl(20 100% 55%)', accentBg: 'rgba(255,107,44,0.08)' },
-  { tag: 'Συστήματα, Σχεδιασμένα.',             headline: ['Χτίζουμε ό,τι', 'άλλοι δεν μπορούν.'], sub: 'Συνεχίστε για να μπείτε.', color: '#8899ff', accentBg: 'rgba(136,153,255,0.08)' },
+  { tag: 'ZYXEN · Software Engineering',       headline: ['Συστήματα,', 'Σχεδιασμένα.'], accentLine: 1, sub: 'Ένα premium studio μηχανικής λογισμικού.', color: '#AF994D', accentBg: 'rgba(175,153,77,0.08)' },
+  { tag: 'Ακρίβεια · Κλιμάκωση · Αποτέλεσμα', headline: ['Φτιαγμένα', 'για κλίμακα.'], accentLine: 1, sub: 'Enterprise πλατφόρμες. Mobile εφαρμογές.', color: 'hsl(20 100% 55%)', accentBg: 'rgba(255,107,44,0.08)' },
+  { tag: 'Συστήματα, Σχεδιασμένα.',             headline: ['Χτίζουμε το', 'αδύνατο.'], accentLine: 1, sub: 'Συνεχίστε για να μπείτε.', color: '#8899ff', accentBg: 'rgba(136,153,255,0.08)' },
 ];
 
 export default function ScrollIntro({ onComplete }) {
@@ -264,8 +264,9 @@ export default function ScrollIntro({ onComplete }) {
   const subRef     = useRef(null);
   const barRef     = useRef(null);
   const logoRef    = useRef(null);
-  const sheenRef   = useRef(null);
-  const contentRef = useRef(null);
+  const sheenRef     = useRef(null);
+  const contentRef   = useRef(null);
+  const underlineRef = useRef(null);
 
   const locked     = useRef(false);
   const chapterRef = useRef(0);
@@ -287,6 +288,7 @@ export default function ScrollIntro({ onComplete }) {
     if (reduced) {
       gsap.set([tagRef.current, subRef.current, logoRef.current], { opacity: 1, x: 0, y: 0 });
       gsap.set(chars, { opacity: 1, y: 0, rotationX: 0, scale: 1, filter: 'blur(0px)' });
+      gsap.set(underlineRef.current, { opacity: 1, scaleX: 1 });
       return;
     }
 
@@ -299,7 +301,8 @@ export default function ScrollIntro({ onComplete }) {
         opacity: 1, y: 0, rotationX: 0, scale: 1, filter: 'blur(0px)',
         duration: 0.95, stagger: { each: 0.03, from: 'start' }, ease: 'power4.out',
       }, 0.6)
-      .fromTo(subRef.current, { opacity: 0, y: 24, filter: 'blur(6px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.75, ease: 'power3.out' }, 1.1);
+      .fromTo(subRef.current, { opacity: 0, y: 24, filter: 'blur(6px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.75, ease: 'power3.out' }, 1.1)
+      .fromTo(underlineRef.current, { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.85, ease: 'power3.out' }, 1.2);
 
     /* Light sheen sweeps across the headline once it has resolved */
     if (sheenRef.current) {
@@ -335,6 +338,8 @@ export default function ScrollIntro({ onComplete }) {
       duration: 0.28, stagger: 0.04, ease: 'power2.in',
     }, 0.06);
 
+    tl.to(underlineRef.current, { scaleX: 0, opacity: 0, duration: 0.24, ease: 'power2.in' }, 0.06);
+
     if (chars && chars.length > 0) {
       tl.to(chars, {
         opacity: 0, y: yOut, filter: 'blur(6px)',
@@ -358,12 +363,14 @@ export default function ScrollIntro({ onComplete }) {
     gsap.set([tagRef.current, subRef.current], { y: 36, filter: 'blur(8px)' });
     gsap.set(chars, { y: 36, opacity: 0, filter: 'blur(6px)' });
     gsap.set(logoRef.current, { scale: 1.06 });
+    gsap.set(underlineRef.current, { scaleX: 0, opacity: 0 });
 
     const tl = gsap.timeline({ onComplete: () => { animating.current = false; } });
     tl.to(tagRef.current, { opacity: 1, x: 0, y: 0, filter: 'blur(0px)', duration: 0.5, ease: 'power3.out' }, 0)
       .to(chars, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, stagger: 0.022, ease: 'power3.out' }, 0.08)
       .to(subRef.current, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.5, ease: 'power3.out' }, 0.24)
-      .to(logoRef.current, { opacity: 1, scale: 1, duration: 0.65, ease: 'back.out(1.4)' }, 0.05);
+      .to(logoRef.current, { opacity: 1, scale: 1, duration: 0.65, ease: 'back.out(1.4)' }, 0.05)
+      .to(underlineRef.current, { scaleX: 1, opacity: 1, duration: 0.7, ease: 'power3.out' }, 0.3);
 
     if (sheenRef.current && !prefersReducedMotion()) {
       gsap.fromTo(sheenRef.current,
@@ -524,7 +531,7 @@ export default function ScrollIntro({ onComplete }) {
       </AnimatePresence>
 
       <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-14 lg:px-24 pointer-events-none" style={{ perspective: '1200px' }}>
-        <div ref={contentRef} className="max-w-2xl" style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}>
+        <div ref={contentRef} className="max-w-2xl lg:max-w-4xl xl:max-w-6xl" style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}>
           <div ref={tagRef} className="flex items-center gap-3 mb-5 sm:mb-7" style={{ opacity: 0 }}>
             <div className="h-px w-7 flex-shrink-0" style={{ background: c.color }} />
             <p className="text-[10px] sm:text-[11px] font-medium tracking-[0.28em] uppercase leading-none" style={{ color: c.color }}>
@@ -535,9 +542,13 @@ export default function ScrollIntro({ onComplete }) {
           <div className="relative overflow-hidden">
           <h2 ref={headRef}
             className="font-display font-bold leading-[0.92] tracking-tight"
-            style={{ fontSize: 'clamp(2.6rem, 10.5vw, 8rem)', transformStyle: 'preserve-3d', perspective: '1000px', color: 'hsl(var(--foreground))' }}>
+            style={{ fontSize: 'clamp(2.4rem, 7vw, 7.5rem)', transformStyle: 'preserve-3d', perspective: '1000px', color: 'hsl(var(--foreground))' }}>
             {c.headline.map((line, lineIdx) => (
-              <span key={lineIdx} className="block overflow-hidden">
+              <span key={lineIdx} className="block overflow-hidden" style={{
+                whiteSpace: 'nowrap',
+                color: lineIdx === c.accentLine ? c.color : undefined,
+                textShadow: lineIdx === c.accentLine ? `0 0 42px color-mix(in srgb, ${c.color} 45%, transparent)` : undefined,
+              }}>
                 {[...line].map((char, charIdx) => (
                   <span key={charIdx} className="intro-char inline-block" style={{ opacity: 0, willChange: 'transform, opacity, filter' }}>
                     {char === ' ' ? ' ' : char}
@@ -555,6 +566,10 @@ export default function ScrollIntro({ onComplete }) {
                 mixBlendMode: 'screen',
               }} aria-hidden="true" />
           </div>
+
+          {/* Accent underline — draws in beneath the headline */}
+          <div ref={underlineRef} className="mt-6 sm:mt-8 h-[2px] w-40 sm:w-56 origin-left rounded-full"
+            style={{ background: `linear-gradient(90deg, ${c.color}, transparent)`, transform: 'scaleX(0)', opacity: 0 }} aria-hidden="true" />
 
           <p ref={subRef} className="text-sm sm:text-[0.95rem] text-muted-foreground mt-5 sm:mt-8 max-w-sm leading-relaxed" style={{ opacity: 0 }}>
             {c.sub}
