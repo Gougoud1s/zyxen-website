@@ -10,6 +10,10 @@ gsap.registerPlugin(ScrollTrigger);
 const isTouchDevice = () =>
   typeof navigator !== 'undefined' && (navigator.maxTouchPoints > 0 || 'ontouchstart' in window);
 
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
 function CrystalCanvas({ chapter }) {
   const mountRef = useRef(null);
   const stateRef = useRef(null);
@@ -255,11 +259,13 @@ export default function ScrollIntro({ onComplete }) {
   const [exiting, setExiting] = useState(false);
   const [showSkip, setShowSkip] = useState(false);
 
-  const tagRef    = useRef(null);
-  const headRef   = useRef(null);
-  const subRef    = useRef(null);
-  const barRef    = useRef(null);
-  const logoRef   = useRef(null);
+  const tagRef     = useRef(null);
+  const headRef    = useRef(null);
+  const subRef     = useRef(null);
+  const barRef     = useRef(null);
+  const logoRef    = useRef(null);
+  const sheenRef   = useRef(null);
+  const contentRef = useRef(null);
 
   const locked     = useRef(false);
   const chapterRef = useRef(0);
@@ -274,15 +280,35 @@ export default function ScrollIntro({ onComplete }) {
 
   useEffect(() => {
     if (!tagRef.current || !headRef.current) return;
+    const reduced = prefersReducedMotion();
     const chars = headRef.current.querySelectorAll('.intro-char');
     gsap.set([tagRef.current, subRef.current, logoRef.current], { opacity: 0 });
-    gsap.set(chars, { opacity: 0, y: 60, rotationX: -18 });
+
+    if (reduced) {
+      gsap.set([tagRef.current, subRef.current, logoRef.current], { opacity: 1, x: 0, y: 0 });
+      gsap.set(chars, { opacity: 1, y: 0, rotationX: 0, scale: 1, filter: 'blur(0px)' });
+      return;
+    }
+
+    gsap.set(chars, { opacity: 0, y: 72, rotationX: -28, scale: 0.94, filter: 'blur(10px)' });
 
     const tl = gsap.timeline();
-    tl.to(logoRef.current, { opacity: 1, duration: 1.2, ease: 'power2.out' }, 0.3)
-      .fromTo(tagRef.current, { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out' }, 0.5)
-      .to(chars, { opacity: 1, y: 0, rotationX: 0, duration: 0.75, stagger: 0.025, ease: 'power3.out' }, 0.65)
-      .fromTo(subRef.current, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.05);
+    tl.to(logoRef.current, { opacity: 1, duration: 1.3, ease: 'power2.out' }, 0.25)
+      .fromTo(tagRef.current, { opacity: 0, x: -28 }, { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out' }, 0.45)
+      .to(chars, {
+        opacity: 1, y: 0, rotationX: 0, scale: 1, filter: 'blur(0px)',
+        duration: 0.95, stagger: { each: 0.03, from: 'start' }, ease: 'power4.out',
+      }, 0.6)
+      .fromTo(subRef.current, { opacity: 0, y: 24, filter: 'blur(6px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.75, ease: 'power3.out' }, 1.1);
+
+    /* Light sheen sweeps across the headline once it has resolved */
+    if (sheenRef.current) {
+      gsap.fromTo(sheenRef.current,
+        { xPercent: -130, opacity: 0, skewX: -12 },
+        { xPercent: 430, opacity: 1, skewX: -12, duration: 1.15, ease: 'power2.inOut',
+          onComplete: () => gsap.set(sheenRef.current, { opacity: 0 }) },
+        1.35);
+    }
   }, []);
 
   const changeChapter = useCallback((next, dir) => {
@@ -297,9 +323,9 @@ export default function ScrollIntro({ onComplete }) {
     if (chars && chars.length > 0) {
       tl.to(headRef.current, {
         keyframes: [
-          { x: -6, skewX: -3, filter: 'blur(1px)', duration: 0.04 },
-          { x: 5, skewX: 2, filter: 'blur(0px)', duration: 0.03 },
-          { x: 0, skewX: 0, duration: 0.03 },
+          { x: -7, skewX: -3.5, filter: 'blur(1.2px)', textShadow: '3px 0 rgba(255,42,90,0.55), -3px 0 rgba(40,200,255,0.55)', duration: 0.045 },
+          { x: 6, skewX: 2.5, filter: 'blur(0.4px)', textShadow: '-2px 0 rgba(255,42,90,0.4), 2px 0 rgba(40,200,255,0.4)', duration: 0.035 },
+          { x: 0, skewX: 0, filter: 'blur(0px)', textShadow: '0px 0 rgba(255,42,90,0), 0px 0 rgba(40,200,255,0)', duration: 0.05 },
         ],
       }, 0);
     }
@@ -338,7 +364,35 @@ export default function ScrollIntro({ onComplete }) {
       .to(chars, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, stagger: 0.022, ease: 'power3.out' }, 0.08)
       .to(subRef.current, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.5, ease: 'power3.out' }, 0.24)
       .to(logoRef.current, { opacity: 1, scale: 1, duration: 0.65, ease: 'back.out(1.4)' }, 0.05);
+
+    if (sheenRef.current && !prefersReducedMotion()) {
+      gsap.fromTo(sheenRef.current,
+        { xPercent: -130, opacity: 0, skewX: -12 },
+        { xPercent: 430, opacity: 1, skewX: -12, duration: 0.95, ease: 'power2.inOut',
+          onComplete: () => gsap.set(sheenRef.current, { opacity: 0 }) },
+        0.18);
+    }
   }, [chapter, CHAPTERS]);
+
+  /* Mouse-parallax depth on the text layers (desktop, motion-allowed only) */
+  useEffect(() => {
+    if (isTouch || prefersReducedMotion() || !contentRef.current) return;
+    let raf = null;
+    const onMove = (e) => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = null;
+        const dx = (e.clientX / window.innerWidth - 0.5);
+        const dy = (e.clientY / window.innerHeight - 0.5);
+        gsap.to(contentRef.current, {
+          x: dx * 26, y: dy * 16, rotationY: dx * 3, rotationX: -dy * 2.4,
+          duration: 0.8, ease: 'power2.out', overwrite: 'auto',
+        });
+      });
+    };
+    window.addEventListener('mousemove', onMove, { passive: true });
+    return () => { window.removeEventListener('mousemove', onMove); if (raf) cancelAnimationFrame(raf); };
+  }, [isTouch]);
 
   const completeIntro = useCallback(() => {
     if (locked.current) return;
@@ -469,8 +523,8 @@ export default function ScrollIntro({ onComplete }) {
         )}
       </AnimatePresence>
 
-      <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-14 lg:px-24 pointer-events-none">
-        <div className="max-w-2xl">
+      <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-14 lg:px-24 pointer-events-none" style={{ perspective: '1200px' }}>
+        <div ref={contentRef} className="max-w-2xl" style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}>
           <div ref={tagRef} className="flex items-center gap-3 mb-5 sm:mb-7" style={{ opacity: 0 }}>
             <div className="h-px w-7 flex-shrink-0" style={{ background: c.color }} />
             <p className="text-[10px] sm:text-[11px] font-medium tracking-[0.28em] uppercase leading-none" style={{ color: c.color }}>
@@ -478,19 +532,29 @@ export default function ScrollIntro({ onComplete }) {
             </p>
           </div>
 
+          <div className="relative overflow-hidden">
           <h2 ref={headRef}
             className="font-display font-bold leading-[0.92] tracking-tight"
             style={{ fontSize: 'clamp(2.6rem, 10.5vw, 8rem)', transformStyle: 'preserve-3d', perspective: '1000px', color: 'hsl(var(--foreground))' }}>
             {c.headline.map((line, lineIdx) => (
               <span key={lineIdx} className="block overflow-hidden">
                 {[...line].map((char, charIdx) => (
-                  <span key={charIdx} className="intro-char inline-block" style={{ opacity: 0, willChange: 'transform, opacity' }}>
+                  <span key={charIdx} className="intro-char inline-block" style={{ opacity: 0, willChange: 'transform, opacity, filter' }}>
                     {char === ' ' ? ' ' : char}
                   </span>
                 ))}
               </span>
             ))}
           </h2>
+            {/* Sheen sweep — a soft diagonal highlight that glides across the headline */}
+            <div ref={sheenRef} className="absolute inset-y-0 -left-1/3 w-1/3 pointer-events-none"
+              style={{
+                opacity: 0,
+                background: `linear-gradient(105deg, transparent, color-mix(in srgb, ${c.color} 40%, transparent) 42%, rgba(255,255,255,0.82) 50%, color-mix(in srgb, ${c.color} 40%, transparent) 58%, transparent)`,
+                filter: 'blur(14px)',
+                mixBlendMode: 'screen',
+              }} aria-hidden="true" />
+          </div>
 
           <p ref={subRef} className="text-sm sm:text-[0.95rem] text-muted-foreground mt-5 sm:mt-8 max-w-sm leading-relaxed" style={{ opacity: 0 }}>
             {c.sub}
