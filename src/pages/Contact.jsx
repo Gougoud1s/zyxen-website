@@ -4,6 +4,8 @@ import AnimatedSection from '@/components/AnimatedSection';
 import FormField, { inputClass } from '@/components/FormField';
 import CustomSelect from '@/components/CustomSelect';
 import MagneticButton from '@/components/MagneticButton';
+import SEOMeta from '@/components/SEOMeta';
+import { faqPageSchema } from '@/lib/structuredData';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, MapPin, Clock, Send, CheckCircle2, Loader2, AlertCircle, ChevronDown } from 'lucide-react';
 
@@ -97,8 +99,15 @@ export default function Contact() {
 
   const faqItems = t('faq');
 
+  const metaTitle = lang === 'el'
+    ? 'Επικοινωνία ZYXEN — Ξεκινήστε το Έργο σας'
+    : 'Contact ZYXEN — Start Your Project';
+  const metaDesc = t('contactPage.desc');
+  const faqSchema = faqPageSchema(faqItems);
+
   return (
     <div>
+      <SEOMeta title={metaTitle} description={metaDesc} jsonLd={faqSchema} />
       <section className="py-32 sm:py-40 border-b border-border/60 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(ellipse 60% 70% at 80% 50%, rgba(255,107,44,0.05), transparent 65%)' }} />

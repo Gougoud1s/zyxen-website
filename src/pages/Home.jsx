@@ -81,6 +81,8 @@ function CountUp({ to, suffix = '', duration = 2 }) {
 export default function Home() {
   const { t, lang, localePath } = useLanguage();
   const [introDone, setIntroDone] = useState(() => {
+    // Prerender/snapshot pass: skip the intro so the static HTML shows page content.
+    if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('prerender')) return true;
     const ts = sessionStorage.getItem('zyxen_intro_ts');
     if (!ts) return false;
     return Date.now() - parseInt(ts, 10) < 10 * 60 * 1000;

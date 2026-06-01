@@ -2,6 +2,8 @@ import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { projects } from '@/lib/data';
 import AnimatedSection from '@/components/AnimatedSection';
+import SEOMeta from '@/components/SEOMeta';
+import { breadcrumbSchema } from '@/lib/structuredData';
 import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 
 export default function ProjectDetail() {
@@ -11,6 +13,7 @@ export default function ProjectDetail() {
 
   if (!project) return (
     <div className="min-h-[60vh] flex items-center justify-center">
+      <SEOMeta noindex title="Case Study | ZYXEN" />
       <div className="text-center">
         <p className="text-muted-foreground">Project not found</p>
         <Link to={localePath('/projects')} className="text-primary text-sm mt-2 inline-block">{t('back')}</Link>
@@ -21,8 +24,17 @@ export default function ProjectDetail() {
   const p = project[lang];
   const related = projects.filter(r => r.slug !== slug).slice(0, 3);
 
+  const metaTitle = `${p.name} — Case Study | ZYXEN`;
+  const metaDesc = p.overview;
+  const breadcrumbs = breadcrumbSchema([
+    { name: lang === 'el' ? 'Αρχική' : 'Home', path: `/${lang}` },
+    { name: lang === 'el' ? 'Έργα' : 'Projects', path: `/${lang}/projects` },
+    { name: p.name, path: `/${lang}/projects/${slug}` },
+  ]);
+
   return (
     <div>
+      <SEOMeta title={metaTitle} description={metaDesc} jsonLd={breadcrumbs} />
       <section className="py-32 border-b border-border">
         <div className="max-w-7xl mx-auto px-6">
           <Link to={localePath('/projects')} className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">

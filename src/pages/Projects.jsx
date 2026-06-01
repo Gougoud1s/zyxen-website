@@ -2,14 +2,21 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { projects } from '@/lib/data';
 import AnimatedSection from '@/components/AnimatedSection';
+import SEOMeta from '@/components/SEOMeta';
 import { ArrowUpRight, Lock } from 'lucide-react';
 
 export default function Projects() {
   const { t, lang, localePath } = useLanguage();
   const pp = t('projectsPage');
 
+  const metaTitle = lang === 'el'
+    ? 'Έργα & Case Studies | ZYXEN'
+    : 'Projects & Case Studies | ZYXEN';
+  const metaDesc = t('projectsPage.desc');
+
   return (
     <div className="overflow-x-hidden">
+      <SEOMeta title={metaTitle} description={metaDesc} />
       <section className="py-28 sm:py-32 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <AnimatedSection>

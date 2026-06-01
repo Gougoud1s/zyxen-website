@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ZyxenMark } from '@/components/ZyxenLogo';
+import SEOMeta from '@/components/SEOMeta';
 import { ArrowLeft, Home, Mail } from 'lucide-react';
 
 export default function NotFound() {
@@ -8,6 +9,7 @@ export default function NotFound() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4 relative overflow-hidden">
+      <SEOMeta noindex title="404 — Page Not Found | ZYXEN" description="The page you are looking for could not be found." />
       {/* Ambient */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[140px]" />

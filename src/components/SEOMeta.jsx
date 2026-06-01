@@ -1,48 +1,60 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+const BASE = 'https://www.zyxen.gr';
+const OG_IMAGE = `${BASE}/og-image.jpg`;
+
 /**
  * SEO meta tag manager — updates document <head> on route change.
- * Usage: <SEOMeta title="..." description="..." />
+ * Usage: <SEOMeta title="..." description="..." noindex jsonLd={obj|array} />
+ *
+ * Canonical/og:url always resolve to the www apex on the current path
+ * (no trailing slash) so every route self-canonicalizes correctly.
  */
-export default function SEOMeta({ title, description, canonical }) {
+export default function SEOMeta({ title, description, canonical, image, noindex = false, jsonLd }) {
   const { pathname } = useLocation();
-  const base = 'https://zyxen.gr';
+  const isGreek = pathname.startsWith('/el');
+  const lang = isGreek ? 'el' : 'en';
+
   const fullTitle = title || 'ZYXEN — Systems, Engineered.';
-  // Use pathname as-is — no trailing slash to avoid canonical mismatch
-  const fullCanonical = canonical || `${base}${pathname}`;
+  const desc = description || 'Premium software engineering studio. AI integrations, Umbraco platforms, Flutter apps and commerce systems. Based in Greece.';
+  // Strip trailing slash to keep one canonical form per page.
+  const cleanPath = pathname.length > 1 ? pathname.replace(/\/$/, '') : pathname;
+  const fullCanonical = canonical || `${BASE}${cleanPath}`;
+  const ogImage = image || OG_IMAGE;
 
   useEffect(() => {
-    // HTML lang based on URL
-    document.documentElement.lang = pathname.startsWith('/el') ? 'el' : 'en';
-
-    // Title
+    document.documentElement.lang = lang;
     document.title = fullTitle;
 
-    // Meta description
-    setMeta('name', 'description', description || 'Premium software engineering studio. AI integrations, Umbraco platforms, Flutter apps and commerce systems. Based in Greece.');
-
-    // Canonical
+    setMeta('name', 'description', desc);
+    setMeta('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
     setLink('canonical', fullCanonical);
 
-    // OG
+    // Open Graph
     setMeta('property', 'og:title', fullTitle);
-    setMeta('property', 'og:description', description || '');
+    setMeta('property', 'og:description', desc);
     setMeta('property', 'og:url', fullCanonical);
-    setMeta('property', 'og:image', 'https://zyxen.gr/og-image.png');
-    setMeta('property', 'og:image:width', '1200');
-    setMeta('property', 'og:image:height', '630');
+    setMeta('property', 'og:image', ogImage);
+    setMeta('property', 'og:image:width', '1024');
+    setMeta('property', 'og:image:height', '1024');
+    setMeta('property', 'og:locale', isGreek ? 'el_GR' : 'en_US');
+    setMeta('property', 'og:locale:alternate', isGreek ? 'en_US' : 'el_GR');
 
     // Twitter
     setMeta('name', 'twitter:title', fullTitle);
-    setMeta('name', 'twitter:description', description || '');
-    setMeta('name', 'twitter:image', 'https://zyxen.gr/og-image.png');
+    setMeta('name', 'twitter:description', desc);
+    setMeta('name', 'twitter:image', ogImage);
 
-    // hreflang
-    const langPath = pathname.replace(/^\/(el|en)/, '');
-    setHreflang('el', `${base}/el${langPath}`);
-    setHreflang('en', `${base}/en${langPath}`);
-  }, [fullTitle, description, fullCanonical, pathname]);
+    // hreflang — el / en / x-default (points to Greek as primary market)
+    const langPath = cleanPath.replace(/^\/(el|en)/, '');
+    setHreflang('el', `${BASE}/el${langPath}`);
+    setHreflang('en', `${BASE}/en${langPath}`);
+    setHreflang('x-default', `${BASE}/el${langPath}`);
+
+    // Optional per-page structured data (managed by data-seo attr so it's idempotent)
+    setJsonLd(jsonLd);
+  }, [fullTitle, desc, fullCanonical, ogImage, noindex, jsonLd, lang, isGreek, cleanPath]);
 
   return null;
 }
@@ -76,4 +88,19 @@ function setHreflang(lang, href) {
     document.head.appendChild(el);
   }
   el.setAttribute('href', href);
+}
+
+/** Inject page-level JSON-LD, replacing any previously injected by this component. */
+function setJsonLd(data) {
+  document.querySelectorAll('script[data-seo="page"]').forEach((n) => n.remove());
+  if (!data) return;
+  const blocks = Array.isArray(data) ? data : [data];
+  for (const block of blocks) {
+    if (!block) continue;
+    const s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.setAttribute('data-seo', 'page');
+    s.textContent = JSON.stringify(block);
+    document.head.appendChild(s);
+  }
 }

@@ -2,6 +2,8 @@ import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { services, projects } from '@/lib/data';
 import AnimatedSection from '@/components/AnimatedSection';
+import SEOMeta from '@/components/SEOMeta';
+import { serviceSchema } from '@/lib/structuredData';
 import { ArrowLeft, ArrowRight, CheckCircle, Layers, Globe, Smartphone, ShoppingCart, Brain, Rocket } from 'lucide-react';
 
 const iconMap = { Layers, Globe, Smartphone, ShoppingCart, Brain, Rocket };
@@ -13,6 +15,7 @@ export default function ServiceDetail() {
 
   if (!service) return (
     <div className="min-h-[60vh] flex items-center justify-center">
+      <SEOMeta noindex title="Service | ZYXEN" />
       <div className="text-center">
         <p className="text-muted-foreground">Service not found</p>
         <Link to={localePath('/services')} className="text-primary text-sm mt-2 inline-block">{t('back')}</Link>
@@ -24,8 +27,12 @@ export default function ServiceDetail() {
   const Icon = iconMap[service.icon] || Layers;
   const related = projects.filter(p => p.tech.some(t => service.tech.includes(t))).slice(0, 3);
 
+  const metaTitle = `${s.name} | ZYXEN`;
+  const metaDesc = s.short || (s.description ? s.description.slice(0, 157) + '…' : '');
+
   return (
     <div>
+      <SEOMeta title={metaTitle} description={metaDesc} jsonLd={serviceSchema(service, lang)} />
       <section className="py-32 border-b border-border">
         <div className="max-w-7xl mx-auto px-6">
           <Link to={localePath('/services')} className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">

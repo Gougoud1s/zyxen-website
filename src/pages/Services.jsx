@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { services } from '@/lib/data';
 import AnimatedSection from '@/components/AnimatedSection';
+import SEOMeta from '@/components/SEOMeta';
 import { ArrowRight, Layers, Globe, Smartphone, ShoppingCart, Brain, Rocket } from 'lucide-react';
 
 const iconMap = { Layers, Globe, Smartphone, ShoppingCart, Brain, Rocket };
@@ -10,8 +11,14 @@ export default function Services() {
   const { t, lang, localePath } = useLanguage();
   const sp = t('servicesPage');
 
+  const metaTitle = lang === 'el'
+    ? 'Υπηρεσίες — Umbraco, Flutter, Commerce & AI | ZYXEN'
+    : 'Services — Umbraco, Flutter, Commerce & AI | ZYXEN';
+  const metaDesc = t('servicesPage.desc');
+
   return (
     <div className="overflow-x-hidden">
+      <SEOMeta title={metaTitle} description={metaDesc} />
       <section className="py-28 sm:py-32 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <AnimatedSection>

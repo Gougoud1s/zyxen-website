@@ -485,7 +485,7 @@ export default function ScrollIntro({ onComplete }) {
       {/* Chapter-specific right panel */}
       <div ref={logoRef} className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none hidden md:block" style={{ opacity: 0 }} aria-hidden="true">
         <div className="relative w-[320px] lg:w-[400px] xl:w-[460px]">
-          <img src="/og-image.png" alt="" className="w-full object-cover select-none"
+          <img src="/og-image.jpg" alt="" className="w-full object-cover select-none"
             style={{
               maskImage: 'radial-gradient(ellipse 70% 80% at 60% 50%, black 30%, transparent 75%)',
               WebkitMaskImage: 'radial-gradient(ellipse 70% 80% at 60% 50%, black 30%, transparent 75%)',

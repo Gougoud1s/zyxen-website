@@ -3,14 +3,21 @@ import { useLanguage } from '@/lib/i18n';
 import AnimatedSection from '@/components/AnimatedSection';
 import TextReveal from '@/components/TextReveal';
 import TiltCard from '@/components/TiltCard';
+import SEOMeta from '@/components/SEOMeta';
 import { CheckCircle, ArrowRight } from 'lucide-react';
 
 export default function About() {
-  const { t, localePath } = useLanguage();
+  const { t, lang, localePath } = useLanguage();
   const a = t('aboutPage');
+
+  const metaTitle = lang === 'el'
+    ? 'Σχετικά με τη ZYXEN — Studio Μηχανικής Λογισμικού'
+    : 'About ZYXEN — Software Engineering Studio in Greece';
+  const metaDesc = t('aboutPage.desc');
 
   return (
     <div className="overflow-x-hidden">
+      <SEOMeta title={metaTitle} description={metaDesc} />
       {/* Hero */}
       <section className="py-28 sm:py-36 border-b border-border relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none"

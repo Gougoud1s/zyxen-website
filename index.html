@@ -10,7 +10,7 @@
     <meta name="keywords" content="software engineering Greece, AI automation, Umbraco development, Flutter apps, custom SaaS, nopCommerce, digital platform, enterprise software" />
     <meta name="author" content="ZYXEN" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://zyxen.gr/el/" />
+    <link rel="canonical" href="https://www.zyxen.gr/el" />
 
     <!-- Google Fonts — non-blocking -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,13 +20,13 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://zyxen.gr/el/" />
+    <meta property="og:url" content="https://www.zyxen.gr/el" />
     <meta property="og:title" content="ZYXEN — Systems, Engineered." />
     <meta property="og:description" content="Premium software engineering studio. AI integrations, Umbraco platforms, Flutter apps and commerce systems." />
     <meta property="og:site_name" content="ZYXEN" />
-    <meta property="og:image" content="https://zyxen.gr/og-image.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image" content="https://www.zyxen.gr/og-image.jpg" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="1024" />
     <meta property="og:locale" content="el_GR" />
     <meta property="og:locale:alternate" content="en_US" />
 
@@ -34,26 +34,43 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ZYXEN — Systems, Engineered." />
     <meta name="twitter:description" content="Premium software engineering studio. AI, Umbraco, Flutter, Commerce." />
-    <meta name="twitter:image" content="https://zyxen.gr/og-image.png" />
+    <meta name="twitter:image" content="https://www.zyxen.gr/og-image.jpg" />
 
-    <!-- Schema.org Organization -->
+    <!-- Schema.org Organization + WebSite -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "ZYXEN",
-      "url": "https://www.zyxen.gr",
-      "description": "Premium software engineering studio specializing in AI integrations, Umbraco platforms, Flutter applications and commerce systems.",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "email": "hello@zyxen.gr",
-        "contactType": "customer service"
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "GR"
-      },
-      "sameAs": ["https://www.zyxen.gr"]
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.zyxen.gr/#organization",
+          "name": "ZYXEN",
+          "url": "https://www.zyxen.gr",
+          "logo": "https://www.zyxen.gr/og-image.jpg",
+          "image": "https://www.zyxen.gr/og-image.jpg",
+          "description": "Premium software engineering studio specializing in AI integrations, Umbraco platforms, Flutter applications and commerce systems.",
+          "email": "hello@zyxen.gr",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "hello@zyxen.gr",
+            "contactType": "customer service",
+            "availableLanguage": ["en", "el"]
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "GR"
+          },
+          "knowsAbout": ["Umbraco", "Flutter", "nopCommerce", "AI integrations", ".NET", "Software Engineering", "SEO"]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.zyxen.gr/#website",
+          "url": "https://www.zyxen.gr",
+          "name": "ZYXEN",
+          "inLanguage": ["el", "en"],
+          "publisher": { "@id": "https://www.zyxen.gr/#organization" }
+        }
+      ]
     }
     </script>
 

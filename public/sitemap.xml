@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.zyxen.gr/el</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/services</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/projects</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/contact</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/contact"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/about</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/about"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/technologies</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/technologies"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/technologies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/technologies"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/services/umbraco-platform-engineering</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services/umbraco-platform-engineering"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services/umbraco-platform-engineering"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services/umbraco-platform-engineering"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/services/web-experiences-seo</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services/web-experiences-seo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services/web-experiences-seo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services/web-experiences-seo"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/services/flutter-web-mobile</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services/flutter-web-mobile"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services/flutter-web-mobile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services/flutter-web-mobile"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/services/commerce-nopcommerce</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services/commerce-nopcommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services/commerce-nopcommerce"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services/commerce-nopcommerce"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/services/ai-integrations</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services/ai-integrations"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services/ai-integrations"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services/ai-integrations"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/services/delivery-devops</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services/delivery-devops"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services/delivery-devops"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services/delivery-devops"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/projects/ips</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/ips"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/ips"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/ips"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/projects/victoria-de-borbon</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/victoria-de-borbon"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/victoria-de-borbon"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/victoria-de-borbon"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/projects/paxisarkia</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/paxisarkia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/paxisarkia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/paxisarkia"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/projects/creta-maris</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/creta-maris"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/creta-maris"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/creta-maris"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/projects/inartio</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/inartio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/inartio"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/inartio"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/projects/astrazeneca</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/astrazeneca"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/astrazeneca"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/astrazeneca"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/projects/dannemann</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/dannemann"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/dannemann"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/dannemann"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/privacy-policy"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/cookie-policy</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/cookie-policy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/cookie-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/cookie-policy"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/el/terms</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/terms"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/terms"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/services</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/projects</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/contact"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/about"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/technologies</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/technologies"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/technologies"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/technologies"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/services/umbraco-platform-engineering</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services/umbraco-platform-engineering"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services/umbraco-platform-engineering"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services/umbraco-platform-engineering"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/services/web-experiences-seo</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services/web-experiences-seo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services/web-experiences-seo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services/web-experiences-seo"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/services/flutter-web-mobile</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services/flutter-web-mobile"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services/flutter-web-mobile"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services/flutter-web-mobile"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/services/commerce-nopcommerce</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services/commerce-nopcommerce"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services/commerce-nopcommerce"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services/commerce-nopcommerce"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/services/ai-integrations</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services/ai-integrations"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services/ai-integrations"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services/ai-integrations"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/services/delivery-devops</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/services/delivery-devops"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/services/delivery-devops"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/services/delivery-devops"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/projects/ips</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/ips"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/ips"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/ips"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/projects/victoria-de-borbon</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/victoria-de-borbon"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/victoria-de-borbon"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/victoria-de-borbon"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/projects/paxisarkia</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/paxisarkia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/paxisarkia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/paxisarkia"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/projects/creta-maris</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/creta-maris"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/creta-maris"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/creta-maris"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/projects/inartio</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/inartio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/inartio"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/inartio"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/projects/astrazeneca</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/astrazeneca"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/astrazeneca"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/astrazeneca"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/projects/dannemann</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/projects/dannemann"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/projects/dannemann"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/projects/dannemann"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/privacy-policy"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/cookie-policy</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/cookie-policy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/cookie-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/cookie-policy"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://www.zyxen.gr/en/terms</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.zyxen.gr/el/terms"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.zyxen.gr/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.zyxen.gr/el/terms"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+    <lastmod>2026-06-01</lastmod>
+  </url>
+</urlset>
