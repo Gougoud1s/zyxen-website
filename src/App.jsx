@@ -32,40 +32,71 @@ function App() {
     setShowIntro(false);
   };
 
-  const renderRoutes = () => (
-    <>
-      <Route index element={<Home />} />
-      <Route path="about" element={<About />} />
-      <Route path="services" element={<Services />} />
-      <Route path="services/:slug" element={<ServiceDetail />} />
-      <Route path="projects" element={<Projects />} />
-      <Route path="projects/:slug" element={<ProjectDetail />} />
-      <Route path="contact" element={<Contact />} />
-      <Route path="privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="cookie-policy" element={<CookiePolicy />} />
-      <Route path="terms" element={<TermsOfUse />} />
-      <Route path="technologies" element={<Technologies />} />
-      <Route path="audit" element={<AuditTool />} />
-      <Route path="admin/crm" element={<CrmDashboard />} />
-      <Route path="crm" element={<CrmDashboard />} />
-    </>
-  );
-
   return (
     <QueryClientProvider client={queryClientInstance}>
       {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
       <Router>
         <ScrollProgressBar />
         <Routes>
+          {/* Top-level explicit routes */}
+          <Route path="/audit" element={<Layout><AuditTool /></Layout>} />
+          <Route path="/crm" element={<Layout><CrmDashboard /></Layout>} />
+          <Route path="/admin/crm" element={<Layout><CrmDashboard /></Layout>} />
+
+          {/* Root nested routes */}
           <Route path="/" element={<Layout />}>
-            {renderRoutes()}
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="services" element={<Services />} />
+            <Route path="services/:slug" element={<ServiceDetail />} />
+            <Route path="projects" element={<Projects />} />
+            <Route path="projects/:slug" element={<ProjectDetail />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="cookie-policy" element={<CookiePolicy />} />
+            <Route path="terms" element={<TermsOfUse />} />
+            <Route path="technologies" element={<Technologies />} />
+            <Route path="audit" element={<AuditTool />} />
+            <Route path="admin/crm" element={<CrmDashboard />} />
+            <Route path="crm" element={<CrmDashboard />} />
           </Route>
+
+          {/* Localized Greek routes (/el) */}
           <Route path="/el" element={<Layout />}>
-            {renderRoutes()}
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="services" element={<Services />} />
+            <Route path="services/:slug" element={<ServiceDetail />} />
+            <Route path="projects" element={<Projects />} />
+            <Route path="projects/:slug" element={<ProjectDetail />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="cookie-policy" element={<CookiePolicy />} />
+            <Route path="terms" element={<TermsOfUse />} />
+            <Route path="technologies" element={<Technologies />} />
+            <Route path="audit" element={<AuditTool />} />
+            <Route path="admin/crm" element={<CrmDashboard />} />
+            <Route path="crm" element={<CrmDashboard />} />
           </Route>
+
+          {/* Localized English routes (/en) */}
           <Route path="/en" element={<Layout />}>
-            {renderRoutes()}
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="services" element={<Services />} />
+            <Route path="services/:slug" element={<ServiceDetail />} />
+            <Route path="projects" element={<Projects />} />
+            <Route path="projects/:slug" element={<ProjectDetail />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="cookie-policy" element={<CookiePolicy />} />
+            <Route path="terms" element={<TermsOfUse />} />
+            <Route path="technologies" element={<Technologies />} />
+            <Route path="audit" element={<AuditTool />} />
+            <Route path="admin/crm" element={<CrmDashboard />} />
+            <Route path="crm" element={<CrmDashboard />} />
           </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
