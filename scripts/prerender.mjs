@@ -84,9 +84,18 @@ async function renderRoute(route) {
     const url = `http://localhost:${PORT}${route}?prerender=1`;
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 8000 }).catch(() => {});
     await new Promise((r) => setTimeout(r, SETTLE_MS));
-    const html = await page.content();
+    let html = await page.content();
     if (html.length < 2000 || /<div id="root">\s*<\/div>/.test(html)) {
       throw new Error(`incomplete render (${html.length}b)`);
+    }
+
+    // Ensure route-specific localized titles for search engine crawlers
+    if (route === '/el' || route === '/el/') {
+      html = html.replace(/<title>.*?<\/title>/i, '<title>Κατασκευή Ιστοσελίδων &amp; Κατασκευή Εφαρμογών (Apps) | ZYXEN Digital Agency</title>');
+      html = html.replace(/<meta name="description" content=".*?"/i, '<meta name="description" content="Εξειδικευμένη εταιρεία στην κατασκευή ιστοσελίδων, κατασκευή e-shop &amp; δημιουργία mobile εφαρμογών (iOS &amp; Android). Κορυφαία ταχύτητα, SEO &amp; Awwwards design. Ζητήστε δωρεάν προσφορά!"');
+    } else if (route === '/en' || route === '/en/') {
+      html = html.replace(/<title>.*?<\/title>/i, '<title>Website Creation &amp; Mobile App Development Agency | ZYXEN Software Studio</title>');
+      html = html.replace(/<meta name="description" content=".*?"/i, '<meta name="description" content="Leading digital agency specializing in website creation, custom web applications &amp; iOS/Android app development. High-performance SEO &amp; enterprise digital platforms."');
     }
     const outDir = join(DIST, route);
     mkdirSync(outDir, { recursive: true });
