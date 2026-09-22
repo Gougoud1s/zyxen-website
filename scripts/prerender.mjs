@@ -1,10 +1,6 @@
 // Static prerender: renders each route to HTML with headless Chromium (Puppeteer) and
 // writes dist/<route>/index.html so crawlers receive real content. Runs in any build
-// environment that can launch Chromium — including Vercel's remote build — because
-// Puppeteer ships its own browser.
-//
-// Safe by design: if Puppeteer is missing or the browser can't launch, it logs a
-// warning and exits 0 — the SPA fallback still serves, the build never breaks.
+// environment that can launch Chromium — including Vercel's remote build.
 import { createServer } from 'node:http';
 import { readFileSync, existsSync, mkdirSync, writeFileSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -14,14 +10,15 @@ import { allRoutes } from './routes.mjs';
 const here = dirname(fileURLToPath(import.meta.url));
 const DIST = join(here, '../dist');
 const PORT = 5273;
-const SETTLE_MS = 700; // let React render + SEOMeta effects run after navigation
+const SETTLE_MS = 250; // let React render + SEOMeta effects run
+const CONCURRENCY = 8; // process 8 pages in parallel for ultra-fast builds
 
 if (!existsSync(join(DIST, 'index.html'))) {
   console.warn('⚠ prerender: dist/index.html missing — skipping.');
   process.exit(0);
 }
 
-// In-process static file server with SPA fallback (async — safe with Puppeteer).
+// In-process static file server with SPA fallback
 const indexHtml = readFileSync(join(DIST, 'index.html'));
 const MIME = {
   '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css',
@@ -42,8 +39,7 @@ const server = createServer((req, res) => {
 });
 await new Promise((r) => server.listen(PORT, r));
 
-// Launch a browser. On Linux (Vercel's build container) the system lacks Chromium's
-// shared libs, so use @sparticuz/chromium (bundles them). Locally, use full puppeteer.
+// Launch browser
 let browser;
 try {
   if (process.platform === 'linux') {
@@ -51,7 +47,7 @@ try {
     const puppeteerCore = (await import('puppeteer-core')).default;
     chromium.setGraphicsMode = false;
     browser = await puppeteerCore.launch({
-      args: [...chromium.args, '--hide-scrollbars'],
+      args: [...chromium.args, '--hide-scrollbars', '--disable-web-security'],
       executablePath: await chromium.executablePath(),
       headless: true,
     });
@@ -70,12 +66,23 @@ try {
 
 const routes = allRoutes();
 let ok = 0, failed = 0;
-for (const route of routes) {
+
+async function renderRoute(route) {
   const page = await browser.newPage();
   try {
-    // ?prerender=1 tells the app to skip the intro overlay so the snapshot shows page content.
+    // Disable external network requests during prerender to speed up dramatically
+    await page.setRequestInterception(true);
+    page.on('request', (req) => {
+      const url = req.url();
+      if (url.startsWith(`http://localhost:${PORT}`)) {
+        req.continue();
+      } else {
+        req.abort(); // don't wait for Google Fonts, external APIs, tracking, etc.
+      }
+    });
+
     const url = `http://localhost:${PORT}${route}?prerender=1`;
-    await page.goto(url, { waitUntil: 'networkidle2', timeout: 15000 }).catch(() => {});
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 8000 }).catch(() => {});
     await new Promise((r) => setTimeout(r, SETTLE_MS));
     const html = await page.content();
     if (html.length < 2000 || /<div id="root">\s*<\/div>/.test(html)) {
@@ -94,7 +101,20 @@ for (const route of routes) {
   }
 }
 
+// Parallel processing queue
+const queue = [...routes];
+async function worker() {
+  while (queue.length > 0) {
+    const route = queue.shift();
+    if (route) await renderRoute(route);
+  }
+}
+
+const startTime = Date.now();
+await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+
 await browser.close().catch(() => {});
 server.close();
-console.log(`\n✓ prerender complete — ${ok} ok, ${failed} failed of ${routes.length}`);
+const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+console.log(`\n✓ prerender complete in ${elapsed}s — ${ok} ok, ${failed} failed of ${routes.length}`);
 process.exit(0);
