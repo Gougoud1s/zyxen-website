@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Three.js neural graph background — dynamically imported inside useEffect
- * to avoid module-level TDZ issues with bundler namespace renaming.
+ * Three.js Architectural Studio 3D Canvas — Inspired by high-end design agencies.
+ * Features a centered floating sculpture with satin porcelain outer ring, champagne gold core,
+ * and orbital ring nodes illuminated by multi-point studio lighting.
+ * Designed with dynamic bounds checking so geometry is never clipped or truncated.
  */
 export default function HeroCanvas() {
   const mountRef = useRef(null);
@@ -17,116 +19,137 @@ export default function HeroCanvas() {
     import('three').then((THREE) => {
       const W = el.offsetWidth;
       const H = el.offsetHeight;
-      const NODE_COUNT = 80;
-      const EDGE_DIST = 2.8;
 
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setSize(W, H);
-      renderer.setClearColor(0x000000, 0);
+      renderer.setClearColor(0xffffff, 0);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       el.appendChild(renderer.domElement);
 
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 100);
-      camera.position.set(0, 0, 12);
+      const camera = new THREE.PerspectiveCamera(40, W / H, 0.1, 100);
 
-      const positions = [];
-      const nodeGeo = new THREE.BufferGeometry();
-      const posArr = new Float32Array(NODE_COUNT * 3);
-      const nodeData = [];
+      // Adjust camera distance adaptively to prevent clipping on narrow screens
+      const adjustCamera = (w, h) => {
+        const aspect = w / h;
+        camera.aspect = aspect;
+        camera.position.set(0, 0, aspect < 1.1 ? 10.5 : 8.5);
+        camera.updateProjectionMatrix();
+      };
+      adjustCamera(W, H);
 
-      for (let i = 0; i < NODE_COUNT; i++) {
-        const x = (Math.random() - 0.5) * 18;
-        const y = (Math.random() - 0.5) * 10;
-        const z = (Math.random() - 0.5) * 6;
-        posArr[i * 3] = x;
-        posArr[i * 3 + 1] = y;
-        posArr[i * 3 + 2] = z;
-        positions.push({ x, y, z });
-        nodeData.push({ x, y, oz: z, vx: (Math.random() - 0.5) * 0.002, vy: (Math.random() - 0.5) * 0.002 });
-      }
+      // Studio Lighting setup
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+      scene.add(ambientLight);
 
-      nodeGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
-      const nodeMat = new THREE.PointsMaterial({
-        size: 0.055, color: 0xAF994D, transparent: true, opacity: 0.65, sizeAttenuation: true,
+      const keyLight = new THREE.DirectionalLight(0xffffff, 2.5);
+      keyLight.position.set(6, 8, 6);
+      keyLight.castShadow = true;
+      scene.add(keyLight);
+
+      const fillLight = new THREE.DirectionalLight(0xaf994d, 1.2);
+      fillLight.position.set(-6, -4, -2);
+      scene.add(fillLight);
+
+      const rimLight = new THREE.PointLight(0xd4af37, 2.0, 15);
+      rimLight.position.set(0, 3, -3);
+      scene.add(rimLight);
+
+      // Root Sculptural Group (Centered safely at 0, 0, 0)
+      const group = new THREE.Group();
+      scene.add(group);
+
+      // 1. Primary Outer Torus Knot — Satin Porcelain / Clearcoat Clay
+      const knotGeo = new THREE.TorusKnotGeometry(1.4, 0.42, 128, 32, 2, 3);
+      const knotMat = new THREE.MeshPhysicalMaterial({
+        color: 0xf2f2f4,
+        roughness: 0.18,
+        metalness: 0.08,
+        clearcoat: 0.8,
+        clearcoatRoughness: 0.15,
+        reflectivity: 0.9,
       });
-      const nodesMesh = new THREE.Points(nodeGeo, nodeMat);
-      scene.add(nodesMesh);
+      const knotMesh = new THREE.Mesh(knotGeo, knotMat);
+      knotMesh.castShadow = true;
+      knotMesh.receiveShadow = true;
+      group.add(knotMesh);
 
-      const edgePositions = [];
-      for (let i = 0; i < NODE_COUNT; i++) {
-        for (let j = i + 1; j < NODE_COUNT; j++) {
-          const dx = positions[i].x - positions[j].x;
-          const dy = positions[i].y - positions[j].y;
-          const dz = positions[i].z - positions[j].z;
-          if (Math.sqrt(dx * dx + dy * dy + dz * dz) < EDGE_DIST) {
-            edgePositions.push(positions[i].x, positions[i].y, positions[i].z);
-            edgePositions.push(positions[j].x, positions[j].y, positions[j].z);
-          }
-        }
-      }
+      // 2. Inner Floating Core — Champagne Metallic Gold Orb
+      const coreGeo = new THREE.IcosahedronGeometry(0.85, 16);
+      const coreMat = new THREE.MeshStandardMaterial({
+        color: 0xaf994d,
+        roughness: 0.15,
+        metalness: 0.85,
+        wireframe: false,
+      });
+      const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+      coreMesh.castShadow = true;
+      group.add(coreMesh);
 
-      const edgeGeo = new THREE.BufferGeometry();
-      edgeGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(edgePositions), 3));
-      const edgeMat = new THREE.LineBasicMaterial({ color: 0xAF994D, transparent: true, opacity: 0.12 });
-      scene.add(new THREE.LineSegments(edgeGeo, edgeMat));
+      // 3. Precision Wireframe Cage — Architectural Geometry
+      const cageGeo = new THREE.IcosahedronGeometry(1.0, 1);
+      const cageMat = new THREE.MeshBasicMaterial({
+        color: 0x121212,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.18,
+      });
+      const cageMesh = new THREE.Mesh(cageGeo, cageMat);
+      group.add(cageMesh);
 
-      const accentCount = Math.floor(NODE_COUNT * 0.2);
-      const accentGeo = new THREE.BufferGeometry();
-      const accentPos = new Float32Array(accentCount * 3);
-      for (let i = 0; i < accentCount; i++) {
-        accentPos[i * 3] = (Math.random() - 0.5) * 18;
-        accentPos[i * 3 + 1] = (Math.random() - 0.5) * 10;
-        accentPos[i * 3 + 2] = (Math.random() - 0.5) * 6;
-      }
-      accentGeo.setAttribute('position', new THREE.BufferAttribute(accentPos, 3));
-      const accentMat = new THREE.PointsMaterial({ size: 0.035, color: 0xFF6B2C, transparent: true, opacity: 0.35, sizeAttenuation: true });
-      scene.add(new THREE.Points(accentGeo, accentMat));
+      // 4. Orbital Ring Accent
+      const ringGeo = new THREE.TorusGeometry(2.2, 0.02, 16, 100);
+      const ringMat = new THREE.MeshStandardMaterial({
+        color: 0xaf994d,
+        roughness: 0.3,
+        metalness: 0.7,
+        transparent: true,
+        opacity: 0.6,
+      });
+      const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+      ringMesh.rotation.x = Math.PI / 3;
+      group.add(ringMesh);
 
       let mouseX = 0, mouseY = 0;
       const onMouseMove = (e) => {
-        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-        mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 1.2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 1.2;
       };
       window.addEventListener('mousemove', onMouseMove, { passive: true });
 
-      let time = 0;
-      let lastFrame = 0;
-      const FRAME_MS = 1000 / 24;
+      let clock = new THREE.Clock();
 
-      function animate(ts) {
+      function animate() {
         raf = requestAnimationFrame(animate);
-        if (ts - lastFrame < FRAME_MS) return;
-        lastFrame = ts;
-        time += 0.001;
+        const elapsedTime = clock.getElapsedTime();
 
-        const pos = nodeGeo.attributes.position;
-        for (let i = 0; i < NODE_COUNT; i++) {
-          nodeData[i].x += nodeData[i].vx;
-          nodeData[i].y += nodeData[i].vy;
-          if (Math.abs(nodeData[i].x) > 9) nodeData[i].vx *= -1;
-          if (Math.abs(nodeData[i].y) > 5) nodeData[i].vy *= -1;
-          pos.setXYZ(i, nodeData[i].x, nodeData[i].y, nodeData[i].oz + Math.sin(time * 0.5 + i * 0.4) * 0.3);
-        }
-        pos.needsUpdate = true;
+        // Organic fluid rotations
+        knotMesh.rotation.y = elapsedTime * 0.22;
+        knotMesh.rotation.x = Math.sin(elapsedTime * 0.18) * 0.25;
 
-        camera.position.x += (mouseX * 1.2 - camera.position.x) * 0.025;
-        camera.position.y += (mouseY * 0.7 - camera.position.y) * 0.025;
-        camera.lookAt(0, 0, 0);
+        coreMesh.rotation.y = -elapsedTime * 0.35;
+        coreMesh.rotation.z = Math.cos(elapsedTime * 0.25) * 0.2;
 
-        scene.rotation.y = time * 0.03;
-        scene.rotation.z = Math.sin(time * 0.08) * 0.04;
+        cageMesh.rotation.x = elapsedTime * 0.15;
+        cageMesh.rotation.y = elapsedTime * 0.12;
+
+        ringMesh.rotation.z = elapsedTime * 0.1;
+
+        // Smooth Mouse Parallax Easing
+        group.rotation.y += (mouseX * 0.4 - group.rotation.y) * 0.05;
+        group.rotation.x += (-mouseY * 0.4 - group.rotation.x) * 0.05;
 
         renderer.render(scene, camera);
       }
-      requestAnimationFrame(animate);
+      animate();
 
       const onResize = () => {
         const w = el.offsetWidth;
         const h = el.offsetHeight;
         renderer.setSize(w, h);
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
+        adjustCamera(w, h);
       };
       window.addEventListener('resize', onResize, { passive: true });
 
@@ -135,6 +158,14 @@ export default function HeroCanvas() {
         window.removeEventListener('mousemove', onMouseMove);
         window.removeEventListener('resize', onResize);
         renderer.dispose();
+        knotGeo.dispose();
+        knotMat.dispose();
+        coreGeo.dispose();
+        coreMat.dispose();
+        cageGeo.dispose();
+        cageMat.dispose();
+        ringGeo.dispose();
+        ringMat.dispose();
         if (el.contains(renderer.domElement)) el.removeChild(renderer.domElement);
       };
     });
@@ -148,7 +179,7 @@ export default function HeroCanvas() {
   return (
     <div
       ref={mountRef}
-      className="absolute inset-0 pointer-events-none"
+      className="w-full h-full min-h-[450px] relative pointer-events-none"
       aria-hidden="true"
     />
   );

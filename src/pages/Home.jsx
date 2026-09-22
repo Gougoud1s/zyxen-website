@@ -2,40 +2,99 @@ import { useRef, useState, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { projects, services } from '@/lib/data';
-import TiltCard from '@/components/TiltCard';
-import TextReveal from '@/components/TextReveal';
 import MagneticButton from '@/components/MagneticButton';
-import CursorGlow from '@/components/CursorGlow';
 import SEOMeta from '@/components/SEOMeta';
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useInView,
-  useAnimation,
-} from 'framer-motion';
-import { ArrowRight, ArrowUpRight, Layers, Globe, Smartphone, ShoppingCart, Brain, Rocket } from 'lucide-react';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { ArrowUpRight, ArrowRight, Layers, Globe, Smartphone, ShoppingCart, Brain, Sparkles, CheckCircle2 } from 'lucide-react';
 
 const HeroCanvas = lazy(() => import('@/components/HeroCanvas'));
-const ScrollIntro = lazy(() => import('@/components/ScrollIntro'));
 
-const iconMap = { Layers, Globe, Smartphone, ShoppingCart, Brain, Rocket };
+const iconMap = { Layers, Globe, Smartphone, ShoppingCart, Brain, Sparkles };
 
 const MARQUEE_ITEMS = [
-  'Umbraco', '.NET / C#', 'Flutter', 'Azure', 'nopCommerce',
-  'Docker', 'OpenAI', 'GitHub Actions', 'PostgreSQL', 'Tailwind CSS',
-  'Kubernetes', 'Vercel',
+  'Umbraco CMS', '.NET / C#', 'Flutter Apps', 'PostgreSQL', 'Azure Cloud',
+  'OpenAI Integrations', 'nopCommerce', 'Tailwind CSS', 'Docker', 'Kubernetes',
 ];
+
+/**
+ * 21st.dev Interactive Spotlight Card Effect
+ * Tracks mouse cursor position and renders a smooth radial gradient overlay
+ */
+export function SpotlightCard({ children, className = '', href, ...props }) {
+  const cardRef = useRef(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  const CardTag = href ? Link : 'div';
+
+  return (
+    <CardTag
+      ref={cardRef}
+      to={href}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`relative overflow-hidden rounded-2xl bg-white border border-gray-200/90 transition-all duration-300 hover:border-black shadow-sm hover:shadow-md ${className}`}
+      {...props}
+    >
+      {/* 21st.dev Spotlight Overlay */}
+      {isHovered && (
+        <div
+          className="pointer-events-none absolute -inset-px transition-opacity duration-300 z-10"
+          style={{
+            background: `radial-gradient(500px circle at ${mousePos.x}px ${mousePos.y}px, rgba(0, 0, 0, 0.04), transparent 80%)`,
+          }}
+        />
+      )}
+      <div className="relative z-20">{children}</div>
+    </CardTag>
+  );
+}
+
+/**
+ * 21st.dev Staggered Word Reveal
+ */
+function TextWordReveal({ text, className = '' }) {
+  const words = text.split(' ');
+  return (
+    <motion.span className={`inline-block ${className}`}>
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: i * 0.08,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="inline-block mr-[0.25em]"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+}
 
 function Scene({ children, className = '', delay = 0 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
+  const inView = useInView(ref, { once: true, margin: '-50px' });
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 48, filter: 'blur(8px)' }}
-      animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-      transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
       className={className}
     >
       {children}
@@ -43,408 +102,309 @@ function Scene({ children, className = '', delay = 0 }) {
   );
 }
 
-function SectionLabel({ tag, title }) {
-  return (
-    <>
-      <div className="flex items-center gap-3 mb-4">
-        <div className="h-px w-8" style={{ background: '#AF994D' }} />
-        <p className="text-xs font-medium tracking-[0.22em] uppercase" style={{ color: '#AF994D' }}>{tag}</p>
-      </div>
-      <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold leading-tight">
-        <TextReveal text={title} />
-      </h2>
-    </>
-  );
-}
-
-function CountUp({ to, suffix = '', duration = 2 }) {
-  const ref = useRef(null);
-  const [value, setValue] = useState(0);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
-
-  useEffect(() => {
-    if (!inView) return;
-    const start = Date.now();
-    const tick = () => {
-      const elapsed = (Date.now() - start) / 1000;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(eased * to));
-      if (progress < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }, [inView, to, duration]);
-
-  return <span ref={ref}>{value}{suffix}</span>;
-}
-
 export default function Home() {
-  const { t, lang, localePath } = useLanguage();
-  const [introDone, setIntroDone] = useState(() => {
-    // Prerender/snapshot pass: skip the intro so the static HTML shows page content.
-    if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('prerender')) return true;
-    const ts = sessionStorage.getItem('zyxen_intro_ts');
-    if (!ts) return false;
-    return Date.now() - parseInt(ts, 10) < 10 * 60 * 1000;
-  });
+  const { localePath } = useLanguage();
   const heroRef = useRef(null);
-  const heroControls = useAnimation();
-
-  useEffect(() => {
-    if (introDone) {
-      const id = requestAnimationFrame(() => heroControls.start('show'));
-      return () => cancelAnimationFrame(id);
-    }
-  }, [introDone, heroControls]);
 
   const { scrollYProgress: heroScroll } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
-  const heroY = useTransform(heroScroll, [0, 1], ['0%', '22%']);
-  const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0]);
-  const heroScale = useTransform(heroScroll, [0, 1], [1, 0.95]);
+  const heroY = useTransform(heroScroll, [0, 1], ['0%', '12%']);
 
   const featured = projects.filter(p => !p.confidential).slice(0, 4);
-  const heroWords1 = t('hero.title1').split(' ');
-  const heroWords2 = t('hero.title2').split(' ');
 
-  const metaTitle = lang === 'el' ? 'ZYXEN — Συστήματα, Σχεδιασμένα.' : 'ZYXEN — Systems, Engineered.';
-  const metaDesc = lang === 'el'
-    ? 'Premium studio λογισμικού με έμφαση σε Umbraco, Flutter, AI integrations και commerce systems. Βασισμένοι στην Ελλάδα, παραδίδουμε enterprise-grade ψηφιακά προϊόντα.'
-    : 'Premium software engineering studio specializing in Umbraco, Flutter, AI integrations and commerce systems. Based in Greece, delivering enterprise-grade digital products.';
-
-  const metrics = t('homeMetrics');
-  const processData = t('homeProcess');
+  const metaTitle = 'ZYXEN — Humanizing Software Engineering';
+  const metaDesc = 'Bespoke software engineering studio based in Athens, Greece. Engineering enterprise web platforms, AI systems, mobile applications, and custom digital experiences.';
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-12">
       <SEOMeta title={metaTitle} description={metaDesc} />
-      <CursorGlow />
 
-      {!introDone && (
-        <Suspense fallback={<div className="fixed inset-0 z-50 bg-background" />}>
-          <ScrollIntro onComplete={() => {
-            sessionStorage.setItem('zyxen_intro_ts', Date.now().toString());
-            setIntroDone(true);
-          }} />
-        </Suspense>
-      )}
-
-      {/* HERO */}
-      <section ref={heroRef} className="relative min-h-[100svh] flex items-center overflow-hidden">
+      {/* HERO SECTION — PURE WHITE EDITORIAL ASYMMETRICAL SPLIT */}
+      <section ref={heroRef} className="relative min-h-[92vh] flex items-center pt-28 pb-20 border-b border-gray-200 overflow-hidden bg-white">
         <Suspense fallback={null}>
-          <HeroCanvas />
+          <div className="absolute right-0 top-0 bottom-0 w-full lg:w-[50%] h-full flex items-center justify-center pointer-events-none z-0">
+            <HeroCanvas />
+          </div>
         </Suspense>
 
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-0 right-0 w-[55%] h-[65%] rounded-full"
-            style={{ background: 'radial-gradient(ellipse at 80% 20%, rgba(255,107,44,0.09), transparent 65%)', filter: 'blur(40px)' }} />
-          <div className="absolute top-[35%] left-[8%] w-[40%] h-[40%] rounded-full"
-            style={{ background: 'radial-gradient(ellipse at 20% 50%, rgba(175,153,77,0.06), transparent 65%)', filter: 'blur(60px)' }} />
-          <div className="absolute bottom-0 left-0 right-0 h-[30%]"
-            style={{ background: 'linear-gradient(to top, hsl(var(--background)), transparent)' }} />
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 w-full relative z-10">
+          <motion.div style={{ y: heroY }}>
+            {/* STUDIO BADGE */}
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-gray-200 bg-gray-50 mb-8 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-[#AF994D] animate-pulse" />
+              <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gray-800">
+                01 / SOFTWARE STUDIO — ATHENS, GR
+              </span>
+            </div>
+
+            {/* EDITORIAL HEADLINE WITH 21ST DEV STAGGERED REVEAL */}
+            <div className="max-w-3xl">
+              <h1 className="text-[clamp(2.75rem,7.5vw,5.75rem)] font-extrabold tracking-tight leading-[0.98] text-black">
+                <span className="block">
+                  <TextWordReveal text="humanizing" />
+                </span>
+                <span className="block text-gray-900 font-serif-editorial font-normal italic">
+                  <TextWordReveal text="software engineering." />
+                </span>
+              </h1>
+
+              <p className="mt-8 text-lg sm:text-xl text-gray-600 max-w-2xl font-normal leading-relaxed">
+                We blend software architecture, bespoke UI/UX design, and strategic AI automation to engineer digital products that perform, scale, and inspire.
+              </p>
+
+              {/* ACTION BUTTONS (Solid Black Pills) */}
+              <div className="mt-10 flex flex-wrap items-center gap-5">
+                <MagneticButton>
+                  <Link
+                    to={localePath('/projects')}
+                    className="inline-flex items-center gap-3 bg-black text-white font-semibold text-sm px-8 py-4 rounded-full hover:bg-gray-800 transition-all duration-300 shadow-md"
+                  >
+                    <span>Explore Featured Work</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </MagneticButton>
+
+                <MagneticButton>
+                  <Link
+                    to={localePath('/contact')}
+                    className="inline-flex items-center gap-3 border border-gray-300 text-black font-semibold text-sm px-8 py-4 rounded-full hover:border-black hover:bg-gray-50 transition-all duration-300"
+                  >
+                    <span>Start a Project</span>
+                  </Link>
+                </MagneticButton>
+              </div>
+
+              {/* CAPABILITY BADGES */}
+              <div className="mt-16 pt-8 border-t border-gray-200 flex flex-wrap items-center gap-6 text-xs text-gray-500 font-mono tracking-wider">
+                <span>[ UMBRACO CMS ]</span>
+                <span>[ .NET 8 / C# ]</span>
+                <span>[ FLUTTER APPS ]</span>
+                <span>[ AI AUTOMATION ]</span>
+                <span>[ ENTERPRISE E-COMMERCE ]</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
-
-        <div className="absolute inset-0 opacity-[0.032] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)', backgroundSize: '44px 44px' }} />
-
-        <motion.div
-          style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-28 sm:py-36 w-full"
-        >
-          <motion.div
-            initial="hidden" animate={heroControls}
-            variants={{ hidden: { opacity: 0, x: -24 }, show: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } } }}
-            className="flex items-center gap-3 mb-8"
-          >
-            <div className="h-px w-8" style={{ background: '#AF994D' }} />
-            <span className="text-xs font-medium tracking-[0.26em] uppercase" style={{ color: '#AF994D' }}>
-              {t('hero.tag')}
-            </span>
-          </motion.div>
-
-          <h1 className="text-[clamp(2.6rem,8vw,6.5rem)] font-display font-bold leading-[0.96] tracking-tight max-w-5xl">
-            <span className="block overflow-hidden">
-              {heroWords1.map((word, i) => (
-                <motion.span key={i} className="inline-block mr-[0.22em]"
-                  initial="hidden" animate={heroControls}
-                  variants={{ hidden: { opacity: 0, y: 72, rotateX: -20 }, show: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.9, delay: 0.08 + i * 0.1, ease: [0.22, 1, 0.36, 1] } } }}
-                  style={{ transformStyle: 'preserve-3d' }}>
-                  {word}
-                </motion.span>
-              ))}
-            </span>
-            <span className="block overflow-hidden mt-1 sm:mt-2">
-              {heroWords2.map((word, i) => (
-                <motion.span key={i} className="inline-block mr-[0.22em]"
-                  style={{ color: 'hsl(var(--primary))', transformStyle: 'preserve-3d' }}
-                  initial="hidden" animate={heroControls}
-                  variants={{ hidden: { opacity: 0, y: 72, rotateX: -20 }, show: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.9, delay: 0.22 + (heroWords1.length + i) * 0.1, ease: [0.22, 1, 0.36, 1] } } }}>
-                  {word}
-                </motion.span>
-              ))}
-            </span>
-          </h1>
-
-          <motion.p
-            initial="hidden" animate={heroControls}
-            variants={{ hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.85, ease: [0.22, 1, 0.36, 1] } } }}
-            className="mt-8 sm:mt-10 text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
-            {t('hero.desc')}
-          </motion.p>
-
-          <motion.div
-            initial="hidden" animate={heroControls}
-            variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.7, delay: 1.05, ease: [0.22, 1, 0.36, 1] } } }}
-            className="mt-10 sm:mt-12 flex flex-wrap gap-3 sm:gap-4">
-            <MagneticButton>
-              <Link to={localePath('/projects')}
-                className="inline-flex items-center gap-2.5 bg-primary text-primary-foreground px-8 py-3.5 rounded-full font-medium text-sm hover:opacity-90 transition-opacity min-h-[48px] shadow-lg shadow-primary/20">
-                {t('hero.cta1')} <ArrowRight className="w-4 h-4" />
-              </Link>
-            </MagneticButton>
-            <MagneticButton>
-              <Link to={localePath('/services')}
-                className="inline-flex items-center gap-2.5 border border-border/70 text-foreground/80 px-8 py-3.5 rounded-full font-medium text-sm hover:border-primary/60 hover:text-foreground transition-all min-h-[48px] backdrop-blur-sm bg-background/20">
-                {t('hero.cta2')}
-              </Link>
-            </MagneticButton>
-          </motion.div>
-
-          <motion.div
-            initial="hidden" animate={heroControls}
-            variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 1, delay: 1.4 } } }}
-            className="mt-12 sm:mt-20 flex gap-2 overflow-x-auto sm:flex-wrap pb-1 sm:pb-0 scrollbar-none"
-            style={{ WebkitOverflowScrolling: 'touch' }}>
-            {['Umbraco', '.NET / C#', 'Flutter', 'nopCommerce', 'AI / ML', 'CI/CD'].map((tech, i) => (
-              <motion.span key={tech} initial="hidden" animate={heroControls}
-                variants={{ hidden: { opacity: 0, scale: 0.8, y: 8 }, show: { opacity: 1, scale: 1, y: 0, transition: { delay: 1.5 + i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] } } }}
-                className="text-xs px-4 py-2 rounded-full border border-border/40 text-muted-foreground bg-card/40 backdrop-blur-md hover:border-primary/40 hover:text-foreground transition-all cursor-default select-none whitespace-nowrap flex-shrink-0 sm:flex-shrink">
-                {tech}
-              </motion.span>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial="hidden" animate={heroControls}
-          variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { delay: 2 } } }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-          <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-            className="flex flex-col items-center gap-1.5">
-            <div className="w-px h-12 bg-gradient-to-b from-transparent via-muted-foreground/30 to-transparent" />
-            <div className="w-1 h-1 rounded-full" style={{ background: '#AF994D' }} />
-          </motion.div>
-        </motion.div>
       </section>
 
-      {/* TECH MARQUEE */}
-      <div className="relative border-y border-border/40 overflow-hidden py-4 bg-card/30">
-        <div className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(90deg, hsl(var(--background)), transparent)' }} />
-        <div className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(-90deg, hsl(var(--background)), transparent)' }} />
-        <motion.div
-          className="flex gap-10 items-center whitespace-nowrap"
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: 28, ease: 'linear', repeat: Infinity }}
-          style={{ width: 'max-content' }}
-        >
-          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-            <span key={i} className="flex items-center gap-3 text-xs font-medium tracking-[0.18em] uppercase text-muted-foreground/60 select-none">
-              <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: '#AF994D' }} />
-              {item}
-            </span>
+      {/* TECH & PARTNERS MARQUEE */}
+      <div className="py-5 border-b border-gray-200 bg-gray-50/80 overflow-hidden">
+        <div className="flex gap-12 items-center whitespace-nowrap animate-marquee">
+          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, idx) => (
+            <div key={idx} className="flex items-center gap-4 text-xs font-mono uppercase tracking-[0.2em] text-gray-600 font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#AF994D]" />
+              <span>{item}</span>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
 
-      {/* METRICS STRIP */}
-      <section className="relative border-b border-border/60 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse 80% 100% at 50% 50%, rgba(255,107,44,0.03), transparent)' }} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-0 sm:divide-x divide-border/40">
-            {Array.isArray(metrics) && metrics.map((m, i) => (
-              <Scene key={i} delay={i * 0.08} className="sm:px-10 first:pl-0 last:pr-0 py-2 sm:py-0 text-center sm:text-left">
-                <div className="text-[clamp(2.2rem,5vw,3.2rem)] font-display font-bold leading-none tabular-nums" style={{ color: 'hsl(var(--primary))' }}>
-                  <CountUp to={m.to} suffix={m.suffix} />
-                </div>
-                <p className="text-sm text-muted-foreground mt-2">{m.label}</p>
-              </Scene>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section className="py-24 sm:py-32 relative overflow-hidden bg-card border-b border-border/60">
-        <div className="absolute inset-0 opacity-[0.022] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
-          <Scene>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-px w-8" style={{ background: '#AF994D' }} />
-              <p className="text-xs font-medium tracking-[0.22em] uppercase" style={{ color: '#AF994D' }}>{processData.label}</p>
+      {/* FEATURED WORK SHOWCASE WITH 21ST DEV SPOTLIGHT CARDS */}
+      <section className="py-28 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto border-b border-gray-200">
+        <Scene>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-8 border-b border-gray-200">
+            <div>
+              <span className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase block mb-3 font-semibold">
+                02 / FEATURED WORK
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-black">
+                Selected Case Studies
+              </h2>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold leading-tight max-w-xl">
-              <TextReveal text={processData.title} />
-            </h2>
-          </Scene>
-          <div className="mt-12 sm:mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-            {Array.isArray(processData.steps) && processData.steps.map((step, i) => (
-              <Scene key={i} delay={i * 0.09}>
-                <TiltCard intensity={5} className="h-full">
-                  <div className="bg-background/80 border border-border/60 rounded-2xl p-6 sm:p-7 h-full relative overflow-hidden group hover:border-primary/30 transition-colors duration-300 backdrop-blur-sm">
-                    <div className="absolute top-0 left-0 w-full h-[2px] rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{ background: 'linear-gradient(90deg, #AF994D, transparent)' }} />
-                    <span className="text-[2.4rem] font-display font-bold leading-none block mb-4"
-                      style={{ color: 'rgba(175,153,77,0.22)' }}>{step.num}</span>
-                    <h3 className="font-display text-base sm:text-lg font-semibold">{step.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{step.desc}</p>
-                  </div>
-                </TiltCard>
-              </Scene>
-            ))}
+            <Link
+              to={localePath('/projects')}
+              className="inline-flex items-center gap-2 text-sm font-bold text-black hover:text-gray-600 transition-colors group"
+            >
+              <span>View all projects</span>
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </Link>
           </div>
-        </div>
-      </section>
+        </Scene>
 
-      {/* PROJECTS */}
-      <section className="py-24 sm:py-36 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[50%] h-[60%] rounded-full"
-            style={{ background: 'radial-gradient(ellipse at 90% 10%, rgba(175,153,77,0.05), transparent 65%)', filter: 'blur(80px)' }} />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
-          <Scene>
-            <SectionLabel tag={t('featuredTitle')} title={t('featuredSub')} />
-          </Scene>
-          <div className="mt-12 sm:mt-16 grid sm:grid-cols-2 gap-4 sm:gap-6">
-            {featured.map((p, i) => (
-              <Scene key={p.slug} delay={i * 0.09}>
-                <TiltCard className="h-full" intensity={7}>
-                  <Link to={localePath(`/projects/${p.slug}`)}
-                    className="group block bg-card border border-border/60 rounded-2xl p-6 sm:p-8 hover:border-primary/40 transition-all duration-500 h-full relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-2xl"
-                      style={{ background: 'radial-gradient(circle at 50% 0%, rgba(255,107,44,0.07), transparent 65%)' }} />
-                    <div className="relative">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-medium uppercase tracking-wider" style={{ color: '#AF994D' }}>{p[lang].category}</p>
-                          <h3 className="font-display text-lg sm:text-xl font-semibold mt-2 group-hover:text-primary transition-colors duration-300 leading-snug">
-                            {p[lang].name}
-                          </h3>
-                        </div>
-                        <motion.div className="flex-shrink-0 w-8 h-8 rounded-full border border-border/60 flex items-center justify-center mt-0.5 group-hover:border-primary/60 transition-colors"
-                          whileHover={{ scale: 1.1 }}>
-                          <ArrowUpRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
-                        </motion.div>
-                      </div>
-                      <p className="text-sm text-muted-foreground mt-4 leading-relaxed line-clamp-3">{p[lang].overview}</p>
-                      <div className="flex flex-wrap gap-1.5 mt-5">
-                        {p.tech.map(tech => (
-                          <span key={tech} className="text-xs px-2.5 py-1 rounded-full bg-secondary/80 text-secondary-foreground border border-border/30">
-                            {tech}
-                          </span>
-                        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+          {featured.map((p, idx) => (
+            <Scene key={p.slug} delay={idx * 0.1}>
+              <SpotlightCard
+                href={localePath(`/projects/${p.slug}`)}
+                className="group overflow-hidden rounded-2xl border border-gray-200 bg-white hover:border-black hover:shadow-2xl transition-all duration-300 h-full flex flex-col justify-between"
+              >
+                <div>
+                  {/* REAL PROJECT PHOTO HEADER */}
+                  <div className="relative h-48 overflow-hidden bg-gray-900 mb-6 rounded-t-xl">
+                    <img
+                      src={p.image}
+                      alt={p.en.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                    
+                    <div className="absolute top-3 left-3 flex items-center gap-2 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full border border-gray-200 shadow-sm">
+                      {p.favicon && (
+                        <img
+                          src={p.favicon}
+                          alt=""
+                          className="w-3.5 h-3.5 object-contain"
+                          onError={(e) => { e.target.style.display = 'none'; }}
+                        />
+                      )}
+                      <span className="text-[10px] font-mono font-bold text-black uppercase tracking-wider">
+                        {p.en.category}
+                      </span>
+                    </div>
+
+                    <div className="absolute top-3 right-3">
+                      <div className="w-8 h-8 rounded-full bg-white/90 text-black flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors shadow-md">
+                        <ArrowUpRight className="w-4 h-4" />
                       </div>
                     </div>
-                  </Link>
-                </TiltCard>
-              </Scene>
-            ))}
+
+                    <div className="absolute bottom-3 left-4 right-4">
+                      <h3 className="text-xl font-bold text-white group-hover:text-[#D4AF37] transition-colors">
+                        {p.en.name}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className="px-6">
+                    <p className="text-gray-600 text-sm leading-relaxed mb-6 font-normal">
+                      {p.en.overview}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2 p-6 pt-4 border-t border-gray-100">
+                  {p.tech.map((tech) => (
+                    <span key={tech} className="text-xs font-mono px-3 py-1 rounded-full bg-gray-50 border border-gray-200 text-gray-700 font-medium">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </SpotlightCard>
+            </Scene>
+          ))}
+        </div>
+      </section>
+
+      {/* CAPABILITIES MATRIX */}
+      <section className="py-28 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto border-b border-gray-200">
+        <Scene>
+          <div className="mb-16">
+            <span className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase block mb-3 font-semibold">
+              03 / CAPABILITIES & SERVICES
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-black max-w-2xl">
+              Bespoke Engineering Capabilities
+            </h2>
           </div>
-          <Scene className="mt-12 text-center" delay={0.2}>
+        </Scene>
+
+        <div className="divide-y divide-gray-200 border-t border-b border-gray-200">
+          {services.map((s, idx) => {
+            const Icon = iconMap[s.icon] || Layers;
+            return (
+              <Scene key={s.slug} delay={idx * 0.08}>
+                <Link
+                  to={localePath(`/services/${s.slug}`)}
+                  className="group py-8 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-gray-50/80 px-6 rounded-xl transition-all duration-300"
+                >
+                  <div className="flex items-start gap-6 md:w-1/2">
+                    <span className="text-xs font-mono text-gray-400 mt-1 font-bold">0{idx + 1}</span>
+                    <div>
+                      <div className="flex items-center gap-3">
+                        <Icon className="w-5 h-5 text-black" />
+                        <h3 className="text-xl font-bold text-black group-hover:text-gray-700 transition-colors">
+                          {s.en.name}
+                        </h3>
+                      </div>
+                      <p className="text-gray-600 text-sm mt-2 leading-relaxed font-normal">
+                        {s.en.short}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between md:justify-end gap-6 md:w-1/2">
+                    <span className="text-xs font-mono text-gray-500 group-hover:text-black font-semibold">
+                      Read details
+                    </span>
+                    <ArrowRight className="w-5 h-5 text-black group-hover:translate-x-2 transition-transform" />
+                  </div>
+                </Link>
+              </Scene>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* STUDIO PHILOSOPHY */}
+      <section className="py-28 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto border-b border-gray-200 bg-gray-50/50">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5">
+            <Scene>
+              <span className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase block mb-3 font-semibold">
+                04 / OUR PHILOSOPHY
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-black leading-tight">
+                Human craftsmanship meets high-performance engineering.
+              </h2>
+            </Scene>
+          </div>
+
+          <div className="lg:col-span-7 space-y-6 text-gray-700 font-normal leading-relaxed text-base">
+            <Scene delay={0.1}>
+              <p>
+                We strictly reject generic AI templates and bloated pre-made themes. Every digital platform engineered at ZYXEN is built from scratch with custom typography, clean architecture (.NET / Flutter / Umbraco), and strict speed optimization.
+              </p>
+            </Scene>
+            <Scene delay={0.2}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-gray-200">
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-black" />
+                  <span className="text-sm font-semibold text-black">Core Web Vitals 95+</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-black" />
+                  <span className="text-sm font-semibold text-black">Enterprise .NET Security</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-black" />
+                  <span className="text-sm font-semibold text-black">Editorial Typography</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-black" />
+                  <span className="text-sm font-semibold text-black">Umbraco & Azure Cloud</span>
+                </div>
+              </div>
+            </Scene>
+          </div>
+        </div>
+      </section>
+
+      {/* CALL TO ACTION */}
+      <section className="py-32 px-6 sm:px-10 lg:px-12 max-w-5xl mx-auto text-center">
+        <Scene>
+          <span className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase block mb-4 font-semibold">
+            05 / LET'S TALK
+          </span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-black tracking-tight leading-tight">
+            Ready to build your next digital product?
+          </h2>
+          <p className="mt-6 text-gray-600 max-w-xl mx-auto text-lg font-normal leading-relaxed">
+            Contact our engineering team in Athens to discuss your project requirements and receive a tailored proposal.
+          </p>
+          <div className="mt-10">
             <MagneticButton>
-              <Link to={localePath('/projects')}
-                className="group inline-flex items-center gap-2.5 text-sm font-medium text-primary border border-primary/30 px-6 py-3 rounded-full hover:bg-primary/5 hover:border-primary/60 transition-all">
-                {t('viewProject')} <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              <Link
+                to={localePath('/contact')}
+                className="inline-flex items-center gap-3 bg-black text-white font-bold text-base px-10 py-5 rounded-full hover:bg-gray-800 transition-all duration-300 shadow-xl"
+              >
+                <span>Start a Conversation</span>
+                <ArrowRight className="w-5 h-5" />
               </Link>
             </MagneticButton>
-          </Scene>
-        </div>
-      </section>
-
-      {/* SERVICES */}
-      <section className="py-24 sm:py-36 bg-card border-y border-border/60 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute bottom-0 left-0 w-[60%] h-[60%] rounded-full"
-            style={{ background: 'radial-gradient(ellipse at 10% 90%, rgba(255,107,44,0.05), transparent 60%)', filter: 'blur(80px)' }} />
-          <div className="absolute top-0 right-0 w-[40%] h-[40%] rounded-full"
-            style={{ background: 'radial-gradient(ellipse at 90% 10%, rgba(175,153,77,0.04), transparent 60%)', filter: 'blur(80px)' }} />
-        </div>
-        <div className="absolute inset-0 opacity-[0.025] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)', backgroundSize: '36px 36px' }} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
-          <Scene>
-            <SectionLabel tag={t('servicesTitle')} title={t('servicesSub')} />
-          </Scene>
-          <div className="mt-12 sm:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-            {services.map((s, i) => {
-              const Icon = iconMap[s.icon] || Layers;
-              return (
-                <Scene key={s.slug} delay={i * 0.06}>
-                  <TiltCard className="h-full" intensity={5} scale={1.015}>
-                    <Link to={localePath(`/services/${s.slug}`)}
-                      className="group block bg-background/80 border border-border/60 rounded-2xl p-6 sm:p-7 hover:border-primary/40 transition-all duration-400 h-full relative overflow-hidden cursor-pointer backdrop-blur-sm">
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
-                        style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(255,107,44,0.06), transparent 60%)' }} />
-                      <div className="relative">
-                        <motion.div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5"
-                          style={{ background: 'rgba(175,153,77,0.1)', border: '1px solid rgba(175,153,77,0.2)' }}
-                          whileHover={{ scale: 1.12, rotate: 4 }}
-                          transition={{ type: 'spring', stiffness: 320, damping: 20 }}>
-                          <Icon className="w-[18px] h-[18px]" style={{ color: '#AF994D' }} />
-                        </motion.div>
-                        <h3 className="font-display text-base sm:text-[1.05rem] font-semibold group-hover:text-primary transition-colors leading-snug">{s[lang].name}</h3>
-                        <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{s[lang].short}</p>
-                        <div className="flex items-center gap-1.5 text-xs text-primary mt-5 font-medium opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-                          {t('learnMore')} <ArrowRight className="w-3 h-3" />
-                        </div>
-                      </div>
-                    </Link>
-                  </TiltCard>
-                </Scene>
-              );
-            })}
           </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-36 sm:py-48 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0"
-            style={{ background: 'radial-gradient(ellipse 70% 70% at 50% 50%, rgba(255,107,44,0.07), transparent 70%)' }} />
-          <div className="absolute inset-0"
-            style={{ background: 'radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.4) 100%)' }} />
-        </div>
-        {[700, 520, 340].map((size, i) => (
-          <motion.div key={size}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary pointer-events-none"
-            style={{ width: size, height: size, opacity: 0.04 + i * 0.02 }}
-            animate={{ rotate: i % 2 === 0 ? 360 : -360 }}
-            transition={{ duration: 60 + i * 20, repeat: Infinity, ease: 'linear' }} />
-        ))}
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center relative">
-          <Scene>
-            <p className="text-xs font-medium tracking-[0.28em] uppercase mb-6" style={{ color: '#AF994D' }}>Systems, Engineered.</p>
-            <h2 className="text-[clamp(2rem,6vw,4.5rem)] font-display font-bold leading-tight">
-              <TextReveal text={t('ctaTitle')} />
-            </h2>
-            <p className="text-muted-foreground mt-6 sm:mt-8 max-w-xl mx-auto leading-relaxed text-base sm:text-lg">{t('ctaSub')}</p>
-            <div className="mt-10 sm:mt-12">
-              <MagneticButton>
-                <Link to={localePath('/contact')}
-                  className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-10 py-4 rounded-full font-medium text-sm sm:text-base hover:opacity-90 transition-opacity shadow-2xl shadow-primary/25 min-h-[52px]">
-                  {t('ctaBtn')} <ArrowRight className="w-4 h-4" />
-                </Link>
-              </MagneticButton>
-            </div>
-          </Scene>
-        </div>
+        </Scene>
       </section>
     </div>
   );

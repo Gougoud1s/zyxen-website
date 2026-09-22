@@ -1,48 +1,46 @@
-/* Google Fonts loaded non-blocking via <link> in index.html */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --font-inter: 'Inter', sans-serif;
-    --font-display: 'Space Grotesk', sans-serif;
-    --background: 240 6% 4%;
-    --foreground: 0 0% 96%;
-    --card: 240 5% 7%;
-    --card-foreground: 0 0% 96%;
-    --popover: 240 5% 7%;
-    --popover-foreground: 0 0% 96%;
-    --primary: 20 100% 55%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 4% 12%;
-    --secondary-foreground: 0 0% 90%;
-    --muted: 240 4% 14%;
-    --muted-foreground: 240 4% 55%;
-    --accent: 20 100% 55%;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-display: 'Plus Jakarta Sans', sans-serif;
+
+    --background: 0 0% 100%; /* Pure White #FFFFFF */
+    --foreground: 0 0% 7%;  /* Solid Charcoal/Black #121212 */
+
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 7%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+
+    --primary: 0 0% 7%; /* Black #121212 */
+    --primary-foreground: 0 0% 100%; /* White #FFFFFF */
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 7%;
+
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 45 42% 49%; /* #AF994D Warm Gold/Bronze Accent */
     --accent-foreground: 0 0% 100%;
+
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 4% 16%;
-    --input: 240 4% 16%;
-    --ring: 20 100% 55%;
-    --chart-1: 20 100% 55%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-    --sidebar-background: 240 5% 6%;
-    --sidebar-foreground: 240 5% 90%;
-    --sidebar-primary: 20 100% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 4% 12%;
-    --sidebar-accent-foreground: 240 5% 90%;
-    --sidebar-border: 240 4% 16%;
-    --sidebar-ring: 20 100% 55%;
+
+    --border: 0 0% 90%; /* Crisp light gray hairline #E5E5E5 */
+    --input: 0 0% 90%;
+    --ring: 0 0% 7%;
+
+    --radius: 0.75rem;
+
     --gold: #AF994D;
-    --gold-muted: rgba(175, 153, 77, 0.15);
+    --alabaster: #FAFAFA;
+    --charcoal: #121212;
   }
 
   *,
@@ -54,11 +52,14 @@
   html {
     overflow-x: hidden;
     scroll-behavior: smooth;
+    background-color: #FFFFFF;
+    color: #121212;
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-inter);
+    background-color: #FFFFFF;
+    color: #121212;
+    font-family: var(--font-sans);
     overflow-x: hidden;
     word-break: break-word;
     -webkit-font-smoothing: antialiased;
@@ -74,46 +75,52 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: #121212;
+  }
+
+  .font-serif-editorial {
+    font-family: var(--font-serif);
+    font-style: italic;
+  }
+
+  .hairline-border {
+    border-color: #E5E5E5;
+  }
+
+  .hairline-divider {
+    height: 1px;
+    background: #E5E5E5;
   }
 
   /* Custom scrollbar */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 99px; }
-  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.5); }
-  * { scrollbar-width: thin; scrollbar-color: hsl(var(--border)) transparent; }
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: #FFFFFF; }
+  ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: #121212; }
+  * { scrollbar-width: thin; scrollbar-color: #D1D5DB #FFFFFF; }
 
-  /* Remove default browser form chrome */
-  input, textarea, button, select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-  }
-
-  /* Custom focus ring */
+  /* Focus ring */
   :focus-visible {
-    outline: 2px solid hsl(var(--primary) / 0.7);
-    outline-offset: 2px;
-    border-radius: 6px;
+    outline: 1px solid var(--primary);
+    outline-offset: 3px;
   }
 
-  :focus:not(:focus-visible) { outline: none; }
-
-  /* Kill browser red invalid states */
-  input:invalid, textarea:invalid, select:invalid {
-    box-shadow: none;
-    outline: none;
+  /* Ticker Marquee Animation */
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
   }
 
-  /* Reduce motion */
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
+  .animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 35s linear infinite;
+  }
+
+  .animate-marquee:hover {
+    animation-play-state: paused;
   }
 }
 

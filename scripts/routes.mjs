@@ -12,6 +12,9 @@ export const localizedPaths = [
   { path: '/contact', priority: 0.8, changefreq: 'monthly' },
   { path: '/about', priority: 0.7, changefreq: 'monthly' },
   { path: '/technologies', priority: 0.6, changefreq: 'monthly' },
+  { path: '/audit', priority: 0.8, changefreq: 'monthly' },
+  { path: '/admin/crm', priority: 0.3, changefreq: 'daily' },
+  { path: '/crm', priority: 0.3, changefreq: 'daily' },
   ...services.map((s) => ({ path: `/services/${s.slug}`, priority: 0.7, changefreq: 'monthly' })),
   ...projects
     .filter((p) => !p.confidential)

@@ -1,52 +1,50 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
-import { ZyxenMark } from '@/components/ZyxenLogo';
+import ZyxenLogo from '@/components/ZyxenLogo';
 
 export default function Footer() {
-  const { t, lang, localePath } = useLanguage();
+  const { localePath } = useLanguage();
 
   const navLinks = [
-    { to: localePath('/'), label: t('nav.home') },
-    { to: localePath('/about'), label: t('nav.about') },
-    { to: localePath('/services'), label: t('nav.services') },
-    { to: localePath('/projects'), label: t('nav.projects') },
-    { to: localePath('/contact'), label: t('nav.contact') },
+    { to: localePath('/'), label: 'Home' },
+    { to: localePath('/projects'), label: 'Work' },
+    { to: localePath('/services'), label: 'Services' },
+    { to: localePath('/about'), label: 'Culture' },
+    { to: localePath('/contact'), label: 'Contact' },
   ];
 
   const legalLinks = [
-    { to: localePath('/privacy-policy'), label: lang === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy' },
-    { to: localePath('/cookie-policy'), label: lang === 'el' ? 'Πολιτική Cookies' : 'Cookie Policy' },
-    { to: localePath('/terms'), label: lang === 'el' ? 'Όροι Χρήσης' : 'Terms of Use' },
+    { to: localePath('/privacy-policy'), label: 'Privacy Policy' },
+    { to: localePath('/cookie-policy'), label: 'Cookie Policy' },
+    { to: localePath('/terms'), label: 'Terms of Use' },
   ];
 
   return (
-    <footer className="border-t border-border bg-card" role="contentinfo">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+    <footer className="border-t border-gray-200 bg-black text-white" role="contentinfo">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center gap-2.5 mb-3">
-              <ZyxenMark size={34} />
-              <div className="flex flex-col">
-                <span className="font-display font-bold text-sm tracking-[0.18em] uppercase leading-none">ZYXEN</span>
-                <span className="text-[9px] tracking-[0.12em] uppercase leading-none mt-0.5" style={{ color: '#AF994D' }}>
-                  Systems, Engineered.
-                </span>
-              </div>
-            </div>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mt-5">{t('footer.tagline')}</p>
-            <a href="mailto:hello@zyxen.gr" className="text-sm text-muted-foreground hover:text-foreground transition-colors mt-4 block">
+            <Link to={localePath('/')} className="inline-block mb-4">
+              <ZyxenLogo size={36} />
+            </Link>
+            <p className="text-sm text-gray-400 leading-relaxed max-w-xs mt-3 font-normal">
+              Bespoke software engineering studio combining high-performance architecture, custom design, and strategic AI automation.
+            </p>
+            <a href="mailto:hello@zyxen.gr" className="text-sm text-gray-300 hover:text-white transition-colors mt-4 block font-mono">
               hello@zyxen.gr
             </a>
           </div>
 
           {/* Navigation */}
           <div>
-            <h4 className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-5">{t('footer.nav')}</h4>
+            <h4 className="text-xs font-mono font-bold tracking-[0.2em] uppercase text-gray-400 mb-5">
+              Navigation
+            </h4>
             <nav aria-label="Footer navigation">
               <div className="flex flex-col gap-3">
-                {navLinks.map(l => (
-                  <Link key={l.to} to={l.to} className="text-sm text-muted-foreground hover:text-foreground transition-colors w-fit">
+                {navLinks.map((l) => (
+                  <Link key={l.to} to={l.to} className="text-sm text-gray-300 hover:text-white transition-colors w-fit">
                     {l.label}
                   </Link>
                 ))}
@@ -56,22 +54,28 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-5">{t('footer.connect')}</h4>
-            <div className="flex flex-col gap-3 text-sm text-muted-foreground">
-              <a href="mailto:hello@zyxen.gr" className="hover:text-foreground transition-colors w-fit">hello@zyxen.gr</a>
-              <span>Greece · Remote-first</span>
-              <Link to={localePath('/contact')} className="hover:text-foreground transition-colors w-fit mt-1 text-primary">
-                {t('nav.cta')} →
+            <h4 className="text-xs font-mono font-bold tracking-[0.2em] uppercase text-gray-400 mb-5">
+              Connect
+            </h4>
+            <div className="flex flex-col gap-3 text-sm text-gray-300 font-normal">
+              <a href="mailto:hello@zyxen.gr" className="hover:text-white transition-colors w-fit font-mono">
+                hello@zyxen.gr
+              </a>
+              <span>Athens, Greece · Remote-first</span>
+              <Link to={localePath('/contact')} className="hover:text-white transition-colors w-fit mt-1 text-[#AF994D] font-semibold">
+                Start a Project →
               </Link>
             </div>
           </div>
 
           {/* Legal */}
           <div>
-            <h4 className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-5">Legal</h4>
+            <h4 className="text-xs font-mono font-bold tracking-[0.2em] uppercase text-gray-400 mb-5">
+              Legal
+            </h4>
             <div className="flex flex-col gap-3">
-              {legalLinks.map(l => (
-                <Link key={l.to} to={l.to} className="text-sm text-muted-foreground hover:text-foreground transition-colors w-fit">
+              {legalLinks.map((l) => (
+                <Link key={l.to} to={l.to} className="text-sm text-gray-300 hover:text-white transition-colors w-fit">
                   {l.label}
                 </Link>
               ))}
@@ -79,9 +83,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} ZYXEN. {t('footer.rights')}</p>
-          <p className="text-xs tracking-[0.15em] font-medium" style={{ color: '#AF994D' }}>SYSTEMS, ENGINEERED.</p>
+        <div className="mt-14 pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-gray-500">© {new Date().getFullYear()} ZYXEN. All rights reserved.</p>
+          <p className="text-xs tracking-[0.2em] font-semibold font-mono text-[#AF994D]">SYSTEMS, ENGINEERED.</p>
         </div>
       </div>
     </footer>

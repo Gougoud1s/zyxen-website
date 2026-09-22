@@ -83,114 +83,24 @@ const translations = {
       { q: 'Do you offer post-launch support?', a: "Yes. Support and maintenance arrangements are tailored per project — from ad hoc fixes to monthly retainers. We discuss this during scoping." },
     ],
     focus: 'Focus', status: 'Status'
-  },
-  el: {
-    nav: { home: 'Αρχική', about: 'Σχετικά', services: 'Υπηρεσίες', projects: 'Έργα', contact: 'Επικοινωνία', cta: 'Αναθέστε Έργο' },
-    hero: {
-      tag: 'Software Engineering · AI · Automation',
-      title1: 'Χτίζουμε πλατφόρμες',
-      title2: 'που κλιμακώνουν επιχειρήσεις.',
-      desc: 'Από βιομηχανικές πλατφόρμες ως δημόσιες υπηρεσίες, παραδίδουμε με μετρήσιμα αποτελέσματα. Umbraco, Flutter και AI integration σε ένα ενοποιημένο delivery stack.',
-      cta1: 'Δείτε Έργα', cta2: 'Υπηρεσίες'
-    },
-    stats: { projects: 'Αναφορές Έργων', tech: 'Umbraco + Flutter', scope: 'B2B έως Public', projectsDesc: 'Πλατφόρμες σε βιομηχανία, υγεία, hospitality, τέχνη και commerce', techDesc: 'Ενοποιημένη παράδοση CMS και εφαρμογών στο ίδιο execution layer', scopeDesc: 'Από enterprise portals έως citizen-facing πλατφόρμες' },
-    featuredTitle: 'Επιλεγμένα Έργα',
-    featuredSub: 'Πλατφόρμες όπου έχουμε συμβάλει',
-    servicesTitle: 'Τι Παραδίδουμε',
-    servicesSub: 'Γραμμές υλοποίησης από πρακτική εμπειρία',
-    capTitle: 'Σύγχρονο Delivery Stack',
-    capSub: 'Πέρα από development',
-    ctaTitle: 'Έτοιμοι να χτίσετε το επόμενο ψηφιακό σας προϊόν;',
-    ctaSub: 'Μοιραστείτε στόχους, budget range και χρονοδιάγραμμα. Θα σας στείλουμε πρακτική απάντηση με επιλογές scope και επόμενα βήματα.',
-    ctaBtn: 'Ξεκινήστε το Έργο σας',
-    aboutPage: {
-      title: 'Πρακτικό delivery profile βασισμένο σε πραγματικές πλατφόρμες.',
-      desc: 'Η εμπειρία μας καλύπτει industrial websites, premium brand storytelling, public-sector πλατφόρμες, hospitality ecosystems, B2B portals και commerce operations με vendor εργαλεία.',
-      howTitle: 'Πώς Δουλεύουμε',
-      how: ['Καθαρότητα συνεισφοράς', 'Production-first αποφάσεις', 'Καθαρό handover mindset'],
-      whatTitle: 'Τι Σημαίνει Αυτό για το Project σας',
-      what: ['Αρχιτεκτονική που ταιριάζει σε πραγματικές editor/workflow ανάγκες.', 'Ταχύτερη υλοποίηση μέσω επαναχρησιμοποιήσιμων patterns.', 'SEO και performance ενσωματωμένα στην παράδοση.', 'Διαφανές scope και ρεαλιστικές δεσμεύσεις.'],
-      processTitle: 'Η Διαδικασία μας',
-      steps: [
-        { num: '01', title: 'Discover', desc: 'Ευθυγράμμιση stakeholders, περιορισμοί, KPIs και γραπτό scope.' },
-        { num: '02', title: 'Blueprint', desc: 'User flows, component model, CMS/app αρχιτεκτονική και plan υλοποίησης.' },
-        { num: '03', title: 'Build', desc: 'Sprint milestones, demos, QA gates και staging releases.' },
-        { num: '04', title: 'Ship & Tune', desc: 'Production rollout, monitoring, performance checks και conversion βελτιώσεις.' }
-      ],
-      collab: 'Θέλετε υλοποίηση με accountability από kickoff έως launch;',
-      collabDesc: 'Εντασσόμαστε στη δομή της ομάδας σας και παραδίδουμε σε καθαρά milestones.'
-    },
-    servicesPage: {
-      title: 'Πρακτικές υπηρεσίες προϊόντος και πλατφόρμας για σύγχρονες ομάδες.',
-      desc: 'Παραδίδουμε Umbraco engineering, Flutter experiences και commerce execution με έμφαση σε απόδοση, SEO και conversion impact.'
-    },
-    projectsPage: {
-      title: 'Contribution-based projects σε πολλαπλούς τομείς.',
-      desc: 'Έργα με ουσιαστική τεχνική συμβολή, με έμφαση σε scalable αρχιτεκτονική, premium εμπειρίες χρήστη και enterprise λύσεις.',
-      note: 'Οι αναφορές παρουσιάζονται αποκλειστικά για λόγους εμπειρίας και τεχνικής συνεισφοράς. Εκτός αν αναφέρεται διαφορετικά, πρόκειται για contribution-based projects.'
-    },
-    contactPage: {
-      title: 'Ας χτίσουμε το επόμενο σας ψηφιακό προϊόν.',
-      desc: 'Μοιραστείτε στόχους, budget range και χρονοδιάγραμμα. Θα σας στείλουμε πρακτική απάντηση με επιλογές scope και επόμενα βήματα.',
-      info: { email: 'Email', location: 'Τοποθεσία', locationVal: 'Ελλάδα (remote-first)', response: 'Χρόνος Απόκρισης', responseVal: 'Εντός μίας εργάσιμης ημέρας' },
-      form: { name: 'Ονοματεπώνυμο', email: 'Email', service: 'Υπηρεσία', servicePh: 'Επιλέξτε υπηρεσία', budget: 'Εύρος budget', budgetPh: 'Επιλέξτε budget', details: 'Λεπτομέρειες έργου', submit: 'Αποστολή αιτήματος', sending: 'Αποστολή...', success: 'Το αίτημά σας στάλθηκε! Θα απαντήσουμε εντός μίας εργάσιμης ημέρας.', error: 'Κάτι πήγε στραβά. Παρακαλώ δοκιμάστε ξανά.' },
-      services: ['Umbraco Platform', 'Flutter App', 'Website', 'AI & Automation', 'Commerce', 'Άλλο'],
-      budgets: ['€5k - €10k', '€10k - €25k', '€25k+']
-    },
-    footer: { tagline: 'Software engineering, AI integration και platform delivery από την Ελλάδα.', nav: 'Πλοήγηση', connect: 'Σύνδεση', rights: 'Με επιφύλαξη παντός δικαιώματος.' },
-    viewProject: 'Δείτε Case Study', visitSite: 'Επίσκεψη Ιστοσελίδας', learnMore: 'Μάθετε Περισσότερα',
-    back: 'Πίσω', overview: 'Επισκόπηση', problem: 'Πρόκληση', solution: 'Λύση', tech: 'Τεχνολογίες', results: 'Αποτελέσματα', relatedProjects: 'Σχετικά Έργα',
-    homeProcess: {
-      label: 'Πώς Δουλεύουμε',
-      title: 'Τέσσερα βήματα, μηδέν ασάφεια.',
-      steps: [
-        { num: '01', title: 'Discover', desc: 'Γραπτό scope, ευθυγράμμιση stakeholders και KPIs πριν γραφτεί κώδικας.' },
-        { num: '02', title: 'Blueprint', desc: 'Αρχιτεκτονικές αποφάσεις, user flows και component model συμφωνημένα με την ομάδα σας.' },
-        { num: '03', title: 'Build', desc: 'Sprint milestones, QA gates και staging demos σας κρατούν ενήμερους.' },
-        { num: '04', title: 'Ship & Tune', desc: 'Production rollout με monitoring, performance checks και βελτιώσεις conversion.' },
-      ],
-    },
-    homeMetrics: [
-      { to: 7, suffix: '+', label: 'Πλατφόρμες' },
-      { to: 4, suffix: '', label: 'Τομείς' },
-      { to: 3, suffix: '+', label: 'Χώρες' },
-      { to: 1, suffix: ' ημέρα', label: 'SLA Απόκρισης' },
-    ],
-    faqTitle: 'Συχνές Ερωτήσεις',
-    faqSub: 'Πρακτικές απαντήσεις πριν επικοινωνήσετε.',
-    faq: [
-      { q: 'Πώς ξεκινάμε;', a: 'Συμπληρώστε τη φόρμα επικοινωνίας με στόχους, budget range και χρονοδιάγραμμα. Ελέγχουμε κάθε υποβολή και απαντάμε εντός μίας εργάσιμης ημέρας με επιλογές scope.' },
-      { q: 'Ποιο είναι το ελάχιστο budget;', a: 'Συνήθως ξεκινάμε από €5.000. Κάτω από αυτό το όριο, το coordination overhead δυσκολεύει την παράδοση ποιοτικών αποτελεσμάτων. Χαρούμενα συζητάμε τι ταιριάζει στο budget σας.' },
-      { q: 'Δουλεύετε εξ αποστάσεως;', a: 'Ναι — remote-first. Εργαζόμαστε με πελάτες σε όλη την Ευρώπη με δομημένη async επικοινωνία και καθαρές milestone reviews. Η γεωγραφία δεν είναι ποτέ εμπόδιο.' },
-      { q: 'Τι σημαίνει "contribution-based" στο portfolio;', a: 'Σημαίνει ότι συμβάλαμε τεχνικά ως μέλος ομάδας ή ως vendor. Αυτές οι αναφορές αποδεικνύουν πρακτική εμπειρία σε συγκεκριμένους τομείς — χωρίς να σημαίνουν απαραίτητα πλήρη ιδιοκτησία.' },
-      { q: 'Προσφέρετε υποστήριξη μετά την κυκλοφορία;', a: 'Ναι. Διαμορφώνουμε υποστήριξη και συντήρηση ανά project — από ad hoc διορθώσεις σε μηνιαία retainers. Το συζητάμε κατά το scoping.' },
-    ],
-    focus: 'Εστίαση', status: 'Κατάσταση'
   }
 };
 
 export function useLanguage() {
-  const { lang } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const currentLang = lang === 'en' ? 'en' : 'el';
+  const currentLang = 'en';
   
   const t = (key) => {
     const keys = key.split('.');
-    let val = translations[currentLang];
+    let val = translations.en;
     for (const k of keys) {
       val = val?.[k];
     }
     return val || key;
   };
 
-  const switchLang = () => {
-    const newLang = currentLang === 'el' ? 'en' : 'el';
-    const newPath = location.pathname.replace(`/${currentLang}`, `/${newLang}`);
-    navigate(newPath);
-  };
+  const switchLang = () => {};
 
-  const localePath = (path) => `/${currentLang}${path}`;
+  const localePath = (path) => path;
 
   return { lang: currentLang, t, switchLang, localePath };
 }

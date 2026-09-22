@@ -46,11 +46,10 @@ export default function SEOMeta({ title, description, canonical, image, noindex 
     setMeta('name', 'twitter:description', desc);
     setMeta('name', 'twitter:image', ogImage);
 
-    // hreflang — el / en / x-default (points to Greek as primary market)
+    // hreflang — en / x-default
     const langPath = cleanPath.replace(/^\/(el|en)/, '');
-    setHreflang('el', `${BASE}/el${langPath}`);
     setHreflang('en', `${BASE}/en${langPath}`);
-    setHreflang('x-default', `${BASE}/el${langPath}`);
+    setHreflang('x-default', `${BASE}/en${langPath}`);
 
     // Optional per-page structured data (managed by data-seo attr so it's idempotent)
     setJsonLd(jsonLd);

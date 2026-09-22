@@ -1,6 +1,7 @@
-import { Toaster } from "@/components/ui/toaster"
-import { QueryClientProvider } from '@tanstack/react-query'
-import { queryClientInstance } from '@/lib/query-client'
+import { useState, useEffect } from 'react';
+import { Toaster } from "@/components/ui/toaster";
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClientInstance } from '@/lib/query-client';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -15,25 +16,55 @@ import CookiePolicy from './pages/CookiePolicy';
 import TermsOfUse from './pages/TermsOfUse';
 import NotFound from './pages/NotFound';
 import Technologies from './pages/Technologies';
+import AuditTool from './pages/AuditTool';
+import CrmDashboard from './pages/CrmDashboard';
+import { ScrollProgressBar } from './components/Interactive2DCanvas';
+import IntroAnimation from './components/IntroAnimation';
 
 function App() {
+  const [showIntro, setShowIntro] = useState(() => {
+    // Show intro animation once per session or on direct load
+    return !sessionStorage.getItem('zyxen_intro_shown');
+  });
+
+  const handleIntroComplete = () => {
+    sessionStorage.setItem('zyxen_intro_shown', 'true');
+    setShowIntro(false);
+  };
+
+  const renderRoutes = () => (
+    <>
+      <Route index element={<Home />} />
+      <Route path="about" element={<About />} />
+      <Route path="services" element={<Services />} />
+      <Route path="services/:slug" element={<ServiceDetail />} />
+      <Route path="projects" element={<Projects />} />
+      <Route path="projects/:slug" element={<ProjectDetail />} />
+      <Route path="contact" element={<Contact />} />
+      <Route path="privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="cookie-policy" element={<CookiePolicy />} />
+      <Route path="terms" element={<TermsOfUse />} />
+      <Route path="technologies" element={<Technologies />} />
+      <Route path="audit" element={<AuditTool />} />
+      <Route path="admin/crm" element={<CrmDashboard />} />
+      <Route path="crm" element={<CrmDashboard />} />
+    </>
+  );
+
   return (
     <QueryClientProvider client={queryClientInstance}>
+      {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
       <Router>
+        <ScrollProgressBar />
         <Routes>
-          <Route path="/" element={<Navigate to="/el" replace />} />
-          <Route path="/:lang" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="services" element={<Services />} />
-            <Route path="services/:slug" element={<ServiceDetail />} />
-            <Route path="projects" element={<Projects />} />
-            <Route path="projects/:slug" element={<ProjectDetail />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="cookie-policy" element={<CookiePolicy />} />
-            <Route path="terms" element={<TermsOfUse />} />
-            <Route path="technologies" element={<Technologies />} />
+          <Route path="/" element={<Layout />}>
+            {renderRoutes()}
+          </Route>
+          <Route path="/el" element={<Layout />}>
+            {renderRoutes()}
+          </Route>
+          <Route path="/en" element={<Layout />}>
+            {renderRoutes()}
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
