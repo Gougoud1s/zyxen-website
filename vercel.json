@@ -1,5 +1,6 @@
 {
   "buildCommand": "npm run build",
+  "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
     {
@@ -8,9 +9,6 @@
       "destination": "https://www.zyxen.gr/$1",
       "permanent": true
     }
-  ],
-  "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
