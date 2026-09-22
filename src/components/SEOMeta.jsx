@@ -7,17 +7,23 @@ const OG_IMAGE = `${BASE}/og-image.jpg`;
 /**
  * SEO meta tag manager — updates document <head> on route change.
  * Usage: <SEOMeta title="..." description="..." noindex jsonLd={obj|array} />
- *
- * Canonical/og:url always resolve to the www apex on the current path
- * (no trailing slash) so every route self-canonicalizes correctly.
  */
 export default function SEOMeta({ title, description, canonical, image, noindex = false, jsonLd }) {
   const { pathname } = useLocation();
-  const isGreek = pathname.startsWith('/el');
+  const isGreek = pathname.startsWith('/el') || pathname === '/' || (!pathname.startsWith('/en'));
   const lang = isGreek ? 'el' : 'en';
 
-  const fullTitle = title || 'ZYXEN — Systems, Engineered.';
-  const desc = description || 'Premium software engineering studio. AI integrations, Umbraco platforms, Flutter apps and commerce systems. Based in Greece.';
+  const defaultTitle = isGreek
+    ? 'Κατασκευή Ιστοσελίδων & Κατασκευή Εφαρμογών (Apps) | ZYXEN Digital Agency'
+    : 'Website Creation & Mobile App Development Agency | ZYXEN Software Studio';
+
+  const defaultDesc = isGreek
+    ? 'Εξειδικευμένη εταιρεία στην κατασκευή ιστοσελίδων, κατασκευή e-shop & δημιουργία mobile εφαρμογών (iOS & Android). Κορυφαία ταχύτητα φόρτωσης, SEO & Awwwards design.'
+    : 'Leading software agency specializing in website creation, custom web applications & iOS/Android app development. High-performance SEO & enterprise digital platforms.';
+
+  const fullTitle = title || defaultTitle;
+  const desc = description || defaultDesc;
+  
   // Strip trailing slash to keep one canonical form per page.
   const cleanPath = pathname.length > 1 ? pathname.replace(/\/$/, '') : pathname;
   const fullCanonical = canonical || `${BASE}${cleanPath}`;
@@ -28,7 +34,11 @@ export default function SEOMeta({ title, description, canonical, image, noindex 
     document.title = fullTitle;
 
     setMeta('name', 'description', desc);
-    setMeta('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
+    setMeta('name', 'keywords', isGreek 
+      ? 'κατασκευή ιστοσελίδων, κατασκευή εφαρμογών, δημιουργία site, κατασκευή eshop, κατασκευή mobile app, εταιρεία πληροφορικής Αθήνα, SEO βελτιστοποίηση, custom software studio'
+      : 'website creation, app development Athens, mobile app creation, custom web development, eshop creation, software agency Greece, SEO agency'
+    );
+    setMeta('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1');
     setLink('canonical', fullCanonical);
 
     // Open Graph
@@ -36,23 +46,57 @@ export default function SEOMeta({ title, description, canonical, image, noindex 
     setMeta('property', 'og:description', desc);
     setMeta('property', 'og:url', fullCanonical);
     setMeta('property', 'og:image', ogImage);
-    setMeta('property', 'og:image:width', '1024');
-    setMeta('property', 'og:image:height', '1024');
+    setMeta('property', 'og:image:width', '1200');
+    setMeta('property', 'og:image:height', '630');
     setMeta('property', 'og:locale', isGreek ? 'el_GR' : 'en_US');
     setMeta('property', 'og:locale:alternate', isGreek ? 'en_US' : 'el_GR');
 
     // Twitter
+    setMeta('name', 'twitter:card', 'summary_large_image');
     setMeta('name', 'twitter:title', fullTitle);
     setMeta('name', 'twitter:description', desc);
     setMeta('name', 'twitter:image', ogImage);
 
-    // hreflang — en / x-default
+    // Hreflang — el / en / x-default
     const langPath = cleanPath.replace(/^\/(el|en)/, '');
+    setHreflang('el', `${BASE}/el${langPath}`);
     setHreflang('en', `${BASE}/en${langPath}`);
-    setHreflang('x-default', `${BASE}/en${langPath}`);
+    setHreflang('x-default', `${BASE}/el${langPath}`);
 
-    // Optional per-page structured data (managed by data-seo attr so it's idempotent)
-    setJsonLd(jsonLd);
+    // Dynamic BreadcrumbList JSON-LD Schema
+    const segments = cleanPath.split('/').filter(Boolean);
+    const breadcrumbItems = [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: isGreek ? 'Αρχική' : 'Home',
+        item: `${BASE}/${lang}`
+      }
+    ];
+
+    if (segments.length > 1) {
+      let currentAcc = `${BASE}/${lang}`;
+      segments.slice(1).forEach((seg, idx) => {
+        currentAcc += `/${seg}`;
+        breadcrumbItems.push({
+          '@type': 'ListItem',
+          position: idx + 2,
+          name: seg.charAt(0).toUpperCase() + seg.slice(1).replace(/-/g, ' '),
+          item: currentAcc
+        });
+      });
+    }
+
+    const breadcrumbSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: breadcrumbItems
+    };
+
+    // Combine custom page JSON-LD with auto Breadcrumb Schema
+    const pageLd = jsonLd ? (Array.isArray(jsonLd) ? [breadcrumbSchema, ...jsonLd] : [breadcrumbSchema, jsonLd]) : [breadcrumbSchema];
+    setJsonLd(pageLd);
+
   }, [fullTitle, desc, fullCanonical, ogImage, noindex, jsonLd, lang, isGreek, cleanPath]);
 
   return null;

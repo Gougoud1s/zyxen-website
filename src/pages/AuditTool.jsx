@@ -80,7 +80,7 @@ export default function AuditTool() {
         url={`https://www.zyxen.gr/${lang}/audit`}
       />
 
-      <div className="relative min-h-screen bg-[#FDFDFD] text-gray-900 pt-32 pb-24 overflow-hidden">
+      <div className="relative min-h-screen bg-[#FDFDFD] text-gray-900 pt-6 sm:pt-8 pb-24 overflow-hidden">
         {/* Subtle Background Glow */}
         <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-gray-100/80 to-transparent blur-3xl opacity-60 -z-10" />
 

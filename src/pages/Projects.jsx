@@ -18,7 +18,7 @@ export default function Projects() {
     : projects.filter(p => p.en?.category?.toLowerCase().includes(activeTab.toLowerCase()) || p.category?.toLowerCase().includes(activeTab.toLowerCase()));
 
   return (
-    <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-12 overflow-x-hidden">
+    <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden">
       <SEOMeta
         title="Featured Work & Case Studies | ZYXEN"
         description="Explore engineering case studies across high-scale e-commerce, custom ERP/SaaS platforms, and cross-platform mobile apps built by ZYXEN."

@@ -55,7 +55,7 @@ export default function Technologies() {
   const { localePath } = useLanguage();
 
   return (
-    <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-12 overflow-x-hidden">
+    <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden">
       <SEOMeta
         title="Technology Architecture & Stack — ZYXEN"
         description="Explore ZYXEN's technology stack: .NET 8, Flutter, Umbraco, nopCommerce, AI integration, and Cloud DevOps."

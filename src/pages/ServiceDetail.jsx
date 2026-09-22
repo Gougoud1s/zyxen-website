@@ -36,7 +36,7 @@ export default function ServiceDetail() {
   const metaDesc = s.description ? s.description.slice(0, 157) + '…' : '';
 
   return (
-    <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-12 overflow-x-hidden">
+    <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden">
       <SEOMeta title={metaTitle} description={metaDesc} jsonLd={serviceSchema(service, 'en')} />
 
       {/* HERO SECTION */}

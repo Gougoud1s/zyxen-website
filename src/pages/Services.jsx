@@ -12,7 +12,7 @@ export default function Services() {
   const { localePath } = useLanguage();
 
   return (
-    <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-12 overflow-x-hidden">
+    <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden">
       <SEOMeta
         title="Engineering Services — Umbraco, .NET, Mobile & AI | ZYXEN"
         description="Comprehensive software engineering capabilities: enterprise CMS portals, high-scale e-commerce, native mobile applications, and AI integrations."

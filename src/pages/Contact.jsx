@@ -119,7 +119,7 @@ export default function Contact() {
   ];
 
   return (
-    <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-12 overflow-x-hidden">
+    <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden">
       <SEOMeta
         title="Contact ZYXEN — Start Your Engineering Discovery"
         description="Initiate a project discovery session with Zyxen's principal architects in Athens, Greece."

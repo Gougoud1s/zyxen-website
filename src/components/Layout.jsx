@@ -11,9 +11,10 @@ import Breadcrumbs from './Breadcrumbs';
 function BreadcrumbsWrapper() {
   const { pathname } = useLocation();
   const isHome = /^\/[a-z]{2}\/?$/.test(pathname) || pathname === '/';
-  if (isHome) return null;
+  const isCrm = pathname.includes('/crm');
+  if (isHome || isCrm) return null;
   return (
-    <div className="border-b border-border/40 bg-card/20">
+    <div className="border-b border-gray-200/80 dark:border-white/10 bg-white/80 dark:bg-black/60 backdrop-blur-md relative z-30 transition-all duration-300 shadow-xs mb-2">
       <Breadcrumbs />
     </div>
   );
@@ -42,7 +43,7 @@ export default function Layout() {
           animate="animate"
           exit="exit"
           transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-          className="pt-16"
+          className="pt-28 sm:pt-32 lg:pt-36"
           id="main-content"
           role="main"
         >
