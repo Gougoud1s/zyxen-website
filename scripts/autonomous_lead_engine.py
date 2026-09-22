@@ -172,7 +172,7 @@ def generate_email_copy(lead, audit):
     company = lead["company"]
     industry = lead["industry"]
     note = lead["custom_note"]
-    audit_url = f"https://www.zyxen.gr/el/audit?ref={audit['audit_ref']}"
+    audit_url = f"https://www.zyxen.gr/el/audit?domain={lead['domain']}"
 
     if "Dentistry" in industry or "Dental" in industry:
         angle = (

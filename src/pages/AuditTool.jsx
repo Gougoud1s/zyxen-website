@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/lib/i18n';
 import SEOMeta from '@/components/SEOMeta';
@@ -24,6 +25,7 @@ import {
 export default function AuditTool() {
   const { lang, t } = useLanguage();
   const isEl = lang === 'el';
+  const [searchParams] = useSearchParams();
 
   const [urlInput, setUrlInput] = useState('');
   const [industry, setIndustry] = useState('ecommerce');
@@ -32,20 +34,17 @@ export default function AuditTool() {
   const [submittedContact, setSubmittedContact] = useState(false);
   const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '' });
 
-  const handleRunAudit = (e) => {
-    e.preventDefault();
-    if (!urlInput.trim()) return;
-
+  const computeAudit = (targetUrl) => {
+    if (!targetUrl.trim()) return;
     setIsAnalyzing(true);
     setAuditResult(null);
 
-    // Simulate high-precision instant AI & Tech audit computation
     setTimeout(() => {
-      let formattedUrl = urlInput.replace(/^(https?:\/\/)?(www\.)?/, '').replace(/\/$/, '');
+      let formattedUrl = targetUrl.replace(/^(https?:\/\/)?(www\.)?/, '').replace(/\/$/, '');
       setIsAnalyzing(false);
       setAuditResult({
         domain: formattedUrl,
-        speedScore: Math.floor(Math.random() * 25) + 42, // 42-67 (Needs upgrade)
+        speedScore: Math.floor(Math.random() * 25) + 42,
         seoScore: Math.floor(Math.random() * 20) + 55,
         uxScore: Math.floor(Math.random() * 25) + 50,
         mobileScore: Math.floor(Math.random() * 20) + 60,
@@ -58,11 +57,28 @@ export default function AuditTool() {
         ],
         zyxenImpact: {
           speedTarget: '98/100 (Sub-second FCP)',
+          seoTarget: '99/100 (Full JSON-LD & Dynamic OG)',
+          uxTarget: 'Awwwards Editorial Standard',
+          mobileTarget: 'PWA Ready & Kinetic Motion',
           conversionBoost: '+35% - +85%',
           techStack: 'Next.js 14 / Lenis Kinetic Scroll / Three.js / Tailwind CSS / Edge CDN'
         }
       });
-    }, 2200);
+    }, 1200);
+  };
+
+  useEffect(() => {
+    const domainParam = searchParams.get('domain') || searchParams.get('url') || searchParams.get('ref') || '';
+    if (domainParam) {
+      const clean = domainParam.replace(/^(https?:\/\/)?(www\.)?/, '').replace(/\/$/, '');
+      setUrlInput(clean);
+      computeAudit(clean);
+    }
+  }, [searchParams]);
+
+  const handleRunAudit = (e) => {
+    e.preventDefault();
+    computeAudit(urlInput);
   };
 
   const handleContactSubmit = (e) => {
