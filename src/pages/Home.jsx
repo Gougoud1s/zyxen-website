@@ -103,7 +103,7 @@ function Scene({ children, className = '', delay = 0 }) {
 }
 
 export default function Home() {
-  const { localePath } = useLanguage();
+  const { lang, localePath } = useLanguage();
   const heroRef = useRef(null);
 
   const { scrollYProgress: heroScroll } = useScroll({
@@ -114,8 +114,13 @@ export default function Home() {
 
   const featured = projects.filter(p => !p.confidential).slice(0, 4);
 
-  const metaTitle = 'ZYXEN — Humanizing Software Engineering';
-  const metaDesc = 'Bespoke software engineering studio based in Athens, Greece. Engineering enterprise web platforms, AI systems, mobile applications, and custom digital experiences.';
+  const metaTitle = lang === 'el'
+    ? 'Κατασκευή Ιστοσελίδων & Κατασκευή Εφαρμογών (Apps) | ZYXEN Digital'
+    : 'Website Creation & Mobile App Development Agency | ZYXEN Software Studio';
+
+  const metaDesc = lang === 'el'
+    ? 'Εξειδικευμένη εταιρεία στην κατασκευή ιστοσελίδων, κατασκευή e-shop & δημιουργία mobile εφαρμογών (iOS & Android). Κορυφαία ταχύτητα, SEO & Awwwards design.'
+    : 'Bespoke software engineering studio specializing in website creation, custom web applications & iOS/Android app development. High-performance SEO & enterprise digital platforms.';
 
   return (
     <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-12">
