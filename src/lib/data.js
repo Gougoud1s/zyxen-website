@@ -4,15 +4,52 @@ export const partners = [
     website: 'https://aiconvert.it',
     logo: '/partners/ai-convert-it-reverse.png',
     darkLogo: '/partners/ai-convert-it-reverse.png',
+    metrics: [
+      { label: 'Extraction Accuracy', val: '99.4%' },
+      { label: 'Workflow Latency', val: '< 200ms' },
+      { label: 'Enterprise Security', val: 'SOC2 / GDPR' }
+    ],
     en: {
       by: 'by Alpdev',
-      description: 'Cutting-edge AI transformation and automation platform partnering with ZYXEN to deliver next-gen digital intelligence and automated workflows.',
-      tag: 'AI & Automation'
+      description: 'Cutting-edge AI transformation and automation platform partnering with ZYXEN to deliver next-gen digital intelligence, document processing, and automated enterprise workflows.',
+      tag: 'AI & Enterprise Automation',
+      detailsTitle: 'AI-Powered Digital Transformation Architecture',
+      capabilities: [
+        {
+          title: 'Document & Data Intelligence',
+          desc: 'Automated document extraction, OCR parsing, and structured data synthesis across PDFs, invoices, and unstructured business media.'
+        },
+        {
+          title: 'Bespoke Conversational AI',
+          desc: 'Fine-tuned domain LLMs and multi-modal assistants integrated directly into Umbraco CMS, .NET APIs, and mobile applications.'
+        },
+        {
+          title: 'Autonomous Workflow Engines',
+          desc: 'Event-driven agentic pipelines that qualify leads, process transactions, and automate complex cross-platform B2B workflows.'
+        }
+      ],
+      jointOffering: 'In joint partnership with ZYXEN, AI Convert It powers autonomous AI integrations across enterprise .NET applications, providing sovereign cloud security and custom model fine-tuning.'
     },
     el: {
       by: 'από την Alpdev',
-      description: 'Πρωτοποριακή πλατφόρμα μετασχηματισμού και αυτοματοποίησης τεχνητής νοημοσύνης που συνεργάζεται με τη ZYXEN για την παροχή ψηφιακής νοημοσύνης επόμενης γενιάς και αυτοματοποιημένων ροών εργασίας.',
-      tag: 'Τεχνητή Νοημοσύνη & Αυτοματισμός'
+      description: 'Πρωτοποριακή πλατφόρμα μετασχηματισμού και αυτοματοποίησης τεχνητής νοημοσύνης που συνεργάζεται με τη ZYXEN για την παροχή ψηφιακής νοημοσύνης, επεξεργασίας εγγράφων και αυτοματοποιημένων εταιρικών ροών εργασίας.',
+      tag: 'Τεχνητή Νοημοσύνη & Εταιρικοί Αυτοματισμοί',
+      detailsTitle: 'Αρχιτεκτονική Ψηφιακού Μετασχηματισμού AI',
+      capabilities: [
+        {
+          title: 'Νοημοσύνη Εγγράφων & Δεδομένων',
+          desc: 'Αυτοματοποιημένη εξαγωγή εγγράφων, αναγνώριση OCR και σύνθεση δομημένων δεδομένων από τιμολόγια, PDF και εταιρικά αρχεία.'
+        },
+        {
+          title: 'Εξειδικευμένα Μοντέλα AI & Assistants',
+          desc: 'Fine-tuned θεματικά γλωσσικά μοντέλα (LLMs) συνδεδεμένα απευθείας με Umbraco CMS, .NET APIs και Flutter mobile apps.'
+        },
+        {
+          title: 'Αυτόνομες Ροές Εργασίας (Agentic Engines)',
+          desc: 'Event-driven αυτοματισμοί που αξιολογούν leads, επεξεργάζονται συναλλαγές και εκτελούν σύνθετες B2B διεργασίες.'
+        }
+      ],
+      jointOffering: 'Σε στενή συνεργασία με τη ZYXEN, η AI Convert It τροφοδοτεί αυτόνομες ενσωματώσεις AI σε εταιρικές εφαρμογές .NET με εγγυημένη ασφάλεια δεδομένων και προσαρμοσμένη εκπαίδευση μοντέλων.'
     }
   }
 ];

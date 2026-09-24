@@ -226,44 +226,92 @@ export default function Home() {
           </div>
         </Scene>
 
-        <div className="grid grid-cols-1 md:grid-cols-1 max-w-2xl mx-auto gap-8 relative z-10">
-          {partners.map((partner, idx) => (
-            <Scene key={partner.name} delay={idx * 0.12}>
-              <div className="group relative bg-neutral-900/90 border border-neutral-800 hover:border-[#D4AF37]/50 rounded-2xl p-8 transition-all duration-300 hover:bg-neutral-900 shadow-lg">
-                <div className="flex items-center justify-between gap-4 mb-6">
-                  <div className="h-12 flex items-center bg-black/60 px-5 py-2 rounded-xl border border-neutral-800/80">
-                    <img
-                      src={partner.darkLogo || partner.logo}
-                      alt={partner.name}
-                      className="h-7 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                    />
+        <div className="grid grid-cols-1 max-w-4xl mx-auto gap-8 relative z-10">
+          {partners.map((partner, idx) => {
+            const localeData = lang === 'el' ? partner.el : partner.en;
+            return (
+              <Scene key={partner.name} delay={idx * 0.12}>
+                <div className="group relative bg-neutral-900/90 border border-neutral-800 hover:border-[#D4AF37]/50 rounded-2xl p-8 transition-all duration-300 hover:bg-neutral-900 shadow-xl">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div className="h-12 flex items-center bg-black/60 px-5 py-2 rounded-xl border border-neutral-800/80 w-fit">
+                      <img
+                        src={partner.darkLogo || partner.logo}
+                        alt={partner.name}
+                        className="h-7 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+                    <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20 font-bold uppercase tracking-wider w-fit">
+                      {localeData.tag}
+                    </span>
                   </div>
-                  <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20 font-bold uppercase tracking-wider">
-                  {lang === 'el' ? partner.el.tag : partner.en.tag}
-                </span>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                {partner.name}
-                {lang === 'el' ? partner.el.by && <span className="text-xs font-normal text-gray-400 font-mono">({partner.el.by})</span> : partner.en.by && <span className="text-xs font-normal text-gray-400 font-mono">({partner.en.by})</span>}
-              </h3>
-              <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                {lang === 'el' ? partner.el.description : partner.en.description}
-                </p>
-                <div className="flex items-center justify-between pt-4 border-t border-neutral-800">
-                  <span className="text-xs font-mono text-gray-500 uppercase tracking-widest">Verified Partner</span>
-                  <a
-                    href={partner.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-white hover:text-[#D4AF37] transition-colors"
-                  >
-                    <span>Visit website</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
+
+                  <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+                    {partner.name}
+                    {localeData.by && <span className="text-xs font-normal text-gray-400 font-mono">({localeData.by})</span>}
+                  </h3>
+
+                  <p className="text-gray-300 text-sm leading-relaxed mb-6 max-w-2xl font-normal">
+                    {localeData.description}
+                  </p>
+
+                  {/* METRICS HIGHLIGHT */}
+                  {partner.metrics && (
+                    <div className="grid grid-cols-3 gap-3 mb-8 bg-black/40 border border-neutral-800/80 rounded-xl p-4">
+                      {partner.metrics.map((m) => (
+                        <div key={m.label} className="text-center sm:text-left">
+                          <div className="text-lg sm:text-xl font-extrabold text-[#D4AF37] font-mono">{m.val}</div>
+                          <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider font-mono">{m.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* CAPABILITIES GRID */}
+                  {localeData.capabilities && (
+                    <div className="mb-8 pt-6 border-t border-neutral-800/80">
+                      <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-[#D4AF37] mb-4">
+                        {localeData.detailsTitle}
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {localeData.capabilities.map((cap) => (
+                          <div key={cap.title} className="bg-neutral-950/80 border border-neutral-800 p-4 rounded-xl">
+                            <div className="text-xs font-bold text-white mb-1">{cap.title}</div>
+                            <p className="text-[12px] text-gray-400 leading-normal">{cap.desc}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* JOINT OFFERING */}
+                  {localeData.jointOffering && (
+                    <div className="mb-6 p-4 rounded-xl bg-[#D4AF37]/5 border border-[#D4AF37]/20 text-xs text-gray-300 leading-relaxed">
+                      <span className="font-bold text-[#D4AF37] block mb-1 uppercase tracking-wider font-mono">
+                        {lang === 'el' ? 'ΚΟΙΝΗ ΛΥΣΗ ZYXEN & AI CONVERT IT' : 'ZYXEN & AI CONVERT IT JOINT SOLUTION'}
+                      </span>
+                      {localeData.jointOffering}
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-between pt-4 border-t border-neutral-800">
+                    <span className="text-xs font-mono text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      Verified Strategic Partner
+                    </span>
+                    <a
+                      href={partner.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-white hover:text-[#D4AF37] transition-colors"
+                    >
+                      <span>Visit website</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </Scene>
-          ))}
+              </Scene>
+            );
+          })}
         </div>
       </section>
 
