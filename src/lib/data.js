@@ -1,12 +1,19 @@
 export const partners = [
   {
     name: 'AI Convert It',
-    by: 'by Alpdev',
+    website: 'https://aiconvert.it',
     logo: '/partners/ai-convert-it-reverse.png',
     darkLogo: '/partners/ai-convert-it-reverse.png',
-    description: 'Cutting-edge AI transformation and automation platform partnering with ZYXEN to deliver next-gen digital intelligence and automated workflows.',
-    website: 'https://aiconvert.it',
-    tag: 'AI & Automation'
+    en: {
+      by: 'by Alpdev',
+      description: 'Cutting-edge AI transformation and automation platform partnering with ZYXEN to deliver next-gen digital intelligence and automated workflows.',
+      tag: 'AI & Automation'
+    },
+    el: {
+      by: 'από την Alpdev',
+      description: 'Πρωτοποριακή πλατφόρμα μετασχηματισμού και αυτοματοποίησης τεχνητής νοημοσύνης που συνεργάζεται με τη ZYXEN για την παροχή ψηφιακής νοημοσύνης επόμενης γενιάς και αυτοματοποιημένων ροών εργασίας.',
+      tag: 'Τεχνητή Νοημοσύνη & Αυτοματισμός'
+    }
   }
 ];
 

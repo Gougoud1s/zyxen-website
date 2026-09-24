@@ -239,15 +239,15 @@ export default function Home() {
                     />
                   </div>
                   <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20 font-bold uppercase tracking-wider">
-                    {partner.tag}
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                  {partner.name}
-                  {partner.by && <span className="text-xs font-normal text-gray-400 font-mono">({partner.by})</span>}
-                </h3>
-                <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                  {partner.description}
+                  {lang === 'el' ? partner.el.tag : partner.en.tag}
+                </span>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                {partner.name}
+                {lang === 'el' ? partner.el.by && <span className="text-xs font-normal text-gray-400 font-mono">({partner.el.by})</span> : partner.en.by && <span className="text-xs font-normal text-gray-400 font-mono">({partner.en.by})</span>}
+              </h3>
+              <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                {lang === 'el' ? partner.el.description : partner.en.description}
                 </p>
                 <div className="flex items-center justify-between pt-4 border-t border-neutral-800">
                   <span className="text-xs font-mono text-gray-500 uppercase tracking-widest">Verified Partner</span>
