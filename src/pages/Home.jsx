@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
-import { projects, services } from '@/lib/data';
+import { projects, services, partners } from '@/lib/data';
 import MagneticButton from '@/components/MagneticButton';
 import SEOMeta from '@/components/SEOMeta';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
@@ -205,6 +205,67 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      {/* STRATEGIC ALLIANCES & PARTNERS */}
+      <section className="py-20 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto border-b border-gray-200 bg-black text-white rounded-3xl my-12 shadow-2xl relative overflow-hidden">
+        <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-[#AF994D]/10 rounded-full blur-3xl pointer-events-none" />
+        <Scene>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[#D4AF37] text-xs font-mono font-semibold uppercase tracking-widest mb-4">
+                <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse" />
+                Strategic Alliances
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
+                Engineered for Collective Growth
+              </h2>
+            </div>
+            <p className="text-gray-400 text-sm max-w-md font-normal leading-relaxed">
+              We partner with industry-leading platforms and engineering houses to deliver enterprise solutions and next-generation AI intelligence.
+            </p>
+          </div>
+        </Scene>
+
+        <div className="grid grid-cols-1 md:grid-cols-1 max-w-2xl mx-auto gap-8 relative z-10">
+          {partners.map((partner, idx) => (
+            <Scene key={partner.name} delay={idx * 0.12}>
+              <div className="group relative bg-neutral-900/90 border border-neutral-800 hover:border-[#D4AF37]/50 rounded-2xl p-8 transition-all duration-300 hover:bg-neutral-900 shadow-lg">
+                <div className="flex items-center justify-between gap-4 mb-6">
+                  <div className="h-12 flex items-center bg-black/60 px-5 py-2 rounded-xl border border-neutral-800/80">
+                    <img
+                      src={partner.darkLogo || partner.logo}
+                      alt={partner.name}
+                      className="h-7 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20 font-bold uppercase tracking-wider">
+                    {partner.tag}
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                  {partner.name}
+                  {partner.by && <span className="text-xs font-normal text-gray-400 font-mono">({partner.by})</span>}
+                </h3>
+                <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                  {partner.description}
+                </p>
+                <div className="flex items-center justify-between pt-4 border-t border-neutral-800">
+                  <span className="text-xs font-mono text-gray-500 uppercase tracking-widest">Verified Partner</span>
+                  <a
+                    href={partner.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-white hover:text-[#D4AF37] transition-colors"
+                  >
+                    <span>Visit website</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            </Scene>
+          ))}
+        </div>
+      </section>
 
       {/* FEATURED WORK SHOWCASE WITH 21ST DEV SPOTLIGHT CARDS */}
       <section className="py-28 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto border-b border-gray-200">

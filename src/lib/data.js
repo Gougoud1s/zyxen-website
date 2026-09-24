@@ -1,3 +1,15 @@
+export const partners = [
+  {
+    name: 'AI Convert It',
+    by: 'by Alpdev',
+    logo: '/partners/ai-convert-it-reverse.png',
+    darkLogo: '/partners/ai-convert-it-reverse.png',
+    description: 'Cutting-edge AI transformation and automation platform partnering with ZYXEN to deliver next-gen digital intelligence and automated workflows.',
+    website: 'https://aiconvert.it',
+    tag: 'AI & Automation'
+  }
+];
+
 export const projects = [
   {
     slug: 'ips',
