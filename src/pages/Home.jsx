@@ -207,107 +207,130 @@ export default function Home() {
       </div>
 
       {/* STRATEGIC ALLIANCES & PARTNERS */}
-      <section className="py-20 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto border-b border-gray-200 bg-black text-white rounded-3xl my-12 shadow-2xl relative overflow-hidden">
-        <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-[#AF994D]/10 rounded-full blur-3xl pointer-events-none" />
+      {/* STRATEGIC ALLIANCES & PARTNERSHIP SECTION */}
+      <section className="py-20 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto border-b border-gray-200 bg-zinc-950 text-white rounded-3xl my-12 shadow-2xl relative overflow-hidden">
+        <div className="absolute -right-24 -bottom-24 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
         <Scene>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[#D4AF37] text-xs font-mono font-semibold uppercase tracking-widest mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37] text-xs font-mono font-semibold uppercase tracking-widest mb-4">
                 <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse" />
-                Strategic Alliances
+                {lang === 'el' ? 'Στρατηγική Συμμαχία' : 'Strategic Alliance'}
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white">
-                Engineered for Collective Growth
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white font-serif">
+                {lang === 'el' ? 'Τεχνολογική Συμμαχία & Καινοτομία' : 'Engineered Strategic Alliances'}
               </h2>
             </div>
-            <p className="text-gray-400 text-sm max-w-md font-normal leading-relaxed">
-              We partner with industry-leading platforms and engineering houses to deliver enterprise solutions and next-generation AI intelligence.
+            <p className="text-zinc-400 text-sm max-w-md font-normal leading-relaxed">
+              {lang === 'el' 
+                ? 'Συνεργαζόμαστε με εξειδικευμένες πλατφόρμες και οίκους μηχανικής για την ενσωμάτωση αυτόνομης τεχνητής νοημοσύνης σε εταιρικές εφαρμογές.' 
+                : 'We collaborate with specialized engineering houses and platforms to embed sovereign AI directly into enterprise software.'}
             </p>
           </div>
         </Scene>
 
-        <div className="grid grid-cols-1 max-w-4xl mx-auto gap-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 relative z-10 items-stretch">
           {partners.map((partner, idx) => {
             const localeData = lang === 'el' ? partner.el : partner.en;
             return (
-              <Scene key={partner.name} delay={idx * 0.12}>
-                <div className="group relative bg-neutral-900/90 border border-neutral-800 hover:border-[#D4AF37]/50 rounded-2xl p-8 transition-all duration-300 hover:bg-neutral-900 shadow-xl">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                    <div className="h-12 flex items-center bg-black/60 px-5 py-2 rounded-xl border border-neutral-800/80 w-fit">
-                      <img
-                        src={partner.darkLogo || partner.logo}
-                        alt={partner.name}
-                        className="h-7 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </div>
-                    <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20 font-bold uppercase tracking-wider w-fit">
-                      {localeData.tag}
-                    </span>
-                  </div>
-
-                  <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
-                    {partner.name}
-                    {localeData.by && <span className="text-xs font-normal text-gray-400 font-mono">({localeData.by})</span>}
-                  </h3>
-
-                  <p className="text-gray-300 text-sm leading-relaxed mb-6 max-w-2xl font-normal">
-                    {localeData.description}
-                  </p>
-
-                  {/* METRICS HIGHLIGHT */}
-                  {partner.metrics && (
-                    <div className="grid grid-cols-3 gap-3 mb-8 bg-black/40 border border-neutral-800/80 rounded-xl p-4">
-                      {partner.metrics.map((m) => (
-                        <div key={m.label} className="text-center sm:text-left">
-                          <div className="text-lg sm:text-xl font-extrabold text-[#D4AF37] font-mono">{m.val}</div>
-                          <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider font-mono">{m.label}</div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* CAPABILITIES GRID */}
-                  {localeData.capabilities && (
-                    <div className="mb-8 pt-6 border-t border-neutral-800/80">
-                      <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-[#D4AF37] mb-4">
-                        {localeData.detailsTitle}
-                      </h4>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        {localeData.capabilities.map((cap) => (
-                          <div key={cap.title} className="bg-neutral-950/80 border border-neutral-800 p-4 rounded-xl">
-                            <div className="text-xs font-bold text-white mb-1">{cap.title}</div>
-                            <p className="text-[12px] text-gray-400 leading-normal">{cap.desc}</p>
+              <Scene key={partner.name} delay={idx * 0.12} className="lg:col-span-12">
+                <div className="group relative bg-zinc-900/80 border border-zinc-800 hover:border-[#D4AF37]/40 rounded-3xl p-8 sm:p-10 transition-all duration-300 shadow-xl backdrop-blur-sm">
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+                    
+                    {/* LEFT COLUMN: BRAND IDENTITY & METRICS */}
+                    <div className="lg:col-span-5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-zinc-800/80 pb-8 lg:pb-0 lg:pr-10">
+                      <div>
+                        <div className="flex items-center justify-between gap-4 mb-6">
+                          <div className="h-14 flex items-center bg-black/80 px-5 py-2.5 rounded-2xl border border-zinc-800/90 w-fit">
+                            <img
+                              src={partner.darkLogo || partner.logo}
+                              alt={partner.name}
+                              className="h-8 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                            />
                           </div>
-                        ))}
+                          <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30 font-bold uppercase tracking-wider">
+                            {localeData.tag}
+                          </span>
+                        </div>
+
+                        <h3 className="text-2xl sm:text-3xl font-bold text-white mb-1 flex items-center gap-2 font-serif">
+                          {partner.name}
+                          {localeData.by && <span className="text-xs font-normal text-zinc-400 font-mono">({localeData.by})</span>}
+                        </h3>
+
+                        <p className="text-zinc-300 text-sm leading-relaxed mb-8 font-normal">
+                          {localeData.description}
+                        </p>
+                      </div>
+
+                      <div>
+                        {/* METRICS SHOWCASE */}
+                        {partner.metrics && (
+                          <div className="grid grid-cols-3 gap-3 mb-6 bg-black/60 border border-zinc-800/80 rounded-2xl p-4">
+                            {partner.metrics.map((m) => (
+                              <div key={m.label} className="text-center sm:text-left">
+                                <div className="text-base sm:text-lg font-extrabold text-[#D4AF37] font-mono">{m.val}</div>
+                                <div className="text-[10px] text-zinc-400 uppercase tracking-wider font-mono mt-0.5">{m.label}</div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        <div className="flex items-center justify-between pt-4 border-t border-zinc-800/80">
+                          <span className="text-xs font-mono text-zinc-400 uppercase tracking-widest flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                            {lang === 'el' ? 'Πιστοποιημένη Συμμαχία' : 'Verified Strategic Partner'}
+                          </span>
+                          <a
+                            href={partner.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-white hover:text-[#D4AF37] transition-colors bg-black/80 border border-zinc-800 hover:border-[#D4AF37]/50 px-4 py-2 rounded-xl"
+                          >
+                            <span>{lang === 'el' ? 'Πλατφόρμα' : 'Visit Platform'}</span>
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  )}
 
-                  {/* JOINT OFFERING */}
-                  {localeData.jointOffering && (
-                    <div className="mb-6 p-4 rounded-xl bg-[#D4AF37]/5 border border-[#D4AF37]/20 text-xs text-gray-300 leading-relaxed">
-                      <span className="font-bold text-[#D4AF37] block mb-1 uppercase tracking-wider font-mono">
-                        {lang === 'el' ? 'ΚΟΙΝΗ ΛΥΣΗ ZYXEN & AI CONVERT IT' : 'ZYXEN & AI CONVERT IT JOINT SOLUTION'}
-                      </span>
-                      {localeData.jointOffering}
+                    {/* RIGHT COLUMN: CAPABILITY SPECTRUM & JOINT SOLUTION */}
+                    <div className="lg:col-span-7 flex flex-col justify-between">
+                      {/* CAPABILITIES */}
+                      {localeData.capabilities && (
+                        <div className="mb-6">
+                          <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-[#D4AF37] mb-6 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                            {localeData.detailsTitle}
+                          </h4>
+                          <div className="space-y-4">
+                            {localeData.capabilities.map((cap) => (
+                              <div key={cap.title} className="p-4 rounded-2xl bg-black/40 border border-zinc-800/80 transition-colors hover:border-zinc-700">
+                                <div className="text-xs font-bold text-white mb-1 flex items-center gap-2 font-mono">
+                                  <span className="text-[#D4AF37] text-sm">✦</span>
+                                  {cap.title}
+                                </div>
+                                <p className="text-xs text-zinc-300 leading-relaxed pl-5 font-normal">{cap.desc}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* JOINT OFFERING */}
+                      {localeData.jointOffering && (
+                        <div className="p-5 rounded-2xl bg-[#D4AF37]/5 border-l-2 border-[#D4AF37] border-y border-r border-zinc-800/60 text-xs text-zinc-300 leading-relaxed">
+                          <span className="font-bold text-[#D4AF37] block mb-1 uppercase tracking-wider font-mono">
+                            {lang === 'el' ? 'ΚΟΙΝΗ ΑΡΧΙΤΕΚΤΟΝΙΚΗ ZYXEN & AI CONVERT IT' : 'ZYXEN & AI CONVERT IT JOINT ENGINEERING'}
+                          </span>
+                          {localeData.jointOffering}
+                        </div>
+                      )}
                     </div>
-                  )}
 
-                  <div className="flex items-center justify-between pt-4 border-t border-neutral-800">
-                    <span className="text-xs font-mono text-gray-500 uppercase tracking-widest flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      Verified Strategic Partner
-                    </span>
-                    <a
-                      href={partner.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-white hover:text-[#D4AF37] transition-colors"
-                    >
-                      <span>Visit website</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </a>
                   </div>
+
                 </div>
               </Scene>
             );

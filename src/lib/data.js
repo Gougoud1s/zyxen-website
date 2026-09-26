@@ -11,45 +11,45 @@ export const partners = [
     ],
     en: {
       by: 'by Alpdev',
-      description: 'Cutting-edge AI transformation and automation platform partnering with ZYXEN to deliver next-gen digital intelligence, document processing, and automated enterprise workflows.',
-      tag: 'AI & Enterprise Automation',
-      detailsTitle: 'AI-Powered Digital Transformation Architecture',
+      tag: 'Strategic AI Alliance',
+      description: 'In partnership with Alpdev’s AI Convert It platform, Zyxen embeds sovereign AI intelligence and automated document processing directly into enterprise .NET environments. Together, we bridge high-performance web engineering with proprietary AI workflows.',
+      detailsTitle: 'Engineering Capabilities',
       capabilities: [
         {
-          title: 'Document & Data Intelligence',
-          desc: 'Automated document extraction, OCR parsing, and structured data synthesis across PDFs, invoices, and unstructured business media.'
+          title: 'Intelligent Document Parsing',
+          desc: 'Automated extraction and structured data synthesis across invoices, complex business PDFs, and unstructured corporate media.'
         },
         {
-          title: 'Bespoke Conversational AI',
-          desc: 'Fine-tuned domain LLMs and multi-modal assistants integrated directly into Umbraco CMS, .NET APIs, and mobile applications.'
+          title: 'Domain-Specific AI Models',
+          desc: 'Fine-tuned LLMs and custom assistants integrated natively into Umbraco CMS, .NET backends, and Flutter mobile applications.'
         },
         {
-          title: 'Autonomous Workflow Engines',
-          desc: 'Event-driven agentic pipelines that qualify leads, process transactions, and automate complex cross-platform B2B workflows.'
+          title: 'Automated Operations',
+          desc: 'Real-time event-driven pipelines that automate B2B workflows, lead qualification, and transaction processing.'
         }
       ],
-      jointOffering: 'In joint partnership with ZYXEN, AI Convert It powers autonomous AI integrations across enterprise .NET applications, providing sovereign cloud security and custom model fine-tuning.'
+      jointOffering: 'A unified engineering alliance providing sovereign model fine-tuning, SOC2/GDPR compliance, and zero-data-leak AI pipelines for enterprise clients.'
     },
     el: {
       by: 'από την Alpdev',
-      description: 'Πρωτοποριακή πλατφόρμα μετασχηματισμού και αυτοματοποίησης τεχνητής νοημοσύνης που συνεργάζεται με τη ZYXEN για την παροχή ψηφιακής νοημοσύνης, επεξεργασίας εγγράφων και αυτοματοποιημένων εταιρικών ροών εργασίας.',
-      tag: 'Τεχνητή Νοημοσύνη & Εταιρικοί Αυτοματισμοί',
-      detailsTitle: 'Αρχιτεκτονική Ψηφιακού Μετασχηματισμού AI',
+      tag: 'Στρατηγική Τεχνολογική Συμμαχία',
+      description: 'Σε συνεργασία με την πλατφόρμα AI Convert It της Alpdev, η Zyxen ενσωματώνει αυτόνομη τεχνητή νοημοσύνη και αυτοματοποιημένη επεξεργασία εγγράφων απευθείας σε εταιρικά περιβάλλοντα .NET. Μαζί συνδέουμε τη web αρχιτεκτονική υψηλών επιδόσεων με εξειδικευμένους αλγόριθμους AI.',
+      detailsTitle: 'Τεχνολογικές Δυνατότητες',
       capabilities: [
         {
-          title: 'Νοημοσύνη Εγγράφων & Δεδομένων',
-          desc: 'Αυτοματοποιημένη εξαγωγή εγγράφων, αναγνώριση OCR και σύνθεση δομημένων δεδομένων από τιμολόγια, PDF και εταιρικά αρχεία.'
+          title: 'Αναγνώριση & Επεξεργασία Εγγράφων',
+          desc: 'Αυτοματοποιημένη εξαγωγή και δόμηση δεδομένων από τιμολόγια, αρχεία PDF και εταιρικά εγγραφα.'
         },
         {
-          title: 'Εξειδικευμένα Μοντέλα AI & Assistants',
-          desc: 'Fine-tuned θεματικά γλωσσικά μοντέλα (LLMs) συνδεδεμένα απευθείας με Umbraco CMS, .NET APIs και Flutter mobile apps.'
+          title: 'Εξειδικευμένα Μοντέλα AI',
+          desc: 'Fine-tuned θεματικά γλωσσικά μοντέλα (LLMs) συνδεδεμένα απευθείας με Umbraco CMS, .NET APIs και mobile εφαρμογές.'
         },
         {
-          title: 'Αυτόνομες Ροές Εργασίας (Agentic Engines)',
-          desc: 'Event-driven αυτοματισμοί που αξιολογούν leads, επεξεργάζονται συναλλαγές και εκτελούν σύνθετες B2B διεργασίες.'
+          title: 'Αυτοματοποίηση Εταιρικών Διεργασιών',
+          desc: 'Event-driven ροές εργασίας για τη διαχείριση B2B διεργασιών, αξιολόγηση αιτημάτων και ασφαλείς συναλλαγές.'
         }
       ],
-      jointOffering: 'Σε στενή συνεργασία με τη ZYXEN, η AI Convert It τροφοδοτεί αυτόνομες ενσωματώσεις AI σε εταιρικές εφαρμογές .NET με εγγυημένη ασφάλεια δεδομένων και προσαρμοσμένη εκπαίδευση μοντέλων.'
+      jointOffering: 'Κοινή τεχνολογική λύση που προσφέρει προσαρμοσμένη εκπαίδευση μοντέλων, πλήρη συμμόρφωση GDPR/SOC2 και ασφαλή υποδομή χωρίς διαρροές δεδομένων.'
     }
   }
 ];
