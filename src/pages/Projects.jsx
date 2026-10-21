@@ -5,9 +5,8 @@ import { projects } from '@/lib/data';
 import AnimatedSection from '@/components/AnimatedSection';
 import SEOMeta from '@/components/SEOMeta';
 import { ArrowUpRight, Lock } from 'lucide-react';
-import { Interactive2DCanvas } from '@/components/Interactive2DCanvas';
 
-const categories = ['All', 'E-Commerce', 'Bespoke SaaS', 'Mobile App', 'Enterprise'];
+const categories = ['All', ...new Set(projects.map(project => project.en.category))];
 
 export default function Projects() {
   const { localePath } = useLanguage();
@@ -26,23 +25,21 @@ export default function Projects() {
 
       {/* HERO SECTION */}
       <section className="relative py-28 sm:py-36 border-b border-gray-200 bg-white">
-        <Interactive2DCanvas opacity={0.3} density={30} />
 
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 relative z-10">
           <AnimatedSection variant="depth">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-gray-200 bg-gray-50 mb-8 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse" />
               <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gray-800">
                 03 / SELECTED WORK
               </span>
             </div>
 
             <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-black max-w-5xl leading-[1.08]">
-              Architectural case studies across high-stakes software domains.
+              Real projects. Clearly credited.
             </h1>
 
             <p className="text-lg sm:text-xl text-gray-600 mt-8 max-w-3xl leading-relaxed font-normal">
-              A curated look into enterprise e-commerce portals, custom business logic, and mobile applications engineered for long-term scalability.
+              Explore platforms we have contributed to across hospitality, industry, public information and commerce. Each case study describes our role and credits the lead agency where supplied.
             </p>
 
             {/* 21ST.DEV SEGMENTED CATEGORY TABS */}
@@ -77,11 +74,12 @@ export default function Projects() {
                   className="group block bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-black hover:shadow-2xl transition-all duration-300 h-full flex flex-col justify-between relative"
                 >
                   {/* REAL PROJECT PHOTO HEADER */}
-                  <div className="relative h-64 overflow-hidden bg-gray-900">
+                  <div className="relative aspect-[3/2] overflow-hidden bg-gray-900">
                     <img
                       src={p.image}
-                      alt={proj.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                      alt={`${proj.name} website preview`}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                     
@@ -124,6 +122,7 @@ export default function Projects() {
                       {proj.overview}
                     </p>
 
+                    {p.leadAgency && <p className="mt-4 text-xs text-gray-600">Lead agency: {p.leadAgency.name}</p>}
                     <div className="mt-8 pt-6 border-t border-gray-100">
                       <div className="flex flex-wrap gap-2 mb-4">
                         {p.tech.map((t) => (
@@ -136,7 +135,7 @@ export default function Projects() {
                         ))}
                       </div>
                       <p className="text-xs text-gray-500 font-medium">
-                        <strong className="text-black">Architecture Focus:</strong> {proj.focus}
+                        <strong className="text-black">Our contribution:</strong> {proj.focus}
                       </p>
                     </div>
                   </div>

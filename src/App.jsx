@@ -1,14 +1,13 @@
-import { useState } from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClientInstance } from '@/lib/query-client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
-import Home from './pages/Home';
+import Home from './pages/MarketingHome';
 import About from './pages/About';
 import Services from './pages/Services';
-import ServiceDetail from './pages/ServiceDetail';
 import Projects from './pages/Projects';
+import ServiceDetail from './pages/ServiceDetail';
 import ProjectDetail from './pages/ProjectDetail';
 import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -17,25 +16,11 @@ import TermsOfUse from './pages/TermsOfUse';
 import NotFound from './pages/NotFound';
 import Technologies from './pages/Technologies';
 import AuditTool from './pages/AuditTool';
-import CrmDashboard from './pages/CrmDashboard';
-import { ScrollProgressBar } from './components/Interactive2DCanvas';
-import IntroAnimation from './components/IntroAnimation';
 
 function App() {
-  const [showIntro, setShowIntro] = useState(() => {
-    return !sessionStorage.getItem('zyxen_intro_shown');
-  });
-
-  const handleIntroComplete = () => {
-    sessionStorage.setItem('zyxen_intro_shown', 'true');
-    setShowIntro(false);
-  };
-
   return (
     <QueryClientProvider client={queryClientInstance}>
-      {showIntro && <IntroAnimation onComplete={handleIntroComplete} />}
       <Router>
-        <ScrollProgressBar />
         <Routes>
           <Route element={<Layout />}>
             {/* Root routes */}
@@ -51,8 +36,6 @@ function App() {
             <Route path="/terms" element={<TermsOfUse />} />
             <Route path="/technologies" element={<Technologies />} />
             <Route path="/audit" element={<AuditTool />} />
-            <Route path="/crm" element={<CrmDashboard />} />
-            <Route path="/admin/crm" element={<CrmDashboard />} />
 
             {/* Localized Greek routes (/el/*) */}
             <Route path="/el" element={<Home />} />
@@ -67,8 +50,6 @@ function App() {
             <Route path="/el/terms" element={<TermsOfUse />} />
             <Route path="/el/technologies" element={<Technologies />} />
             <Route path="/el/audit" element={<AuditTool />} />
-            <Route path="/el/crm" element={<CrmDashboard />} />
-            <Route path="/el/admin/crm" element={<CrmDashboard />} />
 
             {/* Localized English routes (/en/*) */}
             <Route path="/en" element={<Home />} />
@@ -84,8 +65,6 @@ function App() {
             <Route path="/en/technologies" element={<Technologies />} />
             <Route path="/en/audit" element={<AuditTool />} />
             <Route path="/en/en/audit" element={<AuditTool />} />
-            <Route path="/en/crm" element={<CrmDashboard />} />
-            <Route path="/en/admin/crm" element={<CrmDashboard />} />
 
             {/* 404 Catch-all */}
             <Route path="*" element={<NotFound />} />

@@ -4,7 +4,7 @@ import { services } from '@/lib/data';
 import AnimatedSection from '@/components/AnimatedSection';
 import SEOMeta from '@/components/SEOMeta';
 import { ArrowRight, Layers, Globe, Smartphone, ShoppingCart, Brain, Rocket } from 'lucide-react';
-import { Interactive2DCanvas, AnimatedSVGObject } from '@/components/Interactive2DCanvas';
+import { AnimatedSVGObject } from '@/components/Interactive2DCanvas';
 
 const iconMap = { Layers, Globe, Smartphone, ShoppingCart, Brain, Rocket };
 
@@ -20,23 +20,21 @@ export default function Services() {
 
       {/* HERO SECTION */}
       <section className="relative py-28 lg:py-36 border-b border-gray-200 overflow-hidden bg-white">
-        <Interactive2DCanvas opacity={0.35} density={30} />
 
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 relative z-10">
           <AnimatedSection variant="depth">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-gray-200 bg-gray-50 mb-8 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#AF994D] animate-pulse" />
               <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gray-800">
                 02 / CAPABILITIES & SERVICES
               </span>
             </div>
 
             <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-black max-w-5xl leading-[1.08]">
-              Fullstack software solutions engineered for high performance.
+              Software that solves the right problem.
             </h1>
 
             <p className="text-lg sm:text-xl text-gray-600 mt-8 max-w-3xl leading-relaxed font-normal">
-              We engineer scalable digital infrastructure for modern enterprises. Explore our core engineering competencies below.
+              Build a better website, connect your business systems or make everyday work easier. Explore where we can help.
             </p>
           </AnimatedSection>
         </div>

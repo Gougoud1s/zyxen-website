@@ -23,7 +23,7 @@ export default function Navbar() {
     { to: localePath('/'), label: 'Home' },
     { to: localePath('/projects'), label: 'Work' },
     { to: localePath('/services'), label: 'Services' },
-    { to: localePath('/about'), label: 'Culture' },
+    { to: localePath('/about'), label: 'About' },
     { to: localePath('/contact'), label: 'Contact' },
   ];
 
@@ -45,7 +45,7 @@ export default function Navbar() {
           </Link>
 
           {/* Floating Pill Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-8">
             {links.map((l) => {
               const active = isActive(l.to);
               return (
@@ -71,14 +71,16 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               to={localePath('/contact')}
-              className="hidden md:inline-flex text-xs uppercase tracking-wider font-bold bg-black text-white px-6 py-2.5 rounded-full hover:bg-gray-800 transition-all duration-300 shadow-sm hover:shadow"
+              className="hidden lg:inline-flex whitespace-nowrap text-xs uppercase tracking-wider font-bold bg-black text-white px-6 py-2.5 rounded-full hover:bg-gray-800 transition-all duration-300 shadow-sm hover:shadow"
             >
               Start a Project
             </Link>
             <button
               onClick={() => setOpen(!open)}
-              className="md:hidden p-2 text-black min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-gray-100"
+              className="lg:hidden p-2 text-black min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-gray-100"
               aria-label="Toggle menu"
+              aria-expanded={open}
+              aria-controls="mobile-navigation"
             >
               {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -94,7 +96,8 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden mt-3 max-w-6xl mx-auto rounded-2xl border border-gray-200 bg-white/95 backdrop-blur-lg overflow-hidden shadow-xl"
+            id="mobile-navigation"
+            className="lg:hidden mt-3 max-w-6xl mx-auto rounded-2xl border border-gray-200 bg-white/95 backdrop-blur-lg overflow-hidden shadow-xl"
           >
             <div className="px-6 py-6 flex flex-col gap-2">
               {links.map((l) => (

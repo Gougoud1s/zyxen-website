@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import ScrollToTop from './ScrollToTop';
-import ScrollProgress from './ScrollProgress';
 import BackToTop from './BackToTop';
 import CookieBanner from './CookieBanner';
 import Breadcrumbs from './Breadcrumbs';
@@ -32,7 +31,6 @@ export default function Layout() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <ScrollToTop />
-      <ScrollProgress />
       <Navbar />
 
       <AnimatePresence mode="wait" initial={false}>
@@ -42,8 +40,8 @@ export default function Layout() {
           initial="initial"
           animate="animate"
           exit="exit"
-          transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-          className="pt-28 sm:pt-32 lg:pt-36"
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="pt-28 sm:pt-32"
           id="main-content"
           role="main"
         >

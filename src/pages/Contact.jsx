@@ -1,14 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useLanguage } from '@/lib/i18n';
 import AnimatedSection from '@/components/AnimatedSection';
-import FormField, { inputClass } from '@/components/FormField';
-import CustomSelect from '@/components/CustomSelect';
-import MagneticButton from '@/components/MagneticButton';
 import SEOMeta from '@/components/SEOMeta';
-import { faqPageSchema } from '@/lib/structuredData';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, MapPin, Clock, Send, CheckCircle2, Loader2, AlertCircle, ChevronDown } from 'lucide-react';
-import { Interactive2DCanvas } from '@/components/Interactive2DCanvas';
+import { Mail, MapPin, Clock, CheckCircle2, AlertCircle, ChevronDown } from 'lucide-react';
 
 const servicesList = [
   'Enterprise Web & CMS (Umbraco)',
@@ -63,7 +57,7 @@ function FaqItem({ item }) {
   );
 }
 
-export default function Contact() {
+export default function Contact({ embedded = false }) {
   const [form, setForm] = useState({ name: '', email: '', service: '', budget: '', details: '', _hp: '' });
   const [touched, setTouched] = useState({ name: false, email: false, service: false, budget: false, details: false });
   const [sending, setSending] = useState(false);
@@ -96,58 +90,55 @@ export default function Contact() {
     setSubmitError('');
 
     try {
-      // Attempt API call if endpoint exists, otherwise fallback gracefully
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      }).catch(() => null);
-
-      // On success or static fallback, display success response
+        body: JSON.stringify({ ...form, budget: form.budget || 'Not specified' }),
+      });
+      const result = await res.json();
+      if (!res.ok || result.success !== true) throw new Error('Enquiry not accepted');
       setSent(true);
     } catch {
-      setSent(true);
+      setSubmitError('We couldn’t send your enquiry. Your details are still here. Please try again or email hello@zyxen.gr.');
     } finally {
       setSending(false);
     }
   };
 
   const faqItems = [
-    { q: 'What is Zyxen’s typical engagement model?', a: 'We work primarily on fixed-scope architectural milestones or retainer-based dedicated engineering pods.' },
-    { q: 'How fast can a team kick off discovery?', a: 'Typically within 3-5 business days following execution of NDA and initial scope framing.' },
-    { q: 'Do you provide post-launch SLA support?', a: 'Yes, we provide 24/7 proactive monitoring, security updates, and performance optimization SLAs.' },
+    { q: 'What is Zyxen’s typical engagement model?', a: 'We agree on the scope and milestones before starting. Ongoing work can be arranged through a monthly retainer.' },
+    { q: 'When can we get started?', a: 'Discovery typically starts within 3–5 business days after we agree on the initial scope and any confidentiality requirements.' },
+    { q: 'Can you support the project after launch?', a: 'Yes. Maintenance, security updates and performance support are agreed around your project’s needs.' },
   ];
 
   return (
-    <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden">
-      <SEOMeta
-        title="Contact ZYXEN — Start Your Engineering Discovery"
-        description="Initiate a project discovery session with Zyxen's principal architects in Athens, Greece."
-      />
+    <div className={embedded ? "experience-embedded-contact" : "bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden"}>
+      {!embedded && <SEOMeta
+        title="Start a Project | ZYXEN"
+        description="Tell ZYXEN what you want to build or improve. Websites, commerce, mobile apps and automation, from Athens to your team."
+      />}
 
       {/* HERO SECTION */}
-      <section className="relative py-28 sm:py-36 border-b border-gray-200 bg-white">
-        <Interactive2DCanvas opacity={0.3} density={30} />
+      {!embedded && <section className="relative py-16 sm:py-20 border-b border-gray-200 bg-white">
 
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 relative z-10">
           <AnimatedSection variant="depth">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-gray-200 bg-gray-50 mb-8 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#AF994D] animate-pulse" />
               <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gray-800">
-                04 / INITIATE DISCOVERY
+                START A PROJECT
               </span>
             </div>
 
             <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-black max-w-5xl leading-[1.08]">
-              Let’s engineer something exceptional together.
+              Tell us about your project.
             </h1>
 
             <p className="text-lg sm:text-xl text-gray-600 mt-8 max-w-3xl leading-relaxed font-normal">
-              Tell us about your system architecture or digital platform vision. Our team responds within 24 hours.
+              What would you like to build or improve? Share your goals and timeline. We’ll respond within one business day.
             </p>
           </AnimatedSection>
         </div>
-      </section>
+      </section>}
 
       {/* CONTACT FORM & INFO SECTION */}
       <section className="py-24 bg-gray-50/50 border-b border-gray-200">
@@ -156,7 +147,7 @@ export default function Contact() {
           <div className="lg:col-span-2 flex flex-col justify-between">
             <AnimatedSection variant="depth">
               <h2 className="font-display text-2xl font-bold text-black mb-8">
-                Studio Headquarters
+                Speak with ZYXEN
               </h2>
 
               <div className="flex flex-col gap-8">
@@ -197,7 +188,7 @@ export default function Contact() {
             <div className="mt-12 p-6 bg-white border border-gray-200 rounded-2xl">
               <span className="text-xs font-mono font-bold text-[#AF994D] uppercase tracking-wider block mb-2">SLA PROMISE</span>
               <p className="text-sm text-gray-600 leading-relaxed">
-                Direct inquiry review by a Principal Engineer with technical feedback delivered in 1 business day.
+                An engineer will review your enquiry and discuss scope options and next steps within one business day.
               </p>
             </div>
           </div>
@@ -217,10 +208,10 @@ export default function Contact() {
                       <CheckCircle2 className="w-10 h-10" />
                     </div>
                     <h3 className="font-display text-2xl sm:text-3xl font-bold text-black mb-3">
-                      Inquiry Received
+                      Enquiry received
                     </h3>
                     <p className="text-gray-600 text-base max-w-md mx-auto leading-relaxed">
-                      Thank you for contacting Zyxen. Our architectural team will review your requirements and reach out within 24 hours.
+                      Thank you for contacting Zyxen. Our team will review your project and get back to you within one business day.
                     </p>
                   </motion.div>
                 ) : (
@@ -239,17 +230,17 @@ export default function Contact() {
 
                     <div className="grid sm:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                          Your Name
+                        <label htmlFor="contact-name" className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+                        Your Name
                         </label>
-                        <input
+                        <input id="contact-name"
                           type="text"
                           value={form.name}
                           onChange={(e) => {
                             setForm({ ...form, name: e.target.value });
                             if (touched.name) setTouched({ ...touched, name: false });
                           }}
-                          placeholder="E.g. Alexander Vance"
+                          placeholder="Your full name"
                           className={`w-full px-4 py-3.5 rounded-xl border text-black text-sm focus:outline-none transition-colors ${
                             touched.name && !form.name.trim()
                               ? 'border-red-500 bg-red-50/20'
@@ -264,17 +255,17 @@ export default function Contact() {
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                          Email Address
+                        <label htmlFor="contact-email" className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+                        Email Address
                         </label>
-                        <input
+                        <input id="contact-email"
                           type="email"
                           value={form.email}
                           onChange={(e) => {
                             setForm({ ...form, email: e.target.value });
                             if (touched.email) setTouched({ ...touched, email: false });
                           }}
-                          placeholder="alexander@company.com"
+                          placeholder="you@company.com"
                           className={`w-full px-4 py-3.5 rounded-xl border text-black text-sm focus:outline-none transition-colors ${
                             touched.email && (!form.email.trim() || !form.email.includes('@'))
                               ? 'border-red-500 bg-red-50/20'
@@ -290,10 +281,10 @@ export default function Contact() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                        Primary Service Required
+                      <label htmlFor="contact-service" className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+                        What do you need help with?
                       </label>
-                      <select
+                      <select id="contact-service"
                         value={form.service}
                         onChange={(e) => {
                           setForm({ ...form, service: e.target.value });
@@ -305,7 +296,7 @@ export default function Contact() {
                             : 'border-gray-200 bg-gray-50 focus:border-black'
                         }`}
                       >
-                        <option value="">Select a service focus...</option>
+                        <option value="">Choose a service</option>
                         {servicesList.map((s) => (
                           <option key={s} value={s}>
                             {s}
@@ -321,13 +312,14 @@ export default function Contact() {
 
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                        Project Budget Range
+                        Budget range (optional)
                       </label>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                         {budgetRanges.map((b) => (
                           <button
                             key={b}
                             type="button"
+                            aria-pressed={form.budget === b}
                             onClick={() => setForm({ ...form, budget: b })}
                             className={`px-3 py-3 rounded-xl border text-xs font-bold transition-all ${
                               form.budget === b
@@ -342,17 +334,17 @@ export default function Contact() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                        Project Details & Technical Scope
+                      <label htmlFor="contact-details" className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
+                        What would you like to achieve?
                       </label>
-                      <textarea
+                      <textarea id="contact-details"
                         rows={5}
                         value={form.details}
                         onChange={(e) => {
                           setForm({ ...form, details: e.target.value });
                           if (touched.details) setTouched({ ...touched, details: false });
                         }}
-                        placeholder="Tell us about your objectives, timeline, or current technical stack..."
+                        placeholder="Tell us about your business, what needs to change, and when you would like to launch."
                         className={`w-full px-4 py-3.5 rounded-xl border text-black text-sm focus:outline-none transition-colors resize-none ${
                           touched.details && !form.details.trim()
                             ? 'border-red-500 bg-red-50/20'
@@ -367,15 +359,16 @@ export default function Contact() {
                     </div>
 
                     {submitError && (
-                      <p className="text-xs text-red-600 font-semibold">{submitError}</p>
+                      <p role="alert" className="text-sm text-red-700 font-semibold">{submitError}</p>
                     )}
 
                     <button
                       type="submit"
                       disabled={sending}
-                      className="w-full bg-black text-white py-4 rounded-full font-bold text-sm tracking-wide uppercase hover:bg-gray-800 transition-colors shadow-lg mt-2"
+                      aria-busy={sending}
+                      className="w-full bg-black text-white py-4 rounded-full font-bold text-sm tracking-wide uppercase hover:bg-gray-800 disabled:opacity-60 disabled:cursor-wait transition-colors shadow-lg mt-2"
                     >
-                      {sending ? 'Transmitting...' : 'Submit Architectural Request'}
+                      {sending ? 'Sending...' : 'Send enquiry'}
                     </button>
                   </form>
                 )}
@@ -386,14 +379,14 @@ export default function Contact() {
       </section>
 
       {/* FAQ SECTION */}
-      <section className="py-24 bg-white">
+      {!embedded && <section className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-12">
           <AnimatedSection variant="depth">
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#AF994D] block mb-3">
               FREQUENTLY ASKED QUESTIONS
             </span>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-black mb-10">
-              Engagement & Process FAQ
+              Before you get in touch
             </h2>
 
             <div className="flex flex-col gap-4">
@@ -403,7 +396,7 @@ export default function Contact() {
             </div>
           </AnimatedSection>
         </div>
-      </section>
+      </section>}
     </div>
   );
 }

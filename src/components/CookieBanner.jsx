@@ -42,7 +42,7 @@ export function getCookieConsent() {
   } catch { return null; }
 }
 
-export default function CookieBanner() {
+export default function CookieBanner({ compact = false }) {
   const { lang, localePath } = useLanguage();
   const c = text[lang] || text.en;
   const [visible, setVisible] = useState(false);
@@ -71,6 +71,8 @@ export default function CookieBanner() {
     { key: 'marketing', label: c.marketing, desc: c.marketingDesc, editable: true },
     { key: 'functional', label: c.functional, desc: c.functionalDesc, editable: true },
   ];
+
+  if (compact && !expanded) return visible ? <aside className="experience-cookie" aria-label="Cookie consent"><span>{c.desc}</span><button onClick={acceptAll}>{c.acceptAll}</button><button onClick={rejectAll}>{c.rejectAll}</button><button onClick={() => setExpanded(true)}>{c.manage}</button></aside> : null;
 
   return (
     <AnimatePresence>

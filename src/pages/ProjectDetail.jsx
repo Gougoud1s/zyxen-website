@@ -4,12 +4,11 @@ import { projects } from '@/lib/data';
 import AnimatedSection from '@/components/AnimatedSection';
 import SEOMeta from '@/components/SEOMeta';
 import { breadcrumbSchema } from '@/lib/structuredData';
-import { ArrowLeft, ExternalLink, ShieldCheck, Zap, BarChart2, CheckCircle, Monitor } from 'lucide-react';
-import { Interactive2DCanvas } from '@/components/Interactive2DCanvas';
+import { ArrowLeft, ExternalLink, ShieldCheck, Monitor } from 'lucide-react';
 
 export default function ProjectDetail() {
   const { slug } = useParams();
-  const { localePath } = useLanguage();
+  const { localePath, t } = useLanguage();
   const project = projects.find((p) => p.slug === slug);
 
   if (!project) {
@@ -43,7 +42,6 @@ export default function ProjectDetail() {
 
       {/* HERO SECTION */}
       <section className="relative py-20 sm:py-28 border-b border-gray-200 bg-white">
-        <Interactive2DCanvas opacity={0.35} density={25} />
 
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 relative z-10">
           <Link
@@ -63,8 +61,8 @@ export default function ProjectDetail() {
                   onError={(e) => { e.target.style.display = 'none'; }}
                 />
               )}
-              <span className="text-xs font-mono font-bold text-[#D4AF37] uppercase tracking-widest">
-                {p.category} — ARCHITECTURAL CASE STUDY
+              <span className="text-xs font-mono font-bold text-[#806619] uppercase tracking-widest">
+                {p.category} — PROJECT CONTRIBUTION
               </span>
             </div>
 
@@ -76,12 +74,19 @@ export default function ProjectDetail() {
               {p.overview}
             </p>
 
+            <div className="mt-8 max-w-3xl border-l-2 border-[#AF994D] pl-6">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-700">Our contribution</h2>
+              <p className="mt-2 text-lg text-black">{p.focus}</p>
+              {project.leadAgency && <p className="mt-3 text-sm text-gray-700">Lead agency: <a className="underline underline-offset-4" href={project.leadAgency.url} target="_blank" rel="noopener noreferrer">{project.leadAgency.name}</a></p>}
+              <p className="mt-3 text-sm leading-relaxed text-gray-600">{t('projectsPage.note')}</p>
+            </div>
+
             {project.url && (
               <a
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-black text-white text-xs font-bold uppercase tracking-wider hover:bg-[#D4AF37] transition-all mt-8 shadow-md"
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-black text-white text-xs font-bold uppercase tracking-wider hover:bg-[#806619] transition-all mt-8 shadow-md"
               >
                 Visit Live Platform <ExternalLink className="w-4 h-4" />
               </a>
@@ -94,6 +99,7 @@ export default function ProjectDetail() {
       {project.metrics && project.metrics.length > 0 && (
         <section className="py-12 bg-black text-white border-b border-gray-800">
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
+            <h2 className="text-xs font-mono uppercase tracking-widest text-gray-300 mb-8">Project figures</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-800">
               {project.metrics.map((m, idx) => (
                 <div key={idx} className="pt-4 md:pt-0">
@@ -115,11 +121,11 @@ export default function ProjectDetail() {
         <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
           <AnimatedSection variant="depth">
             <div className="text-center mb-10">
-              <span className="text-xs font-mono font-bold text-[#D4AF37] uppercase tracking-widest block mb-2">
-                INTERFACE & VISUAL SCREENSHOT
+              <span className="text-xs font-mono font-bold text-[#806619] uppercase tracking-widest block mb-2">
+                THE PLATFORM
               </span>
               <h2 className="font-display text-2xl sm:text-4xl font-bold text-black">
-                Visual Showcase & Platform Design
+                A closer look at the work
               </h2>
             </div>
 
@@ -175,9 +181,9 @@ export default function ProjectDetail() {
       <section className="py-24 border-b border-gray-200 bg-white">
         <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-12 flex flex-col gap-16">
           {[
-            { label: '01 / ARCHITECTURAL CHALLENGE', content: p.challenge },
-            { label: '02 / ENGINEERING SOLUTION', content: p.solution },
-            { label: '03 / MEASURABLE RESULTS & IMPACT', content: p.results },
+            { label: '01 / THE CHALLENGE', content: p.challenge },
+            { label: '02 / THE APPROACH', content: p.solution },
+            { label: '03 / THE OUTCOME', content: p.results },
           ].map((section, i) => (
             <AnimatedSection key={i} delay={i * 0.1} variant="depth">
               <div className="bg-white border border-gray-200 rounded-2xl p-8 sm:p-10 shadow-sm hover:border-black transition-colors">

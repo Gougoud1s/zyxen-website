@@ -57,6 +57,7 @@ export const partners = [
 export const projects = [
   {
     slug: 'ips',
+    leadAgency: { name: 'Redirect', url: 'https://redirect.gr' },
     url: 'https://ips.com.gr/',
     image: '/projects/ips.png',
     favicon: '/projects/ips-favicon.png',
@@ -79,6 +80,7 @@ export const projects = [
   },
   {
     slug: 'victoria-de-borbon',
+    leadAgency: { name: 'Redirect', url: 'https://redirect.gr' },
     url: 'https://www.victoriadeborbon.com/',
     image: '/projects/victoria-de-borbon.png',
     favicon: '/projects/victoria-de-borbon-favicon.png',
@@ -101,6 +103,7 @@ export const projects = [
   },
   {
     slug: 'paxisarkia',
+    leadAgency: { name: 'Redirect', url: 'https://redirect.gr' },
     url: 'https://paxisarkiakaipaidi.gov.gr/',
     image: '/projects/paxisarkia.png',
     favicon: '/projects/paxisarkia-favicon.png',
@@ -123,8 +126,9 @@ export const projects = [
   },
   {
     slug: 'creta-maris',
+    leadAgency: { name: 'Redirect', url: 'https://redirect.gr' },
     url: 'https://www.cretamaris.gr/',
-    image: '/projects/creta-maris.png',
+    image: '/projects/creta-maris-clean.jpg',
     favicon: '/projects/creta-maris-favicon.png',
     tech: ['Umbraco', 'SEO', 'Performance'],
     metrics: [
@@ -167,6 +171,7 @@ export const projects = [
   },
   {
     slug: 'astrazeneca',
+    leadAgency: { name: 'Redirect', url: 'https://redirect.gr' },
     url: 'https://b2b.astrazeneca.gr/',
     image: '/projects/astrazeneca.png',
     favicon: '/projects/astrazeneca-favicon.png',
@@ -189,6 +194,7 @@ export const projects = [
   },
   {
     slug: 'dannemann',
+    leadAgency: { name: 'Threenitas', url: 'https://threenitas.gr' },
     url: 'https://dannemann-group.com/',
     image: '/projects/dannemann.png',
     favicon: '/projects/dannemann-favicon.png',
@@ -218,7 +224,7 @@ export const services = [
     tech: ['Umbraco', '.NET/C#', 'Component Design'],
     en: {
       name: 'Umbraco Platform Engineering',
-      short: 'Structured information architecture, component-driven pages and maintainable editor workflows.',
+      short: 'Give your team a website they can update confidently, with content and workflows built around the business.',
       description: 'We build enterprise-grade Umbraco platforms with clean content architecture, reusable component systems and editor-first workflows. Our implementations focus on scalability, performance and long-term maintainability.',
       subServices: ['CMS Architecture & Content Modeling', 'Component-driven Page Building', 'Editor Workflow Design', 'Multi-language & Multi-site Setup', 'Performance Optimization', 'Migration & Upgrade Services'],
       useCases: ['Corporate websites with complex content hierarchies', 'Multi-language platforms for international brands', 'Content-heavy portals with custom editor tools', 'Enterprise websites requiring structured handover'],
@@ -231,7 +237,7 @@ export const services = [
     tech: ['SEO', 'Core Web Vitals', 'Front-end'],
     en: {
       name: 'Web Experiences & SEO',
-      short: 'Technical SEO, Core Web Vitals improvement and conversion-aware front-end implementation.',
+      short: 'Help customers find you, load pages faster and take the next step with a clearer website.',
       description: 'We deliver web experiences that combine technical excellence with conversion optimization. From Core Web Vitals improvements to structured data implementation, every detail is engineered for search performance and user engagement.',
       subServices: ['Technical SEO Audits & Implementation', 'Core Web Vitals Optimization', 'Conversion Rate Optimization', 'Structured Data & Schema Markup', 'Page Speed Engineering', 'Analytics Setup & Reporting'],
       useCases: ['Websites needing search visibility improvement', 'E-commerce platforms with conversion challenges', 'Content platforms requiring performance optimization', 'Brands seeking measurable digital growth'],
@@ -244,7 +250,7 @@ export const services = [
     tech: ['Flutter', 'Dart', 'API Integration'],
     en: {
       name: 'Flutter Web/Mobile',
-      short: 'Production-ready applications with API integrations and reliable release workflows.',
+      short: 'Bring your service to mobile and web, connected to the systems your team already uses.',
       description: 'We build cross-platform Flutter applications for web and mobile with production-grade architecture, API integrations and release-ready deployment pipelines. Our focus is on real-world usability and maintainable codebases.',
       subServices: ['Cross-platform App Development', 'API Integration & Backend Connectivity', 'Vendor & Operator Tools', 'Release Pipeline Setup', 'App Store Deployment', 'Maintenance & Updates'],
       useCases: ['Vendor management mobile applications', 'Operator tools for field teams', 'Consumer-facing mobile experiences', 'Cross-platform apps requiring web and mobile parity'],
@@ -257,7 +263,7 @@ export const services = [
     tech: ['nopCommerce', '.NET/C#', 'B2B/B2C'],
     en: {
       name: 'Commerce & nopCommerce',
-      short: 'Product workflows, vendor operations and B2B/B2C functionality in real conditions.',
+      short: 'Make ordering easier for customers and manage products, vendors and fulfilment in one connected operation.',
       description: 'We implement commerce solutions using nopCommerce with custom product workflows, vendor management and conversion-optimized shopping experiences. From B2B portals to B2C marketplaces, we deliver commerce that works.',
       subServices: ['nopCommerce Setup & Customization', 'Product Catalog Management', 'Vendor & Multi-store Operations', 'Payment & Fulfillment Integration', 'B2B Portal Development', 'Marketplace Features'],
       useCases: ['Multi-vendor marketplaces', 'B2B ordering platforms', 'Product-heavy e-commerce stores', 'Commerce platforms with custom workflows'],
@@ -270,7 +276,7 @@ export const services = [
     tech: ['AI/ML', 'LLMs', 'Automation'],
     en: {
       name: 'AI Integrations',
-      short: 'Practical AI features for assistants, workflow automation and productivity gains.',
+      short: 'Reduce repetitive work with assistants and automated workflows connected to your business software.',
       description: 'We integrate practical AI capabilities into web and mobile applications. From intelligent assistants to automated workflows, we deliver AI features that solve real problems and measurably improve productivity.',
       subServices: ['AI Assistant Development', 'Workflow Automation', 'Smart Content Generation', 'Data Analysis & Insights', 'Chatbot Integration', 'Process Optimization'],
       useCases: ['Customer service automation', 'Internal workflow optimization', 'Content generation at scale', 'Data-driven decision support'],
@@ -283,7 +289,7 @@ export const services = [
     tech: ['Jenkins', 'Bitbucket Pipelines', 'CI/CD'],
     en: {
       name: 'Delivery & DevOps',
-      short: 'CI/CD with Jenkins or Bitbucket Pipelines, QA loops and release reliability.',
+      short: 'Release updates with a repeatable process, clear checks and a practical handover to your team.',
       description: 'We set up and manage delivery operations with automated build/test/deploy pipelines. Our DevOps practices ensure reliable releases, reduced deployment risk and consistent quality across all environments.',
       subServices: ['CI/CD Pipeline Setup', 'Automated Testing Integration', 'Deployment Automation', 'Environment Management', 'Release Strategy Planning', 'Monitoring & Alerting'],
       useCases: ['Teams needing automated deployment pipelines', 'Projects requiring consistent release quality', 'Organizations transitioning to DevOps practices', 'Complex multi-environment deployments'],

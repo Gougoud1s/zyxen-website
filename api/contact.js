@@ -79,7 +79,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    await Promise.all([
+    const deliveries = await Promise.all([
       resend.emails.send({
         from: 'ZYXEN Website <no-reply@zyxen.gr>',
         to: OWNER_EMAILS,
@@ -95,6 +95,9 @@ export default async function handler(req, res) {
       }),
     ]);
 
+    if (deliveries.some((delivery) => delivery.error)) {
+      return res.status(502).json({ error: 'Failed to send email' });
+    }
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error('Email send failed:', error?.message);
