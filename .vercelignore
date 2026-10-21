@@ -4,3 +4,16 @@ dist
 .env*
 src/pages/CrmDashboard.jsx
 data
+.claude
+.agents
+.ruflo
+.hermes
+.swarm
+CLAUDE.md
+AGENTS.md
+README.md
+components.json
+public/* 2.*
+public/projects/* 2.*
+public/cta-gules-f463ac.mp4
+public/cta-gules-f463ac-opt.mp4

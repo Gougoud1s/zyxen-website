@@ -56,6 +56,38 @@ export const partners = [
 
 export const projects = [
   {
+    slug: 'led7',
+    url: 'https://led7.gr/',
+    image: '/projects/led7.jpg',
+    tech: ['E-commerce', 'SEO', 'Google Ads'],
+    previewType: 'browser',
+    en: {
+      name: 'LED7',
+      category: 'E-commerce / Retail',
+      focus: 'E-commerce support, search visibility and digital marketing',
+      overview: 'Online store for LED lighting, electrical supplies and home products, serving retail customers and professionals.',
+      challenge: 'Supporting a broad product catalogue where customers need to find lighting and electrical products across multiple categories and brands.',
+      solution: 'Our work covers ongoing e-commerce support, technical SEO review and Google Ads account management, with attention to product discovery and the shopping journey.',
+      results: 'An ongoing collaboration supporting the LED7 storefront and its digital marketing activity.'
+    }
+  },
+  {
+    slug: 'artistishop',
+    url: 'https://artistishop.gr/',
+    image: '/projects/artistishop.jpg',
+    tech: ['E-commerce', 'Google Ads', 'Merchant Center'],
+    previewType: 'browser',
+    en: {
+      name: 'Artisti Shop',
+      category: 'E-commerce / Retail',
+      focus: 'E-commerce support and product advertising',
+      overview: 'Fashion e-commerce store bringing clothing, footwear and accessories together in a multi-brand shopping experience.',
+      challenge: 'Supporting an online fashion catalogue with product variations and keeping storefront information aligned with product advertising.',
+      solution: 'Our contribution includes technical support, Google Ads account review and Merchant Center product diagnostics, connecting store operations with advertising requirements.',
+      results: 'An ongoing collaboration supporting the Artisti Shop storefront and its product advertising channels.'
+    }
+  },
+  {
     slug: 'ips',
     leadAgency: { name: 'Redirect', url: 'https://redirect.gr' },
     url: 'https://ips.com.gr/',
