@@ -4,6 +4,7 @@ import { queryClientInstance } from '@/lib/query-client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/MarketingHome';
+import BusinessWebsite from './pages/BusinessWebsite';
 import About from './pages/About';
 import Services from './pages/Services';
 import Projects from './pages/Projects';
@@ -30,6 +31,9 @@ function App() {
             <Route path="/services/:slug" element={<ServiceDetail />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:slug" element={<ProjectDetail />} />
+            <Route path="/websites" element={<BusinessWebsite />} />
+            <Route path="/el/websites" element={<BusinessWebsite />} />
+            <Route path="/en/websites" element={<BusinessWebsite />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/cookie-policy" element={<CookiePolicy />} />

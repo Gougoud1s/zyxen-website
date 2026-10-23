@@ -1,10 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import '@/website-offer.css';
 import AnimatedSection from '@/components/AnimatedSection';
 import SEOMeta from '@/components/SEOMeta';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, MapPin, Clock, CheckCircle2, AlertCircle, ChevronDown } from 'lucide-react';
 
+const websiteService = 'Business website — €1,200 + VAT';
 const servicesList = [
+  websiteService,
+  'Website care — €45/month + VAT',
+  'Monthly development partnership',
   'Enterprise Web & CMS (Umbraco)',
   'High-Scale E-Commerce',
   'Custom SaaS & Mobile (Flutter)',
@@ -13,6 +19,10 @@ const servicesList = [
 ];
 
 const budgetRanges = [
+  '€1,200 website',
+  '€45/month website care',
+  '€1.5k — €5k',
+  '€5k — €10k',
   '€10k — €25k',
   '€25k — €50k',
   '€50k — €100k',
@@ -58,7 +68,11 @@ function FaqItem({ item }) {
 }
 
 export default function Contact({ embedded = false }) {
-  const [form, setForm] = useState({ name: '', email: '', service: '', budget: '', details: '', _hp: '' });
+  const [searchParams] = useSearchParams();
+  const websiteOffer = searchParams.get('offer') === 'website';
+  const greekOffer = websiteOffer && searchParams.get('language') !== 'en';
+  const label = (en, el) => greekOffer ? el : en;
+  const [form, setForm] = useState({ name: '', email: '', service: websiteOffer ? websiteService : '', budget: websiteOffer ? '€1,200 website' : '', details: websiteOffer ? `${label('I am interested in the €1,200 + VAT website.', 'Ενδιαφέρομαι για ιστοσελίδα έως 5 σελίδες με 1.200 € + ΦΠΑ.')}${searchParams.get('care') === 'yes' ? label(' With optional care at €45/month + VAT.', ' Με προαιρετική φροντίδα 45 €/μήνα + ΦΠΑ.') : ''}\n\n${label('My business: ', 'Η επιχείρησή μου: ')}` : '', _hp: '' });
   const [touched, setTouched] = useState({ name: false, email: false, service: false, budget: false, details: false });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -112,9 +126,9 @@ export default function Contact({ embedded = false }) {
   ];
 
   return (
-    <div className={embedded ? "experience-embedded-contact" : "bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden"}>
+    <div lang={greekOffer ? "el" : "en"} style={websiteOffer ? { fontFamily: "'Zyxen Inter', sans-serif" } : undefined} className={embedded ? "experience-embedded-contact" : "bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden"}>
       {!embedded && <SEOMeta
-        title="Start a Project | ZYXEN"
+        title={label("Start a Project | ZYXEN", "Η ιστοσελίδα της επιχείρησής σας | ZYXEN")}
         description="Tell ZYXEN what you want to build or improve. Websites, commerce, mobile apps and automation, from Athens to your team."
       />}
 
@@ -125,20 +139,22 @@ export default function Contact({ embedded = false }) {
           <AnimatedSection variant="depth">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-gray-200 bg-gray-50 mb-8 shadow-sm">
               <span className="text-xs uppercase tracking-[0.2em] font-semibold text-gray-800">
-                START A PROJECT
+                {label('START A PROJECT', 'Η ΙΣΤΟΣΕΛΙΔΑ ΣΑΣ')}
               </span>
             </div>
 
             <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-black max-w-5xl leading-[1.08]">
-              Tell us about your project.
+              {label('Tell us about your project.', 'Ας γνωρίσουμε την επιχείρησή σας.')}
             </h1>
 
             <p className="text-lg sm:text-xl text-gray-600 mt-8 max-w-3xl leading-relaxed font-normal">
-              What would you like to build or improve? Share your goals and timeline. We’ll respond within one business day.
+              {label('What would you like to build or improve? Share your goals and timeline. We’ll respond within one business day.', 'Πείτε μας τι κάνετε και τι χρειάζεστε. Θα σας απαντήσουμε μέσα σε μία εργάσιμη ημέρα.')}
             </p>
           </AnimatedSection>
         </div>
       </section>}
+
+      {websiteOffer && <aside className="website-offer offer-wrap" aria-label="Η προσφορά σας"><div className="offer-note"><strong>{label("Website with up to 5 pages · €1,200 + VAT", "Ιστοσελίδα έως 5 σελίδες · 1.200 € + ΦΠΑ")}</strong><p>{label("Tell us about your business and available content. Scope, schedule and cost are agreed before starting. An enquiry is not an order.", "Πείτε μας τι κάνει η επιχείρησή σας και τι υλικό διαθέτετε. Θα συμφωνήσουμε αντικείμενο, χρόνο και κόστος πριν ξεκινήσουμε. Η αποστολή αιτήματος δεν αποτελεί παραγγελία.")}</p></div></aside>}
 
       {/* CONTACT FORM & INFO SECTION */}
       <section className="py-24 bg-gray-50/50 border-b border-gray-200">
@@ -147,7 +163,7 @@ export default function Contact({ embedded = false }) {
           <div className="lg:col-span-2 flex flex-col justify-between">
             <AnimatedSection variant="depth">
               <h2 className="font-display text-2xl font-bold text-black mb-8">
-                Speak with ZYXEN
+                {label('Speak with ZYXEN', 'Μιλήστε με τη ZYXEN')}
               </h2>
 
               <div className="flex flex-col gap-8">
@@ -231,7 +247,7 @@ export default function Contact({ embedded = false }) {
                     <div className="grid sm:grid-cols-2 gap-6">
                       <div>
                         <label htmlFor="contact-name" className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                        Your Name
+                        {label('Your Name', 'Ονοματεπώνυμο')}
                         </label>
                         <input id="contact-name"
                           type="text"
@@ -240,7 +256,7 @@ export default function Contact({ embedded = false }) {
                             setForm({ ...form, name: e.target.value });
                             if (touched.name) setTouched({ ...touched, name: false });
                           }}
-                          placeholder="Your full name"
+                          placeholder={label('Your full name', 'Το όνομά σας')}
                           className={`w-full px-4 py-3.5 rounded-xl border text-black text-sm focus:outline-none transition-colors ${
                             touched.name && !form.name.trim()
                               ? 'border-red-500 bg-red-50/20'
@@ -256,7 +272,7 @@ export default function Contact({ embedded = false }) {
 
                       <div>
                         <label htmlFor="contact-email" className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                        Email Address
+                        {label('Email Address', 'Email')}
                         </label>
                         <input id="contact-email"
                           type="email"
@@ -282,7 +298,7 @@ export default function Contact({ embedded = false }) {
 
                     <div>
                       <label htmlFor="contact-service" className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                        What do you need help with?
+                        {label('What do you need help with?', 'Τι χρειάζεστε;')}
                       </label>
                       <select id="contact-service"
                         value={form.service}
@@ -312,7 +328,7 @@ export default function Contact({ embedded = false }) {
 
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                        Budget range (optional)
+                        {label('Budget range (optional)', 'Προϋπολογισμός (προαιρετικό)')}
                       </label>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                         {budgetRanges.map((b) => (
@@ -335,7 +351,7 @@ export default function Contact({ embedded = false }) {
 
                     <div>
                       <label htmlFor="contact-details" className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2">
-                        What would you like to achieve?
+                        {label('What would you like to achieve?', 'Πείτε μας λίγα λόγια για την επιχείρησή σας')}
                       </label>
                       <textarea id="contact-details"
                         rows={5}
@@ -344,7 +360,7 @@ export default function Contact({ embedded = false }) {
                           setForm({ ...form, details: e.target.value });
                           if (touched.details) setTouched({ ...touched, details: false });
                         }}
-                        placeholder="Tell us about your business, what needs to change, and when you would like to launch."
+                        placeholder={label('Tell us about your business, what needs to change, and when you would like to launch.', 'Υπηρεσίες, διαθέσιμο υλικό και πότε θα θέλατε να ξεκινήσουμε.')}
                         className={`w-full px-4 py-3.5 rounded-xl border text-black text-sm focus:outline-none transition-colors resize-none ${
                           touched.details && !form.details.trim()
                             ? 'border-red-500 bg-red-50/20'
@@ -368,7 +384,7 @@ export default function Contact({ embedded = false }) {
                       aria-busy={sending}
                       className="w-full bg-black text-white py-4 rounded-full font-bold text-sm tracking-wide uppercase hover:bg-gray-800 disabled:opacity-60 disabled:cursor-wait transition-colors shadow-lg mt-2"
                     >
-                      {sending ? 'Sending...' : 'Send enquiry'}
+                      {sending ? label('Sending...', 'Αποστολή...') : label('Send enquiry', 'Αποστολή αιτήματος')}
                     </button>
                   </form>
                 )}

@@ -1,3 +1,4 @@
+import WebsiteOffer from '@/components/WebsiteOffer';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { services } from '@/lib/data';
@@ -43,6 +44,8 @@ export default function Services() {
           <AnimatedSVGObject type="grid-nodes" className="w-40 h-40" />
         </div>
       </section>
+
+      <WebsiteOffer />
 
       {/* SERVICES LIST — 21ST.DEV SPOTLIGHT CARDS */}
       <section className="py-24 border-b border-gray-200 bg-gray-50/50">

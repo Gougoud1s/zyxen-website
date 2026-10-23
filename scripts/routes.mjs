@@ -7,6 +7,7 @@ export const LANGS = ['el', 'en'];
 // Localized path suffixes (without the /{lang} prefix). '' === the home page.
 export const localizedPaths = [
   { path: '', priority: 1.0, changefreq: 'weekly' },
+  { path: '/websites', priority: 0.9, changefreq: 'monthly' },
   { path: '/services', priority: 0.9, changefreq: 'monthly' },
   { path: '/projects', priority: 0.9, changefreq: 'monthly' },
   { path: '/contact', priority: 0.8, changefreq: 'monthly' },

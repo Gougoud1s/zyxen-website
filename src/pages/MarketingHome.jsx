@@ -1,3 +1,4 @@
+import WebsiteOffer from '@/components/WebsiteOffer';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
@@ -35,6 +36,8 @@ export default function MarketingHome() {
         <figcaption><div><span className="m-label">Selected contribution / Hospitality</span><strong>Creta Maris</strong><span>{heroProject.en.focus}</span><span>Lead agency: {heroProject.leadAgency.name}</span></div><Link className="m-icon-link" to={localePath(`/projects/${heroProject.slug}`)} aria-label="View Creta Maris case study"><ArrowUpRight /></Link></figcaption>
       </figure>
     </section>
+
+    <WebsiteOffer />
 
     <section className="m-section m-wrap" id="selected-work" aria-labelledby="work-heading">
       <div className="m-section-head"><div><p className="m-label">01 / Selected work</p><h2 id="work-heading">Experience you<br />can explore.</h2></div><div><p>From hospitality and industry to public information and premium brands.</p><Link className="m-text-link" to={localePath('/projects')}>View all projects <ArrowUpRight size={18} /></Link></div></div>
