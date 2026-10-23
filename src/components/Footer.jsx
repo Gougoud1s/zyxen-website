@@ -10,7 +10,7 @@ export default function Footer() {
     { to: localePath('/'), label: 'Home' },
     { to: localePath('/projects'), label: 'Work' },
     { to: localePath('/services'), label: 'Services' },
-    { to: '/websites', label: 'Website €1,200' },
+    { to: '/websites', label: 'Business Websites' },
     { to: localePath('/about'), label: 'About' },
     { to: localePath('/contact'), label: 'Contact' },
   ];
