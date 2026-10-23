@@ -6,10 +6,10 @@ import SEOMeta from '@/components/SEOMeta';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, MapPin, Clock, CheckCircle2, AlertCircle, ChevronDown } from 'lucide-react';
 
-const websiteService = 'Business website — €1,200 + VAT';
+const websiteService = 'Business website';
 const servicesList = [
   websiteService,
-  'Website care — €45/month + VAT',
+  'Website care',
   'Monthly development partnership',
   'Enterprise Web & CMS (Umbraco)',
   'High-Scale E-Commerce',
@@ -19,8 +19,7 @@ const servicesList = [
 ];
 
 const budgetRanges = [
-  '€1,200 website',
-  '€45/month website care',
+  'Discuss the website package',
   '€1.5k — €5k',
   '€5k — €10k',
   '€10k — €25k',
@@ -72,7 +71,7 @@ export default function Contact({ embedded = false }) {
   const websiteOffer = searchParams.get('offer') === 'website';
   const greekOffer = websiteOffer && searchParams.get('language') === 'el';
   const label = (en, el) => greekOffer ? el : en;
-  const [form, setForm] = useState({ name: '', email: '', service: websiteOffer ? websiteService : '', budget: websiteOffer ? '€1,200 website' : '', details: websiteOffer ? `${label('I am interested in the €1,200 + VAT website.', 'Ενδιαφέρομαι για ιστοσελίδα έως 5 σελίδες με 1.200 € + ΦΠΑ.')}${searchParams.get('care') === 'yes' ? label(' With optional care at €45/month + VAT.', ' Με προαιρετική φροντίδα 45 €/μήνα + ΦΠΑ.') : ''}\n\n${label('My business: ', 'Η επιχείρησή μου: ')}` : '', _hp: '' });
+  const [form, setForm] = useState({ name: '', email: '', service: websiteOffer ? websiteService : '', budget: websiteOffer ? 'Discuss the website package' : '', details: websiteOffer ? `${label('I am interested in the business website package.', 'Ενδιαφέρομαι για το πακέτο ιστοσελίδας έως 5 σελίδες.')}${searchParams.get('care') === 'yes' ? label(' With optional website care.', ' Με προαιρετική φροντίδα ιστοσελίδας.') : ''}\n\n${label('My business: ', 'Η επιχείρησή μου: ')}` : '', _hp: '' });
   const [touched, setTouched] = useState({ name: false, email: false, service: false, budget: false, details: false });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -154,7 +153,7 @@ export default function Contact({ embedded = false }) {
         </div>
       </section>}
 
-      {websiteOffer && <aside className="website-offer offer-wrap" aria-label="Η προσφορά σας"><div className="offer-note"><strong>{label("Website with up to 5 pages · €1,200 + VAT", "Ιστοσελίδα έως 5 σελίδες · 1.200 € + ΦΠΑ")}</strong><p>{label("Tell us about your business and available content. Scope, schedule and cost are agreed before starting. An enquiry is not an order.", "Πείτε μας τι κάνει η επιχείρησή σας και τι υλικό διαθέτετε. Θα συμφωνήσουμε αντικείμενο, χρόνο και κόστος πριν ξεκινήσουμε. Η αποστολή αιτήματος δεν αποτελεί παραγγελία.")}</p></div></aside>}
+      {websiteOffer && <aside className="website-offer offer-wrap" aria-label="Η προσφορά σας"><div className="offer-note"><strong>{label("Business website with up to 5 pages", "Ιστοσελίδα επιχείρησης έως 5 σελίδες")}</strong><p>{label("Tell us about your business and available content. Scope, schedule and cost are agreed before starting. An enquiry is not an order.", "Πείτε μας τι κάνει η επιχείρησή σας και τι υλικό διαθέτετε. Θα συμφωνήσουμε αντικείμενο, χρόνο και κόστος πριν ξεκινήσουμε. Η αποστολή αιτήματος δεν αποτελεί παραγγελία.")}</p></div></aside>}
 
       {/* CONTACT FORM & INFO SECTION */}
       <section className="py-24 bg-gray-50/50 border-b border-gray-200">
