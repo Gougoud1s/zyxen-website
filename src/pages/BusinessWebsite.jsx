@@ -5,10 +5,10 @@ import SEOMeta from '@/components/SEOMeta';
 import '@/website-offer.css';
 
 export default function BusinessWebsite() {
-  const english = useLocation().pathname.startsWith('/en/');
+  const english = !useLocation().pathname.startsWith('/el/');
   const [care, setCare] = useState(false);
   const copy = (el, en) => english ? en : el;
-  const contact = `/contact?offer=website${english ? '&language=en' : ''}${care ? '&care=yes' : ''}`;
+  const contact = `/contact?offer=website${english ? '&language=en' : '&language=el'}${care ? '&care=yes' : ''}`;
   const inclusions = copy([
     ['Έως 5 σελίδες', 'Αρχική, η επιχείρηση, υπηρεσίες, έργα και επικοινωνία — προσαρμοσμένες στη δουλειά σας.'],
     ['Σωστή εμφάνιση σε κινητό', 'Ευανάγνωστο περιεχόμενο, καθαρή πλοήγηση και εύκολη πρόσβαση στο τηλέφωνό σας.'],
@@ -26,7 +26,7 @@ export default function BusinessWebsite() {
   ]);
 
   return <div className="website-offer" lang={english ? 'en' : 'el'}>
-    <SEOMeta title={copy('Ιστοσελίδα επιχείρησης με 1.200 € + ΦΠΑ | ZYXEN', 'Business website for €1,200 + VAT | ZYXEN')}
+    <SEOMeta language={english ? 'en' : 'el'} title={copy('Ιστοσελίδα επιχείρησης με 1.200 € + ΦΠΑ | ZYXEN', 'Business website for €1,200 + VAT | ZYXEN')}
       description={copy('Επαγγελματική ιστοσελίδα έως 5 σελίδες με 1.200 € + ΦΠΑ. Προαιρετική τεχνική φροντίδα 45 €/μήνα. Σαφές αντικείμενο, δύο γύροι διορθώσεων και παράδοση.', 'A professional website with up to 5 pages for €1,200 + VAT. Optional €45/month website care. Clear scope, two revision rounds and handover.')}
       jsonLd={{ '@context': 'https://schema.org', '@type': 'Service', name: 'ZYXEN Business Website', serviceType: 'Website development', provider: { '@type': 'Organization', name: 'ZYXEN', url: 'https://www.zyxen.gr' }, areaServed: 'GR', offers: { '@type': 'Offer', price: '1200', priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', price: '1200', priceCurrency: 'EUR', valueAddedTaxIncluded: false } } }} />
     <section className="offer-wrap offer-hero">
@@ -35,7 +35,7 @@ export default function BusinessWebsite() {
         <h1>{copy('Η δουλειά σας αξίζει μια σωστή ιστοσελίδα.', 'Your business deserves a proper website.')}</h1>
         <p className="offer-lead">{copy('Δείξτε τι κάνετε, παρουσιάστε τα έργα σας και δώστε στους πελάτες έναν εύκολο τρόπο να σας βρουν και να επικοινωνήσουν.', 'Show what you do, share your work and give customers an easy way to find and contact you.')}</p>
         <Link className="offer-button" to={contact}>{copy('Ας μιλήσουμε για το site σας', 'Let’s discuss your website')} <ArrowUpRight size={18} aria-hidden="true" /></Link>
-        <Link className="offer-language" to={english ? '/websites' : '/en/websites'}>{english ? 'Ελληνικά' : 'English'}</Link>
+        <Link className="offer-language" to={english ? '/el/websites' : '/websites'}>{english ? 'Ελληνικά' : 'English'}</Link>
       </div>
       <aside className="offer-summary" aria-label={copy('Κόστος ιστοσελίδας', 'Website pricing')}>
         <p className="offer-label">{copy('Συγκεκριμένο αντικείμενο. Καθαρή τιμή.', 'Defined scope. Clear price.')}</p>

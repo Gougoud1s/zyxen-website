@@ -70,7 +70,7 @@ function FaqItem({ item }) {
 export default function Contact({ embedded = false }) {
   const [searchParams] = useSearchParams();
   const websiteOffer = searchParams.get('offer') === 'website';
-  const greekOffer = websiteOffer && searchParams.get('language') !== 'en';
+  const greekOffer = websiteOffer && searchParams.get('language') === 'el';
   const label = (en, el) => greekOffer ? el : en;
   const [form, setForm] = useState({ name: '', email: '', service: websiteOffer ? websiteService : '', budget: websiteOffer ? '€1,200 website' : '', details: websiteOffer ? `${label('I am interested in the €1,200 + VAT website.', 'Ενδιαφέρομαι για ιστοσελίδα έως 5 σελίδες με 1.200 € + ΦΠΑ.')}${searchParams.get('care') === 'yes' ? label(' With optional care at €45/month + VAT.', ' Με προαιρετική φροντίδα 45 €/μήνα + ΦΠΑ.') : ''}\n\n${label('My business: ', 'Η επιχείρησή μου: ')}` : '', _hp: '' });
   const [touched, setTouched] = useState({ name: false, email: false, service: false, budget: false, details: false });

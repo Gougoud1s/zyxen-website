@@ -8,9 +8,9 @@ const OG_IMAGE = `${BASE}/og-image.jpg`;
  * SEO meta tag manager — updates document <head> on route change.
  * Usage: <SEOMeta title="..." description="..." noindex jsonLd={obj|array} />
  */
-export default function SEOMeta({ title, description, canonical, image, noindex = false, jsonLd }) {
+export default function SEOMeta({ title, description, canonical, image, noindex = false, jsonLd, language }) {
   const { pathname } = useLocation();
-  const isGreek = pathname.startsWith('/el') || pathname === '/' || (!pathname.startsWith('/en'));
+  const isGreek = language ? language === 'el' : pathname.startsWith('/el') || pathname === '/' || (!pathname.startsWith('/en'));
   const lang = isGreek ? 'el' : 'en';
 
   const defaultTitle = isGreek
