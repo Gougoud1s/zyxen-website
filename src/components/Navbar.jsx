@@ -41,7 +41,7 @@ export default function Navbar() {
       >
         <div className="flex items-center justify-between gap-4">
           {/* Bespoke Architectural Logo Lockup */}
-          <Link to={localePath('/')} className="flex-shrink-0" aria-label="ZYXEN SOFTWARE STUDIO — Home">
+          <Link to={localePath('/')} className="flex-shrink-0">
             <ZyxenLogo size={34} />
           </Link>
 
