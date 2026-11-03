@@ -1,3 +1,4 @@
+import { projectStories } from '@/lib/projectStories';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
@@ -18,7 +19,7 @@ export default function Projects() {
 
   return (
     <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden">
-      <SEOMeta
+      <SEOMeta language="en"
         title="Featured Work & Case Studies | ZYXEN"
         description="Explore engineering case studies across high-scale e-commerce, custom ERP/SaaS platforms, and cross-platform mobile apps built by ZYXEN."
       />
@@ -119,9 +120,10 @@ export default function Projects() {
                   {/* CONTENT BODY */}
                   <div className="p-8 sm:p-10 flex flex-col justify-between flex-grow">
                     <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                      {proj.overview}
+                      {projectStories[p.slug]?.headline || proj.overview}
                     </p>
 
+                    {projectStories[p.slug] && <p className="mt-4 text-sm font-semibold text-[#806619]">Read the full case study →</p>}
                     {p.leadAgency && <p className="mt-4 text-xs text-gray-600">Lead agency: {p.leadAgency.name}</p>}
                     <div className="mt-8 pt-6 border-t border-gray-100">
                       <div className="flex flex-wrap gap-2 mb-4">

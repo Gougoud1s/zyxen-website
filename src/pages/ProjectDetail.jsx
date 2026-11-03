@@ -1,3 +1,5 @@
+import ProjectStory from '@/components/ProjectStory';
+import { projectStories } from '@/lib/projectStories';
 import { useParams, Link } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import { projects } from '@/lib/data';
@@ -14,7 +16,7 @@ export default function ProjectDetail() {
   if (!project) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center bg-white text-[#121212]">
-        <SEOMeta noindex title="Case Study | ZYXEN" />
+        <SEOMeta language="en" noindex title="Case Study | ZYXEN" />
         <div className="text-center">
           <p className="text-gray-500">Project case study not found.</p>
           <Link to={localePath('/projects')} className="text-black font-semibold text-sm mt-4 inline-block underline">
@@ -26,6 +28,7 @@ export default function ProjectDetail() {
   }
 
   const p = project.en || project;
+  const story = projectStories[slug];
   const related = projects.filter((r) => r.slug !== slug).slice(0, 3);
 
   const metaTitle = `${p.name} — Case Study | ZYXEN`;
@@ -38,7 +41,7 @@ export default function ProjectDetail() {
 
   return (
     <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden">
-      <SEOMeta title={metaTitle} description={metaDesc} jsonLd={breadcrumbs} />
+      <SEOMeta language="en" title={metaTitle} description={metaDesc} jsonLd={breadcrumbs} />
 
       {/* HERO SECTION */}
       <section className="relative py-20 sm:py-28 border-b border-gray-200 bg-white">
@@ -96,7 +99,7 @@ export default function ProjectDetail() {
       </section>
 
       {/* METRICS & KEY IMPACT BANNER */}
-      {project.metrics && project.metrics.length > 0 && (
+      {!story && project.metrics && project.metrics.length > 0 && (
         <section className="py-12 bg-black text-white border-b border-gray-800">
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
             <h2 className="text-xs font-mono uppercase tracking-widest text-gray-300 mb-8">Project figures</h2>
@@ -173,12 +176,13 @@ export default function ProjectDetail() {
                 </div>
               </div>
             </div>
+            {story && <p className="text-sm text-gray-600 max-w-5xl mx-auto mt-6 leading-relaxed">{story.caption}</p>}
           </AnimatedSection>
         </div>
       </section>
 
       {/* CASE STUDY DEEP DIVE */}
-      <section className="py-24 border-b border-gray-200 bg-white">
+      {story ? <ProjectStory story={story} name={p.name} /> : <section className="py-24 border-b border-gray-200 bg-white">
         <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-12 flex flex-col gap-16">
           {[
             { label: '01 / THE CHALLENGE', content: p.challenge },
@@ -195,7 +199,7 @@ export default function ProjectDetail() {
             </AnimatedSection>
           ))}
         </div>
-      </section>
+      </section>}
 
       {/* TECH STACK */}
       <section className="py-16 bg-gray-50 border-b border-gray-200">

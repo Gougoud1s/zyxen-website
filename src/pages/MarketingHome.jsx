@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import ServiceOffers from '@/components/ServiceOffers';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import { projects, services, partners } from '@/lib/data';
@@ -6,22 +6,14 @@ import { useLanguage } from '@/lib/i18n';
 import SEOMeta from '@/components/SEOMeta';
 import '@/marketing.css';
 
-const featuredSlugs = ['creta-maris', 'victoria-de-borbon', 'paxisarkia', 'ips'];
+const featuredSlugs = ['creta-maris', 'led7', 'artistishop', 'ips'];
 const featured = featuredSlugs.map(slug => projects.find(project => project.slug === slug));
-const needs = [
-  { label: 'A better website', slug: 'web-experiences-seo', title: 'Turn your website into a clearer path to your business.', detail: 'Start with the customer journey. We bring together content, interface design, technical SEO and page performance.', deliverables: 'Website review · UX & development · Technical SEO' },
-  { label: 'An easier way to sell', slug: 'commerce-nopcommerce', title: 'Connect the storefront to the way your business works.', detail: 'Product catalogues, customer ordering and vendor operations, built around the people who use them every day.', deliverables: 'B2B & B2C commerce · Ordering flows · System integrations' },
-  { label: 'A useful app', slug: 'flutter-web-mobile', title: 'Put the tools your customers and team need within reach.', detail: 'A shared Flutter codebase for mobile and web, connected to your existing services and ready for release.', deliverables: 'Product flows · Flutter development · API integration' },
-  { label: 'Less manual work', slug: 'ai-integrations', title: 'Spend less time moving information between systems.', detail: 'Identify a repetitive workflow, connect the right tools and introduce AI where it solves a specific problem.', deliverables: 'Workflow mapping · AI assistants · Automation' },
-];
 
 export default function MarketingHome() {
   const { localePath, t } = useLanguage();
-  const [activeNeed, setActiveNeed] = useState(0);
-  const need = needs[activeNeed];
   const heroProject = featured[0];
   return <div className="marketing">
-    <SEOMeta title="Websites, Apps & Business Software | ZYXEN" description="ZYXEN builds websites, commerce platforms, mobile apps and business automation. Explore our project contributions and discuss your next project." jsonLd={{ '@context': 'https://schema.org', '@type': 'Organization', name: 'ZYXEN', url: 'https://www.zyxen.gr', email: 'hello@zyxen.gr' }} />
+    <SEOMeta language="en" title="Websites, Apps & Business Software | ZYXEN" description="ZYXEN builds websites, commerce platforms, mobile apps and business automation. Explore our project contributions and discuss your next project." jsonLd={{ '@context': 'https://schema.org', '@type': 'Organization', name: 'ZYXEN', url: 'https://www.zyxen.gr', email: 'hello@zyxen.gr' }} />
     <section className="m-hero m-wrap" aria-labelledby="home-title">
       <div className="m-hero-copy">
         <p className="m-label">Software studio / Athens, Greece</p>
@@ -46,12 +38,7 @@ export default function MarketingHome() {
       </article>)}</div>
     </section>
 
-    <section className="m-needs" aria-labelledby="needs-heading"><div className="m-wrap m-section">
-      <div className="m-section-head"><div><p className="m-label">02 / What do you need?</p><h2 id="needs-heading">Start with the problem.</h2></div><p>Choose what you want to improve. We’ll work out the right technology together.</p></div>
-      <div className="m-need-selector"><div className="m-need-options" role="group" aria-label="Choose your business need">{needs.map((item, index) => <button key={item.slug} type="button" aria-pressed={index === activeNeed} aria-controls="need-detail" onClick={() => setActiveNeed(index)}><span>0{index + 1}</span>{item.label}<ArrowRight size={18} /></button>)}</div>
-        <div className="m-need-detail" id="need-detail" aria-live="polite" aria-atomic="true"><h3>{need.title}</h3><p>{need.detail}</p><p className="m-deliverables">{need.deliverables}</p><Link className="m-button" to={localePath(`/services/${need.slug}`)}>Explore service <ArrowUpRight size={18} /></Link></div>
-      </div>
-    </div></section>
+    <ServiceOffers />
 
     <section className="m-wrap m-section" aria-labelledby="services-heading"><div className="m-section-head"><div><p className="m-label">03 / Our capabilities</p><h2 id="services-heading">Built around your business.</h2></div><p>Practical design and engineering, from the first brief to ongoing improvements.</p></div>
       <div className="m-services">{services.map((service, index) => <Link key={service.slug} to={localePath(`/services/${service.slug}`)}><span className="m-label">0{index + 1}</span><h3>{service.en.name}</h3><p>{service.en.short}</p><ArrowUpRight size={22} /></Link>)}</div>

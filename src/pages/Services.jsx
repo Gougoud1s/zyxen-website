@@ -1,3 +1,4 @@
+import ServiceOffers from '@/components/ServiceOffers';
 import WebsiteOffer from '@/components/WebsiteOffer';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
@@ -14,7 +15,7 @@ export default function Services() {
 
   return (
     <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden">
-      <SEOMeta
+      <SEOMeta language="en"
         title="Engineering Services — Umbraco, .NET, Mobile & AI | ZYXEN"
         description="Comprehensive software engineering capabilities: enterprise CMS portals, high-scale e-commerce, native mobile applications, and AI integrations."
       />
@@ -45,6 +46,7 @@ export default function Services() {
         </div>
       </section>
 
+      <ServiceOffers />
       <WebsiteOffer />
 
       {/* SERVICES LIST — 21ST.DEV SPOTLIGHT CARDS */}

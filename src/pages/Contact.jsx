@@ -68,10 +68,14 @@ function FaqItem({ item }) {
 
 export default function Contact({ embedded = false }) {
   const [searchParams] = useSearchParams();
+  const selectedOffer = {
+    commerce: { service: 'High-Scale E-Commerce', details: 'I would like to discuss an e-commerce project.\n\nNew store or existing store: \nMy catalogue and requirements: ' },
+    custom: { service: 'AI Integration & Automation', details: 'I would like to discuss custom software or automation.\n\nThe process I want to improve: \nSystems involved: ' },
+  }[searchParams.get('offer')];
   const websiteOffer = searchParams.get('offer') === 'website';
   const greekOffer = websiteOffer && searchParams.get('language') === 'el';
   const label = (en, el) => greekOffer ? el : en;
-  const [form, setForm] = useState({ name: '', email: '', service: websiteOffer ? websiteService : '', budget: websiteOffer ? 'Discuss the website package' : '', details: websiteOffer ? `${label('I am interested in the business website package.', 'Ενδιαφέρομαι για το πακέτο ιστοσελίδας έως 5 σελίδες.')}${searchParams.get('care') === 'yes' ? label(' With optional website care.', ' Με προαιρετική φροντίδα ιστοσελίδας.') : ''}\n\n${label('My business: ', 'Η επιχείρησή μου: ')}` : '', _hp: '' });
+  const [form, setForm] = useState({ name: '', email: '', service: websiteOffer ? websiteService : selectedOffer?.service || '', budget: websiteOffer ? 'Discuss the website package' : '', details: websiteOffer ? `${label('I am interested in the business website package.', 'Ενδιαφέρομαι για το πακέτο ιστοσελίδας έως 5 σελίδες.')}${searchParams.get('care') === 'yes' ? label(' With optional website care.', ' Με προαιρετική φροντίδα ιστοσελίδας.') : ''}\n\n${label('My business: ', 'Η επιχείρησή μου: ')}` : selectedOffer?.details || '', _hp: '' });
   const [touched, setTouched] = useState({ name: false, email: false, service: false, budget: false, details: false });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);

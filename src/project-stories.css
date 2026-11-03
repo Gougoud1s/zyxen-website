@@ -1,0 +1,38 @@
+.story-wrap { max-width: 1280px; margin-inline: auto; padding-inline: 48px; }
+.project-story, .engagements { color: #171717; background: #fff; padding-block: 96px; border-bottom: 1px solid #deded9; }
+.engagements { background: #f5f4f0; scroll-margin-top: 128px; }
+.story-label { color: #806619; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .2em; line-height: 1.6; }
+.story-heading { display: grid; grid-template-columns: 1fr 1.5fr; gap: 64px; margin-bottom: 64px; align-items: start; }
+.story-heading h2 { font-size: clamp(32px, 4vw, 48px); line-height: 1.15; letter-spacing: -.04em; font-weight: 600; }
+.story-heading > div h2 { margin-top: 16px; }
+.story-heading p:not(.story-label), .story-chapter p, .offer-details p, .offer-details dd, .story-next p:not(.story-label) { font-size: 16px; line-height: 1.75; color: #525252; max-width: 65ch; }
+.story-chapter { display: grid; grid-template-columns: 1fr 1.5fr; gap: 64px; padding-block: 40px; border-top: 1px solid #deded9; }
+.story-chapter h2 { font-size: 24px; letter-spacing: -.025em; font-weight: 600; }
+.story-chapter h2 span { display: block; color: #806619; font-size: 11px; letter-spacing: .2em; margin-bottom: 16px; }
+.story-work + .story-work { margin-top: 32px; }
+.story-work h3, .offer-details h4, .offer-details dt { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.story-next { margin-top: 40px; padding: 40px; background: #f5f4f0; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.story-next h2 { font-size: 28px; line-height: 1.25; letter-spacing: -.03em; margin-block: 16px; }
+.story-button { display: inline-flex; align-items: center; justify-content: center; gap: 16px; background: #171717; color: #fff; padding: 16px 24px; border-radius: 4px; font-size: 14px; font-weight: 600; flex-shrink: 0; }
+.story-button svg, .story-link svg { flex-shrink: 0; }
+.story-link { display: flex; align-items: center; gap: 8px; width: fit-content; margin-top: 24px; font-size: 14px; text-decoration: underline; text-underline-offset: 4px; }
+.offer-selector { display: grid; grid-template-columns: 1fr 1.5fr; gap: 64px; align-items: start; }
+.offer-choices { display: flex; flex-direction: column; }
+.offer-choices button { display: flex; align-items: center; gap: 16px; text-align: left; padding: 24px 16px; border-bottom: 1px solid #c6c6bf; font-size: 16px; }
+.offer-choices button svg { flex-shrink: 0; margin-left: auto; }
+.offer-choices button[aria-pressed=true] { background: #171717; color: #fff; }
+.offer-choices button[aria-pressed=true] .story-label { color: #e0cea0; }
+.offer-details h3 { font-size: 32px; line-height: 1.25; letter-spacing: -.035em; font-weight: 600; margin-bottom: 16px; }
+.offer-details h4 { margin-top: 32px; }
+.offer-details ul { margin-block: 16px 32px; padding-left: 20px; list-style: disc; }
+.offer-details li { padding-block: 4px; line-height: 1.6; }
+.offer-details dl > div { border-top: 1px solid #c6c6bf; padding-block: 24px; }
+.offer-details .offer-pricing { font-size: 14px; margin-block: 24px; }
+.story-button, .story-link, .offer-choices button { transition: background-color 200ms cubic-bezier(.16,1,.3,1), color 200ms cubic-bezier(.16,1,.3,1), transform 200ms cubic-bezier(.16,1,.3,1); }
+.story-button:hover { background: #383838; }
+.offer-choices button:hover:not([aria-pressed=true]) { background: #e8e7e0; }
+.story-button:active, .offer-choices button:active { transform: translateY(1px); }
+.story-button:focus-visible, .story-link:focus-visible, .offer-choices button:focus-visible { outline: 2px solid #806619; outline-offset: 4px; }
+@media(max-width: 900px) { .story-wrap { padding-inline: 32px; } .story-heading, .story-chapter, .offer-selector { gap: 32px; } .story-next { align-items: flex-start; flex-direction: column; } }
+@media(max-width: 640px) { .story-wrap { padding-inline: 24px; } .project-story, .engagements { padding-block: 56px; } .story-heading, .story-chapter, .offer-selector { grid-template-columns: 1fr; gap: 24px; } .story-heading { margin-bottom: 40px; } .story-chapter { padding-block: 32px; } .story-chapter h2 span { display: inline; margin-right: 16px; } .story-next { padding: 24px; } .story-button { white-space: normal; } .offer-details h3 { font-size: 28px; } }
+@media(prefers-reduced-motion: reduce) { .story-button, .story-link, .offer-choices button { transition: none; } }
