@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const BASE = 'https://www.zyxen.gr';
+import { SITE_URL as BASE, canonicalPath, languageAlternates, organizationSchema, websiteSchema } from '@/lib/seo';
 const OG_IMAGE = `${BASE}/og-image.jpg`;
 
 /**
@@ -10,22 +10,16 @@ const OG_IMAGE = `${BASE}/og-image.jpg`;
  */
 export default function SEOMeta({ title, description, canonical, image, noindex = false, jsonLd, language }) {
   const { pathname } = useLocation();
-  const isGreek = language ? language === 'el' : pathname.startsWith('/el') || pathname === '/' || (!pathname.startsWith('/en'));
+  const isGreek = language === 'el' || pathname === '/el/websites';
   const lang = isGreek ? 'el' : 'en';
-
-  const defaultTitle = isGreek
-    ? 'Κατασκευή Ιστοσελίδων & Κατασκευή Εφαρμογών (Apps) | ZYXEN Digital Agency'
-    : 'Website Creation & Mobile App Development Agency | ZYXEN Software Studio';
-
-  const defaultDesc = isGreek
-    ? 'Εξειδικευμένη εταιρεία στην κατασκευή ιστοσελίδων, κατασκευή e-shop & δημιουργία mobile εφαρμογών (iOS & Android). Κορυφαία ταχύτητα φόρτωσης, SEO & Awwwards design.'
-    : 'Leading software agency specializing in website creation, custom web applications & iOS/Android app development. High-performance SEO & enterprise digital platforms.';
+  const defaultTitle = 'Websites, E-commerce & Custom Software | ZYXEN Greece';
+  const defaultDesc = 'ZYXEN builds business websites, e-commerce platforms, mobile apps and automation. Explore our project contributions and discuss your requirements.';
 
   const fullTitle = title || defaultTitle;
   const desc = description || defaultDesc;
   
   // Strip trailing slash to keep one canonical form per page.
-  const cleanPath = pathname.length > 1 ? pathname.replace(/\/$/, '') : pathname;
+  const cleanPath = canonicalPath(pathname);
   const fullCanonical = canonical || `${BASE}${cleanPath}`;
   const ogImage = image || OG_IMAGE;
 
@@ -49,34 +43,34 @@ export default function SEOMeta({ title, description, canonical, image, noindex 
     setMeta('property', 'og:image:width', '1200');
     setMeta('property', 'og:image:height', '630');
     setMeta('property', 'og:locale', isGreek ? 'el_GR' : 'en_US');
-    setMeta('property', 'og:locale:alternate', isGreek ? 'en_US' : 'el_GR');
+    document.querySelectorAll('meta[property="og:locale:alternate"]').forEach(el => el.remove());
+    if (languageAlternates(cleanPath).length) setMeta('property', 'og:locale:alternate', isGreek ? 'en_US' : 'el_GR');
 
     // Twitter
     setMeta('name', 'twitter:card', 'summary_large_image');
+    setMeta('name', 'twitter:url', fullCanonical);
     setMeta('name', 'twitter:title', fullTitle);
     setMeta('name', 'twitter:description', desc);
     setMeta('name', 'twitter:image', ogImage);
 
-    // Hreflang — el / en / x-default
-    const langPath = cleanPath.replace(/^\/(el|en)/, '');
-    setHreflang('el', `${BASE}/el${langPath}`);
-    setHreflang('en', `${BASE}/en${langPath}`);
-    setHreflang('x-default', `${BASE}/el${langPath}`);
+    // Only advertise translations that actually exist.
+    document.querySelectorAll('link[hreflang]').forEach(el => el.remove());
+    languageAlternates(cleanPath).forEach(item => setHreflang(item.lang, `${BASE}${item.path}`));
 
     // Dynamic BreadcrumbList JSON-LD Schema
-    const segments = cleanPath.split('/').filter(Boolean);
+    const segments = cleanPath.replace(/^\/el(?=\/)/, '').split('/').filter(Boolean);
     const breadcrumbItems = [
       {
         '@type': 'ListItem',
         position: 1,
         name: isGreek ? 'Αρχική' : 'Home',
-        item: `${BASE}/${lang}`
+        item: `${BASE}/`
       }
     ];
 
-    if (segments.length > 1) {
-      let currentAcc = `${BASE}/${lang}`;
-      segments.slice(1).forEach((seg, idx) => {
+    if (segments.length > 0) {
+      let currentAcc = cleanPath === '/el/websites' ? `${BASE}/el` : BASE;
+      segments.forEach((seg, idx) => {
         currentAcc += `/${seg}`;
         breadcrumbItems.push({
           '@type': 'ListItem',
@@ -93,8 +87,10 @@ export default function SEOMeta({ title, description, canonical, image, noindex 
       itemListElement: breadcrumbItems
     };
 
-    // Combine custom page JSON-LD with auto Breadcrumb Schema
-    const pageLd = jsonLd ? (Array.isArray(jsonLd) ? [breadcrumbSchema, ...jsonLd] : [breadcrumbSchema, jsonLd]) : [breadcrumbSchema];
+    const custom = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+    const pageLd = [organizationSchema, websiteSchema,
+      ...(custom.some(item => item['@type'] === 'BreadcrumbList') ? [] : [breadcrumbSchema]),
+      ...custom.filter(item => item['@type'] !== 'Organization' && item['@type'] !== 'WebSite')];
     setJsonLd(pageLd);
 
   }, [fullTitle, desc, fullCanonical, ogImage, noindex, jsonLd, lang, isGreek, cleanPath]);

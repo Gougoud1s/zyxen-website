@@ -14,8 +14,8 @@ const SETTLE_MS = 250; // let React render + SEOMeta effects run
 const CONCURRENCY = 8; // process 8 pages in parallel for ultra-fast builds
 
 if (!existsSync(join(DIST, 'index.html'))) {
-  console.warn('⚠ prerender: dist/index.html missing — skipping.');
-  process.exit(0);
+  console.warn('⚠ prerender: dist/index.html missing — build failed.');
+  process.exit(1);
 }
 
 // In-process static file server with SPA fallback
@@ -59,17 +59,18 @@ try {
     });
   }
 } catch (e) {
-  console.warn(`⚠ prerender: could not launch Chromium (${e.message}) — skipping. Build continues.`);
+  console.warn(`⚠ prerender: could not launch Chromium (${e.message}) — build failed.`);
   server.close();
-  process.exit(0);
+  process.exit(1);
 }
 
-const routes = allRoutes();
+const routes = [...allRoutes(), '/404'];
 let ok = 0, failed = 0;
 
 async function renderRoute(route) {
   const page = await browser.newPage();
   try {
+    await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
     // Disable external network requests during prerender to speed up dramatically
     await page.setRequestInterception(true);
     page.on('request', (req) => {
@@ -89,17 +90,10 @@ async function renderRoute(route) {
       throw new Error(`incomplete render (${html.length}b)`);
     }
 
-    // Ensure route-specific localized titles for search engine crawlers
-    if (route === '/el' || route === '/el/') {
-      html = html.replace(/<title>.*?<\/title>/i, '<title>Κατασκευή Ιστοσελίδων &amp; Κατασκευή Εφαρμογών (Apps) | ZYXEN Digital Agency</title>');
-      html = html.replace(/<meta name="description" content=".*?"/i, '<meta name="description" content="Εξειδικευμένη εταιρεία στην κατασκευή ιστοσελίδων, κατασκευή e-shop &amp; δημιουργία mobile εφαρμογών (iOS &amp; Android). Κορυφαία ταχύτητα, SEO &amp; Awwwards design. Ζητήστε δωρεάν προσφορά!"');
-    } else if (route === '/en' || route === '/en/') {
-      html = html.replace(/<title>.*?<\/title>/i, '<title>Website Creation &amp; Mobile App Development Agency | ZYXEN Software Studio</title>');
-      html = html.replace(/<meta name="description" content=".*?"/i, '<meta name="description" content="Leading digital agency specializing in website creation, custom web applications &amp; iOS/Android app development. High-performance SEO &amp; enterprise digital platforms."');
-    }
     const outDir = join(DIST, route);
     mkdirSync(outDir, { recursive: true });
     writeFileSync(join(outDir, 'index.html'), html, 'utf8');
+    if (route === '/404') writeFileSync(join(DIST, '404.html'), html, 'utf8');
     ok++;
     process.stdout.write(`  ✓ ${route} (${(html.length / 1024).toFixed(0)}kb)\n`);
   } catch (e) {
@@ -126,4 +120,4 @@ await browser.close().catch(() => {});
 server.close();
 const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
 console.log(`\n✓ prerender complete in ${elapsed}s — ${ok} ok, ${failed} failed of ${routes.length}`);
-process.exit(0);
+process.exit(failed ? 1 : 0);

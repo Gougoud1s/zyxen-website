@@ -25,18 +25,5 @@ export const localizedPaths = [
 
 // Absolute route paths to prerender, e.g. ['/', '/audit', '/crm', '/el', '/en/about', ...].
 export function allRoutes() {
-  const routes = [];
-  
-  // 1. Unprefixed root routes (e.g. /, /audit, /crm)
-  for (const { path } of localizedPaths) {
-    routes.push(path === '' ? '/' : path);
-  }
-  
-  // 2. Localized routes (e.g. /el/audit, /en/crm)
-  for (const lang of LANGS) {
-    for (const { path } of localizedPaths) {
-      routes.push(`/${lang}${path}`);
-    }
-  }
-  return routes;
+  return [...localizedPaths.map(({ path }) => path || '/'), '/el/websites'];
 }

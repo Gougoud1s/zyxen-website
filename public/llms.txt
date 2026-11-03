@@ -1,0 +1,28 @@
+# ZYXEN
+
+> ZYXEN (zyxen.gr) is a software studio based in Greece. It provides business websites, e-commerce development and support, mobile applications, custom software and automation.
+
+Official website: https://www.zyxen.gr/
+Contact: hello@zyxen.gr
+The main website is in English. A Greek translation of the business website package is available separately.
+
+## Services
+- [Services and project scopes](https://www.zyxen.gr/services): Deliverables, client inputs and scope boundaries.
+- [Business websites](https://www.zyxen.gr/websites): The website package, inclusions and optional care.
+- [Business websites in Greek](https://www.zyxen.gr/el/websites): Greek-language package information.
+- [Umbraco development](https://www.zyxen.gr/services/umbraco-platform-engineering)
+- [Web development and technical SEO](https://www.zyxen.gr/services/web-experiences-seo)
+- [E-commerce](https://www.zyxen.gr/services/commerce-nopcommerce)
+- [Mobile applications](https://www.zyxen.gr/services/flutter-web-mobile)
+- [AI integrations and automation](https://www.zyxen.gr/services/ai-integrations)
+
+## Project contributions
+- [Portfolio](https://www.zyxen.gr/projects): Each project explains the studio's contribution; inclusion does not imply full project ownership.
+- [LED7](https://www.zyxen.gr/projects/led7): Ongoing e-commerce support, technical SEO review and Google Ads management.
+- [Artisti Shop](https://www.zyxen.gr/projects/artistishop): Existing-store support, Google Ads review and Merchant Center diagnostics.
+- [IPS](https://www.zyxen.gr/projects/ips): Content architecture and technical implementation contribution. Lead agency: Redirect.
+
+## Company
+- [About ZYXEN](https://www.zyxen.gr/about)
+- [Contact](https://www.zyxen.gr/contact)
+- [Sitemap](https://www.zyxen.gr/sitemap.xml)

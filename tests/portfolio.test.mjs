@@ -27,13 +27,13 @@ test('portfolio and service proposal journeys', async () => {
       await page.locator('.offer-choices button:nth-child(2)').click();
       assert.equal(await page.$eval('.offer-choices button:nth-child(2)', el => el.getAttribute('aria-pressed')), 'true');
       assert.match(await page.$eval('#offer-details', el => el.textContent), /Catalogue and customer journey planning/);
-      await page.locator('#offer-details .story-button').click();
+      await page.locator('#offer-details .offer-details:not([hidden]) .story-button').click();
       await page.waitForSelector('#contact-service');
       assert.equal(await page.$eval('#contact-service', el => el.value), 'High-Scale E-Commerce');
       assert.match(await page.$eval('#contact-details', el => el.value), /e-commerce project/);
       await page.goto(`${base}/services`, { waitUntil: 'networkidle0' });
       await page.locator('.offer-choices button:nth-child(3)').click();
-      await page.locator('#offer-details .story-button').click();
+      await page.locator('#offer-details .offer-details:not([hidden]) .story-button').click();
       await page.waitForSelector('#contact-service');
       assert.equal(await page.$eval('#contact-service', el => el.value), 'AI Integration & Automation');
       assert.match(await page.$eval('#contact-details', el => el.value), /process I want to improve/);

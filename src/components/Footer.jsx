@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/lib/i18n';
 import ZyxenLogo from '@/components/ZyxenLogo';
-import OpenAIIcon from '@/components/OpenAIIcon';
 
 export default function Footer() {
   const { localePath } = useLanguage();
@@ -36,13 +35,7 @@ export default function Footer() {
             <a href="mailto:hello@zyxen.gr" className="text-sm text-gray-300 hover:text-white transition-colors mt-4 block font-mono">
               hello@zyxen.gr
             </a>
-            <div className="mt-6 inline-flex items-center gap-3 border border-white/25 rounded-lg px-4 py-3 text-white">
-              <OpenAIIcon className="h-7 w-7 shrink-0" />
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.16em] text-gray-300">Official partner</p>
-                <p className="text-sm font-semibold text-white mt-1">OpenAI ChatGPT Partner</p>
-              </div>
-            </div>
+
           </div>
 
           {/* Navigation */}
@@ -93,7 +86,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-gray-500">© {new Date().getFullYear()} ZYXEN. All rights reserved.</p>
+          <p className="text-xs text-gray-400">© {new Date().getFullYear()} ZYXEN. All rights reserved.</p>
           <p className="text-xs tracking-[0.2em] font-semibold font-mono text-[#AF994D]">SYSTEMS, ENGINEERED.</p>
         </div>
       </div>

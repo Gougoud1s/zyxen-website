@@ -52,7 +52,7 @@ export function ZyxenWordmark({ className = '', variant = 'dark' }) {
         </span>
         <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
       </div>
-      <span className="text-[9px] tracking-[0.24em] font-bold text-gray-400 uppercase leading-none mt-1">
+      <span className={`text-[9px] tracking-[0.24em] font-bold ${variant === 'light' ? 'text-gray-400' : 'text-gray-500'} uppercase leading-none mt-1`}>
         SOFTWARE STUDIO
       </span>
     </div>

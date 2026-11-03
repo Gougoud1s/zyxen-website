@@ -13,7 +13,7 @@ export default function MarketingHome() {
   const { localePath, t } = useLanguage();
   const heroProject = featured[0];
   return <div className="marketing">
-    <SEOMeta language="en" title="Websites, Apps & Business Software | ZYXEN" description="ZYXEN builds websites, commerce platforms, mobile apps and business automation. Explore our project contributions and discuss your next project." jsonLd={{ '@context': 'https://schema.org', '@type': 'Organization', name: 'ZYXEN', url: 'https://www.zyxen.gr', email: 'hello@zyxen.gr' }} />
+    <SEOMeta language="en" title="Websites, E-commerce & Custom Software | ZYXEN Greece" description="ZYXEN is a software studio in Greece building business websites, e-commerce, mobile apps and automation. Explore our services and real project contributions." jsonLd={{ '@context': 'https://schema.org', '@type': 'Organization', name: 'ZYXEN', url: 'https://www.zyxen.gr', email: 'hello@zyxen.gr' }} />
     <section className="m-hero m-wrap" aria-labelledby="home-title">
       <div className="m-hero-copy">
         <p className="m-label">Software studio / Athens, Greece</p>
@@ -23,7 +23,7 @@ export default function MarketingHome() {
         <p className="m-hero-foot">Design, engineering and delivery.<br />From Athens, working with teams internationally.</p>
       </div>
       <figure className="m-hero-project">
-        <Link to={localePath(`/projects/${heroProject.slug}`)} aria-label="Explore our Creta Maris contribution"><img src={heroProject.image} alt="Creta Maris hospitality website" fetchPriority="high" width="1440" height="900" /></Link>
+        <Link to={localePath(`/projects/${heroProject.slug}`)} aria-label="Explore our Creta Maris contribution"><img src={heroProject.image} srcSet={`${heroProject.image.replace(".webp", "-640.webp")} 640w, ${heroProject.image} ${heroProject.imageWidth}w`} sizes="(max-width: 640px) 100vw, 50vw" alt="Creta Maris hospitality website" fetchPriority="high" width={heroProject.imageWidth} height={heroProject.imageHeight} /></Link>
         <figcaption><div><span className="m-label">Selected contribution / Hospitality</span><strong>Creta Maris</strong><span>{heroProject.en.focus}</span><span>Lead agency: {heroProject.leadAgency.name}</span></div><Link className="m-icon-link" to={localePath(`/projects/${heroProject.slug}`)} aria-label="View Creta Maris case study"><ArrowUpRight /></Link></figcaption>
       </figure>
     </section>
@@ -33,7 +33,7 @@ export default function MarketingHome() {
       <div className="m-section-head"><div><p className="m-label">01 / Selected work</p><h2 id="work-heading">Experience you<br />can explore.</h2></div><div><p>From hospitality and industry to public information and premium brands.</p><Link className="m-text-link" to={localePath('/projects')}>View all projects <ArrowUpRight size={18} /></Link></div></div>
       <p className="m-attribution">{t('projectsPage.note')}</p>
       <div className="m-work-grid">{featured.map((project, index) => <article className="m-work-item" key={project.slug}>
-        <Link className="m-work-image" to={localePath(`/projects/${project.slug}`)}><img src={project.image} alt={`${project.en.name} website preview`} loading="lazy" width="1440" height="900" /><span className="m-image-link"><ArrowUpRight size={22} /></span></Link>
+        <Link className="m-work-image" to={localePath(`/projects/${project.slug}`)}><img src={project.image} srcSet={`${project.image.replace(".webp", "-640.webp")} 640w, ${project.image} ${project.imageWidth}w`} sizes="(max-width: 640px) 100vw, 50vw" alt={`${project.en.name} website preview`} loading="lazy" width={project.imageWidth} height={project.imageHeight} /><span className="m-image-link"><ArrowUpRight size={22} /></span></Link>
         <div className="m-work-caption"><span className="m-label">0{index + 1} / {project.en.category}</span><h3><Link to={localePath(`/projects/${project.slug}`)}>{project.en.name}</Link></h3><p>{project.en.focus}</p>{project.leadAgency && <p className="m-project-credit">Lead agency: <a href={project.leadAgency.url} target="_blank" rel="noopener noreferrer">{project.leadAgency.name}</a></p>}</div>
       </article>)}</div>
     </section>

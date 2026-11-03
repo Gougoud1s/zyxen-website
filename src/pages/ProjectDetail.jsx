@@ -31,8 +31,8 @@ export default function ProjectDetail() {
   const story = projectStories[slug];
   const related = projects.filter((r) => r.slug !== slug).slice(0, 3);
 
-  const metaTitle = `${p.name} — Case Study | ZYXEN`;
-  const metaDesc = p.overview;
+  const metaTitle = `${p.name} — Project Contribution | ZYXEN`;
+  const metaDesc = `ZYXEN’s work on ${p.name}: ${p.focus}.${project.leadAgency ? ` Lead agency: ${project.leadAgency.name}.` : ''}`;
   const breadcrumbs = breadcrumbSchema([
     { name: 'Home', path: `/en` },
     { name: 'Projects', path: `/en/projects` },
@@ -97,27 +97,6 @@ export default function ProjectDetail() {
           </AnimatedSection>
         </div>
       </section>
-
-      {/* METRICS & KEY IMPACT BANNER */}
-      {!story && project.metrics && project.metrics.length > 0 && (
-        <section className="py-12 bg-black text-white border-b border-gray-800">
-          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12">
-            <h2 className="text-xs font-mono uppercase tracking-widest text-gray-300 mb-8">Project figures</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-800">
-              {project.metrics.map((m, idx) => (
-                <div key={idx} className="pt-4 md:pt-0">
-                  <span className="text-3xl sm:text-4xl font-display font-extrabold text-[#D4AF37] block mb-1">
-                    {m.val}
-                  </span>
-                  <span className="text-xs font-mono text-gray-400 uppercase tracking-widest">
-                    {m.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* INTERACTIVE BROWSER SCREENSHOT STORYTELLING MOCKUP */}
       <section className="py-20 bg-gray-50 border-b border-gray-200">

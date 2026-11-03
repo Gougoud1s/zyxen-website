@@ -5,8 +5,288 @@
   "redirects": [
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "zyxen.gr" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "zyxen.gr"
+        }
+      ],
       "destination": "https://www.zyxen.gr/$1",
+      "permanent": true
+    },
+    {
+      "source": "/en",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/websites",
+      "destination": "/websites",
+      "permanent": true
+    },
+    {
+      "source": "/en/services",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/en/projects",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/en/about",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/en/technologies",
+      "destination": "/technologies",
+      "permanent": true
+    },
+    {
+      "source": "/en/audit",
+      "destination": "/audit",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/umbraco-platform-engineering",
+      "destination": "/services/umbraco-platform-engineering",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/web-experiences-seo",
+      "destination": "/services/web-experiences-seo",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/flutter-web-mobile",
+      "destination": "/services/flutter-web-mobile",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/commerce-nopcommerce",
+      "destination": "/services/commerce-nopcommerce",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/ai-integrations",
+      "destination": "/services/ai-integrations",
+      "permanent": true
+    },
+    {
+      "source": "/en/services/delivery-devops",
+      "destination": "/services/delivery-devops",
+      "permanent": true
+    },
+    {
+      "source": "/en/projects/led7",
+      "destination": "/projects/led7",
+      "permanent": true
+    },
+    {
+      "source": "/en/projects/artistishop",
+      "destination": "/projects/artistishop",
+      "permanent": true
+    },
+    {
+      "source": "/en/projects/ips",
+      "destination": "/projects/ips",
+      "permanent": true
+    },
+    {
+      "source": "/en/projects/victoria-de-borbon",
+      "destination": "/projects/victoria-de-borbon",
+      "permanent": true
+    },
+    {
+      "source": "/en/projects/paxisarkia",
+      "destination": "/projects/paxisarkia",
+      "permanent": true
+    },
+    {
+      "source": "/en/projects/creta-maris",
+      "destination": "/projects/creta-maris",
+      "permanent": true
+    },
+    {
+      "source": "/en/projects/inartio",
+      "destination": "/projects/inartio",
+      "permanent": true
+    },
+    {
+      "source": "/en/projects/astrazeneca",
+      "destination": "/projects/astrazeneca",
+      "permanent": true
+    },
+    {
+      "source": "/en/projects/dannemann",
+      "destination": "/projects/dannemann",
+      "permanent": true
+    },
+    {
+      "source": "/en/privacy-policy",
+      "destination": "/privacy-policy",
+      "permanent": true
+    },
+    {
+      "source": "/en/cookie-policy",
+      "destination": "/cookie-policy",
+      "permanent": true
+    },
+    {
+      "source": "/en/terms",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/el",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/el/services",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/el/projects",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/el/contact",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/el/about",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/el/technologies",
+      "destination": "/technologies",
+      "permanent": true
+    },
+    {
+      "source": "/el/audit",
+      "destination": "/audit",
+      "permanent": true
+    },
+    {
+      "source": "/el/services/umbraco-platform-engineering",
+      "destination": "/services/umbraco-platform-engineering",
+      "permanent": true
+    },
+    {
+      "source": "/el/services/web-experiences-seo",
+      "destination": "/services/web-experiences-seo",
+      "permanent": true
+    },
+    {
+      "source": "/el/services/flutter-web-mobile",
+      "destination": "/services/flutter-web-mobile",
+      "permanent": true
+    },
+    {
+      "source": "/el/services/commerce-nopcommerce",
+      "destination": "/services/commerce-nopcommerce",
+      "permanent": true
+    },
+    {
+      "source": "/el/services/ai-integrations",
+      "destination": "/services/ai-integrations",
+      "permanent": true
+    },
+    {
+      "source": "/el/services/delivery-devops",
+      "destination": "/services/delivery-devops",
+      "permanent": true
+    },
+    {
+      "source": "/el/projects/led7",
+      "destination": "/projects/led7",
+      "permanent": true
+    },
+    {
+      "source": "/el/projects/artistishop",
+      "destination": "/projects/artistishop",
+      "permanent": true
+    },
+    {
+      "source": "/el/projects/ips",
+      "destination": "/projects/ips",
+      "permanent": true
+    },
+    {
+      "source": "/el/projects/victoria-de-borbon",
+      "destination": "/projects/victoria-de-borbon",
+      "permanent": true
+    },
+    {
+      "source": "/el/projects/paxisarkia",
+      "destination": "/projects/paxisarkia",
+      "permanent": true
+    },
+    {
+      "source": "/el/projects/creta-maris",
+      "destination": "/projects/creta-maris",
+      "permanent": true
+    },
+    {
+      "source": "/el/projects/inartio",
+      "destination": "/projects/inartio",
+      "permanent": true
+    },
+    {
+      "source": "/el/projects/astrazeneca",
+      "destination": "/projects/astrazeneca",
+      "permanent": true
+    },
+    {
+      "source": "/el/projects/dannemann",
+      "destination": "/projects/dannemann",
+      "permanent": true
+    },
+    {
+      "source": "/el/privacy-policy",
+      "destination": "/privacy-policy",
+      "permanent": true
+    },
+    {
+      "source": "/el/cookie-policy",
+      "destination": "/cookie-policy",
+      "permanent": true
+    },
+    {
+      "source": "/el/terms",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/free-website-review",
+      "destination": "/audit",
+      "permanent": true
+    },
+    {
+      "source": "/en/free-website-review",
+      "destination": "/audit",
+      "permanent": true
+    },
+    {
+      "source": "/el/free-website-review",
+      "destination": "/audit",
+      "permanent": true
+    },
+    {
+      "source": "/en/en/audit",
+      "destination": "/audit",
       "permanent": true
     }
   ],
@@ -14,26 +294,56 @@
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/(og-image.jpg|favicon.ico)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
       ]
     },
     {
       "source": "/:path*",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate, max-age=0, s-maxage=0" },
-        { "key": "CDN-Cache-Control", "value": "no-store" },
-        { "key": "Vercel-CDN-Cache-Control", "value": "no-store" },
-        { "key": "Pragma", "value": "no-cache" },
-        { "key": "Expires", "value": "0" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate, max-age=0, s-maxage=0"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
       ]
     }
   ]

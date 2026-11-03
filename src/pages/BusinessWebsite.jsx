@@ -28,7 +28,7 @@ export default function BusinessWebsite() {
   return <div className="website-offer" lang={english ? 'en' : 'el'}>
     <SEOMeta language={english ? 'en' : 'el'} title={copy('Ιστοσελίδα επιχείρησης με 1.200 € + ΦΠΑ | ZYXEN', 'Business website for €1,200 + VAT | ZYXEN')}
       description={copy('Επαγγελματική ιστοσελίδα έως 5 σελίδες με 1.200 € + ΦΠΑ. Προαιρετική τεχνική φροντίδα 45 €/μήνα. Σαφές αντικείμενο, δύο γύροι διορθώσεων και παράδοση.', 'A professional website with up to 5 pages for €1,200 + VAT. Optional €45/month website care. Clear scope, two revision rounds and handover.')}
-      jsonLd={{ '@context': 'https://schema.org', '@type': 'Service', name: 'ZYXEN Business Website', serviceType: 'Website development', provider: { '@type': 'Organization', name: 'ZYXEN', url: 'https://www.zyxen.gr' }, areaServed: 'GR', offers: { '@type': 'Offer', price: '1200', priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', price: '1200', priceCurrency: 'EUR', valueAddedTaxIncluded: false } } }} />
+      jsonLd={{ '@context': 'https://schema.org', '@type': 'Service', name: 'ZYXEN Business Website', serviceType: 'Website development', provider: { '@id': 'https://www.zyxen.gr/#organization' }, areaServed: 'GR', offers: { '@type': 'Offer', price: '1200', priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', price: '1200', priceCurrency: 'EUR', valueAddedTaxIncluded: false } } }} />
     <section className="offer-wrap offer-hero">
       <div>
         <p className="offer-label">{copy('ZYXEN / Για μικρές επιχειρήσεις', 'ZYXEN / For small businesses')}</p>

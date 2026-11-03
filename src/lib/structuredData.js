@@ -1,4 +1,4 @@
-const BASE = 'https://www.zyxen.gr';
+import { SITE_URL as BASE, ORGANIZATION_ID, canonicalPath } from './seo.js';
 
 /**
  * Build a schema.org FAQPage from an array of { q, a } items.
@@ -32,11 +32,8 @@ export function serviceSchema(service, lang) {
     description: s.description,
     serviceType: s.name,
     areaServed: 'GR',
-    provider: {
-      '@type': 'Organization',
-      name: 'ZYXEN',
-      url: BASE,
-    },
+    provider: { '@id': ORGANIZATION_ID },
+    url: `${BASE}/services/${service.slug}`,
   };
 }
 
@@ -52,7 +49,7 @@ export function breadcrumbSchema(items) {
       '@type': 'ListItem',
       position: i + 1,
       name: item.name,
-      item: `${BASE}${item.path}`,
+      item: `${BASE}${canonicalPath(item.path)}`,
     })),
   };
 }

@@ -1,3 +1,6 @@
+import ServiceQuestions from '@/components/ServiceQuestions';
+import { serviceQuestions } from '@/lib/serviceQuestions';
+import { faqPageSchema } from '@/lib/structuredData';
 import ServiceOffers from '@/components/ServiceOffers';
 import WebsiteOffer from '@/components/WebsiteOffer';
 import { Link } from 'react-router-dom';
@@ -16,8 +19,9 @@ export default function Services() {
   return (
     <div className="bg-white text-[#121212] min-h-screen selection:bg-black selection:text-white font-sans pt-2 overflow-x-hidden">
       <SEOMeta language="en"
-        title="Engineering Services — Umbraco, .NET, Mobile & AI | ZYXEN"
-        description="Comprehensive software engineering capabilities: enterprise CMS portals, high-scale e-commerce, native mobile applications, and AI integrations."
+        title="Web Development, E-commerce & Automation Services | ZYXEN"
+        description="Explore ZYXEN’s business websites, e-commerce, mobile apps and automation services. See proposed deliverables, project scopes and real contributions."
+        jsonLd={faqPageSchema(serviceQuestions)}
       />
 
       {/* HERO SECTION */}
@@ -99,6 +103,8 @@ export default function Services() {
           })}
         </div>
       </section>
+
+      <ServiceQuestions />
 
       {/* CTA SECTION */}
       <section className="py-28 bg-white border-t border-gray-200">

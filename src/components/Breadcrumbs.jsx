@@ -4,12 +4,14 @@ import { useLanguage } from '@/lib/i18n';
 
 export default function Breadcrumbs() {
   const { pathname } = useLocation();
-  const { lang, localePath, t } = useLanguage();
+  const { localePath } = useLanguage();
+  const lang = pathname === '/el/websites' ? 'el' : 'en';
 
-  const segments = pathname.replace(`/${lang}`, '').split('/').filter(Boolean);
+  const segments = pathname.replace(/^\/(en|el)(?=\/|$)/, '').split('/').filter(Boolean);
   if (segments.length === 0) return null;
 
   const labelMap = {
+    websites: lang === 'el' ? 'Ιστοσελίδες' : 'Business Websites',
     about: lang === 'el' ? 'Σχετικά' : 'About',
     services: lang === 'el' ? 'Υπηρεσίες' : 'Services',
     projects: lang === 'el' ? 'Έργα' : 'Projects',

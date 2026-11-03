@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const variants = {
   fade: {
@@ -22,11 +22,12 @@ export default function AnimatedSection({
   variant = 'fade',
   duration = 0.7,
 }) {
+  const reducedMotion = useReducedMotion();
   const v = variants[variant] || variants.fade;
 
   return (
     <motion.div
-      initial="hidden"
+      initial={reducedMotion ? false : "hidden"}
       whileInView="visible"
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
