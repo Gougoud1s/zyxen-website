@@ -79,10 +79,21 @@ export default async function handler(req, res) {
   }
 
   try {
-    const deliveries = await Promise.all([
+    /*
+     * The owner notification is the lead itself — it must never be lost.
+     * The auto-reply to the visitor is a courtesy to an address that may be
+     * mistyped. Sending both in one Promise.all made the lead hostage to the
+     * visitor's typing: one 422 on the auto-reply (bad domain, nonexistent
+     * mailbox) failed the whole request, so the owner was never told and the
+     * visitor saw an error for a message that had in fact been received.
+     *
+     * So: send them independently and judge them separately.
+     */
+    const [ownerResult, autoReplyResult] = await Promise.allSettled([
       resend.emails.send({
         from: 'ZYXEN Website <no-reply@zyxen.gr>',
         to: OWNER_EMAILS,
+        replyTo: email,
         subject: `New Inquiry: ${esc(name)} — ${esc(service)}`,
         html: ownerHtml({ name, email, service, budget, details }),
       }),
@@ -95,9 +106,28 @@ export default async function handler(req, res) {
       }),
     ]);
 
-    if (deliveries.some((delivery) => delivery.error)) {
+    /* Resend resolves with { data, error } rather than throwing on a rejected send. */
+    const ownerError =
+      ownerResult.status === 'rejected'
+        ? ownerResult.reason
+        : ownerResult.value?.error;
+    const autoReplyError =
+      autoReplyResult.status === 'rejected'
+        ? autoReplyResult.reason
+        : autoReplyResult.value?.error;
+
+    if (autoReplyError) {
+      /* Non-fatal: the lead was still captured, and we can follow up by hand. */
+      console.warn('Auto-reply failed (lead still delivered):', autoReplyError.message ?? autoReplyError);
+    }
+
+    if (ownerError) {
+      /* Fatal: we do not have the lead, so the visitor must not be told we do. */
+      console.error('Owner notification failed:', ownerError.message ?? ownerError);
       return res.status(502).json({ error: 'Failed to send email' });
     }
+
+    /* Success even if the auto-reply bounced — the enquiry reached us. */
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error('Email send failed:', error?.message);
