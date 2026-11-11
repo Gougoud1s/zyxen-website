@@ -1,81 +1,85 @@
 {
   "privacy": {
     "title": "Privacy Policy",
-    "updated": "Last updated: May 2024",
+    "updated": "Last updated: November 2026",
     "sections": [
       {
         "h": "1. Who We Are",
-        "p": "ZYXEN is a software engineering studio based in Greece. We provide Umbraco platform engineering, Flutter applications, commerce systems, and AI integration services. Contact: hello@zyxen.gr"
+        "p": "ZYXEN is a software engineering studio based in Athens, Greece, and the controller of the personal data described here. We provide website, commerce, application and automation services. Contact: hello@zyxen.gr"
       },
       {
         "h": "2. Data We Collect",
-        "p": "We collect information you voluntarily submit via our contact form: your name, email address, and project details. We do not collect sensitive personal data, financial information, or data from minors."
+        "p": "Through our contact form we collect what you choose to send: your name, email address, the service you are interested in, an optional budget range, an optional link to your current website and your message. When you submit the form, your IP address is used for a few minutes, in memory only, to limit repeated submissions and protect the form from abuse; it is not stored with your enquiry. We do not collect sensitive personal data, financial information, or data from minors."
       },
       {
         "h": "3. How We Use Your Data",
-        "p": "We use submitted information solely to: (a) respond to your project inquiry, (b) send a confirmation email, and (c) follow up regarding your project scope. We do not use your data for marketing without explicit consent."
+        "p": "We use submitted information solely to: (a) respond to your project inquiry, (b) send you a confirmation email, (c) record the enquiry in our internal customer records so we can follow up, and (d) follow up regarding your project scope. We do not use your data for marketing without explicit consent. The legal basis is taking steps at your request before a possible contract and our legitimate interest in answering business enquiries."
       },
       {
         "h": "4. Data Storage & Retention",
-        "p": "Form submissions are processed via our secure systems. We retain inquiry data for up to 24 months after the last meaningful contact, after which it is permanently deleted. You may request deletion at any time."
+        "p": "Enquiries are delivered to our email inboxes and recorded in our internal customer records. We retain inquiry data for up to 24 months after the last meaningful contact, after which it is permanently deleted. You may request deletion at any time."
       },
       {
-        "h": "5. Data Sharing",
-        "p": "We do not sell, trade, or share your personal data with third parties for commercial purposes. Data may be processed by our email service providers under data processing agreements."
+        "h": "5. Data Sharing and Service Providers",
+        "p": "We do not sell, trade, or share your personal data with third parties for commercial purposes. We use these service providers, which process data on our behalf under their data processing terms: Vercel (website hosting and privacy-friendly visitor statistics), Resend (delivery of the enquiry and confirmation emails) and Notion (our internal customer records). Some of them may process data outside the European Economic Area; where they do, the transfer relies on the safeguards in their data processing terms."
       },
       {
-        "h": "6. Your GDPR Rights",
-        "p": "Under GDPR, you have the right to: access your data, correct inaccurate data, request deletion, restrict processing, and object to processing. To exercise these rights, contact: hello@zyxen.gr"
+        "h": "6. Website Statistics",
+        "p": "We use Vercel Web Analytics to count page views and understand which pages are useful. It does not use cookies, does not build profiles of visitors and does not track you across other websites."
       },
       {
-        "h": "7. Cookies",
-        "p": "We use cookies as described in our Cookie Policy. Non-essential cookies are only set with your consent. See our Cookie Policy for details."
+        "h": "7. Your GDPR Rights",
+        "p": "Under GDPR, you have the right to: access your data, correct inaccurate data, request deletion, restrict processing, object to processing and receive your data in a portable format. To exercise these rights, contact: hello@zyxen.gr. You also have the right to lodge a complaint with the Hellenic Data Protection Authority (www.dpa.gr)."
       },
       {
-        "h": "8. Security",
+        "h": "8. Cookies",
+        "p": "This website does not use cookies for statistics, advertising or tracking. See our Cookie Policy for details."
+      },
+      {
+        "h": "9. Security",
         "p": "We implement appropriate technical and organizational measures to protect your data against unauthorized access, alteration, or disclosure."
       },
       {
-        "h": "9. Changes to This Policy",
+        "h": "10. Changes to This Policy",
         "p": "We may update this policy periodically. Material changes will be communicated via our website. Continued use constitutes acceptance of the updated policy."
       },
       {
-        "h": "10. Contact",
-        "p": "For any privacy-related queries: hello@zyxen.gr | ZYXEN, Greece"
+        "h": "11. Contact",
+        "p": "For any privacy-related queries: hello@zyxen.gr | ZYXEN, Athens, Greece"
       }
     ],
     "description": "ZYXEN Privacy Policy — GDPR compliant data handling and privacy practices."
   },
   "cookies": {
     "title": "Cookie Policy",
-    "updated": "Last updated: May 2024",
+    "updated": "Last updated: November 2026",
     "sections": [
       {
         "h": "What Are Cookies",
         "p": "Cookies are small text files stored on your device when you visit a website. They help sites remember your preferences and understand how you use them."
       },
       {
-        "h": "Types We Use",
-        "p": "Necessary: Essential for the site to function (session management, security). Analytics: Help us understand visitor behavior anonymously. Functional: Remember your language and preferences. Marketing: Used only with explicit consent for targeted content."
+        "h": "Cookies on This Website",
+        "p": "This website does not set cookies for statistics, advertising, marketing or tracking, and it does not load social media tracking pixels. Because no such cookies are used, there is no cookie consent banner."
       },
       {
-        "h": "Third-Party Cookies",
-        "p": "We may use analytics tools (e.g., privacy-first analytics) under their respective data processing agreements. No social media tracking pixels are active without consent."
+        "h": "Website Statistics",
+        "p": "We use Vercel Web Analytics to count page views. It works without cookies and does not identify individual visitors or follow them across other websites."
       },
       {
-        "h": "Your Consent",
-        "p": "When you first visit ZYXEN, a consent banner appears. You can accept all, reject non-essential, or manage individual categories. Your choice is stored locally and respected on all subsequent visits."
+        "h": "Third-Party Sites",
+        "p": "Links to other websites, such as the client projects in our portfolio, take you to sites with their own cookie policies, which we do not control."
       },
       {
         "h": "How to Manage Cookies",
-        "p": "You can update your preferences at any time by clearing the \"zyxen_cookie_consent\" key from your browser localStorage, or via your browser settings. You can also disable cookies entirely in your browser, though this may affect site functionality."
+        "p": "You can view and delete cookies, or block them entirely, in your browser settings."
       },
       {
         "h": "Contact",
         "p": "Questions about our cookie use: hello@zyxen.gr"
       }
     ],
-    "description": "ZYXEN Cookie Policy — how we use cookies and how to manage your preferences."
+    "description": "ZYXEN Cookie Policy: this website does not use cookies for statistics, advertising or tracking."
   },
   "terms": {
     "title": "Terms of Use",

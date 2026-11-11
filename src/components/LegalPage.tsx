@@ -10,7 +10,7 @@ export const legalMeta = (doc: Doc, path: string) =>
 
 const paths: Record<Doc, string> = { privacy: '/privacy-policy', cookies: '/cookie-policy', terms: '/terms' };
 
-/** Legal text is kept verbatim from the previous site; only the styling changed. */
+/** Legal texts live in src/lib/legal.json (terms as on the previous site; privacy and cookies updated Nov 2026). */
 export default function LegalPage({ doc }: { doc: Doc }) {
   const c = legal[doc];
   return (
