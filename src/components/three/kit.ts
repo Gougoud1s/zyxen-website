@@ -22,7 +22,7 @@ export const smooth = (t: number) => {
 export const damp = (k: number, dt: number) => 1 - Math.pow(1 - k, dt * 60);
 
 /** The studio "panel room" baked into a PMREM environment map. */
-export function studioEnvironment(gl: THREE.WebGLRenderer) {
+export function studioEnvironment(gl: THREE.WebGLRenderer, size = 256) {
   const env = new THREE.Scene();
   env.add(new THREE.Mesh(new THREE.BoxGeometry(30, 20, 30), new THREE.MeshBasicMaterial({ color: 0x050506, side: THREE.BackSide })));
   const panel = (w: number, h: number, color: number, x: number, y: number, z: number, ry = 0, rx = 0) => {
@@ -37,7 +37,7 @@ export function studioEnvironment(gl: THREE.WebGLRenderer) {
   panel(2, 10, 0x9fb4ff, -13, 0, -6, Math.PI / 2); // cool rim left
   panel(8, 2, 0xffffff, 3, 9.5, -3, 0, Math.PI / 2); // top strip
   const pm = new THREE.PMREMGenerator(gl);
-  const texture = pm.fromScene(env, 0.035).texture;
+  const texture = pm.fromScene(env, 0.035, 0.1, 100, { size }).texture;
   pm.dispose();
   env.traverse((o) => {
     if (o instanceof THREE.Mesh) {

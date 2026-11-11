@@ -31,6 +31,13 @@ class Fallback extends Component<{ children: ReactNode; onError: () => void }, {
   }
 }
 
+let eligible: boolean | undefined;
+const canRun = () => (eligible ??= canRunWebGL());
+
+// Start downloading the shared 3D engine (three.js + R3F) as soon as this module runs,
+// instead of after the page has hydrated.
+if (typeof window !== 'undefined' && !new URLSearchParams(location.search).has('poster') && canRun()) void import('./Stage');
+
 function canRunWebGL() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
   // Only genuinely low-end phones get the poster only. iPhones and many Androids report 4 cores
@@ -62,8 +69,8 @@ type Props = {
 /**
  * Server-rendered poster first, then the live scene fades in over it.
  * Poster only for reduced motion, low-end phones and no WebGL. Pauses off-screen and in hidden tabs.
- * The scene's code starts downloading on mount; it goes live once the page is idle (at most ~1 s)
- * and in view, starting from the same pose as the poster so the swap is seamless.
+ * The 3D engine starts downloading when this module loads; the scene goes live as soon as its code
+ * is in and it is on screen, starting from the same pose as the poster so the swap is seamless.
  * `?poster` forces the live scene (used by scripts/render-posters.mjs).
  */
 export default function SceneCanvas({ scene, label, className = '', sceneProps, band }: Props) {
@@ -75,13 +82,12 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
 
   useEffect(() => {
     const el = ref.current!;
-    if (!posterMode && !canRunWebGL()) return;
+    if (!posterMode && !canRun()) return;
     void load[scene]();
 
     let visible = false;
-    let idle = false;
     const update = () => {
-      if (visible && idle) setLive(true);
+      if (visible) setLive(true);
       setRunning(visible && !document.hidden);
     };
     const io = new IntersectionObserver(([e]) => {
@@ -89,15 +95,6 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
       update();
     });
     io.observe(el);
-    const ric = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 200));
-    const cic = window.cancelIdleCallback ?? window.clearTimeout;
-    const id = ric(
-      () => {
-        idle = true;
-        update();
-      },
-      { timeout: 1000 },
-    );
     document.addEventListener('visibilitychange', update);
     // A lost GPU context drops back to the poster (the event does not bubble, so listen in capture).
     const lost = () => {
@@ -108,7 +105,6 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
     return () => {
       el.removeEventListener('webglcontextlost', lost, true);
       io.disconnect();
-      cic(id);
       document.removeEventListener('visibilitychange', update);
     };
   }, [posterMode, scene]);
@@ -135,13 +131,13 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
             alt=""
             decoding="async"
             fetchPriority="high"
-            className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover transition-opacity duration-700"
+            className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover transition-opacity duration-[400ms]"
             style={{ opacity: ready ? 0 : 1 }}
           />
         </picture>
       )}
       {live && (
-        <div className="absolute inset-0 transition-opacity duration-700" style={{ opacity: ready ? 1 : 0 }}>
+        <div className="absolute inset-0 transition-opacity duration-[400ms]" style={{ opacity: ready ? 1 : 0 }}>
           <Fallback onError={() => setLive(false)}>
             <Scene {...props} />
           </Fallback>

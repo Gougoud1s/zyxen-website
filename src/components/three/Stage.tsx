@@ -8,7 +8,8 @@ function Studio() {
   const gl = useThree((s) => s.gl);
   const scene = useThree((s) => s.scene);
   useLayoutEffect(() => {
-    const env = studioEnvironment(gl);
+    // The environment is heavily blurred, so half resolution on phones looks the same and builds faster.
+    const env = studioEnvironment(gl, matchMedia('(pointer: coarse)').matches ? 128 : 256);
     scene.environment = env;
     return () => {
       scene.environment = null;
