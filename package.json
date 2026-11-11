@@ -9,15 +9,19 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test:smoke": "node --test tests/smoke.test.mjs"
+    "test:smoke": "node --test tests/smoke.test.mjs",
+    "test:contact": "node --test tests/contact.test.mjs",
+    "posters": "node scripts/render-posters.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "^9.8.2",
+    "@vercel/analytics": "^2.0.1",
     "next": "16.4.6",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "resend": "^4.0.0",
-    "three": "^0.186.1"
+    "three": "^0.186.1",
+    "zod": "4.6"
   },
   "devDependencies": {
     "@playwright/test": "1.64",

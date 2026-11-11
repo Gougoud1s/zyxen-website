@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Inter_Tight } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import Header from '@/components/Header';
 import { SITE_URL } from '@/lib/site';
 import './globals.css';
@@ -27,6 +28,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <Header />
         <main id="main">{children}</main>
+        {/* Cookieless (no consent banner needed); enable Web Analytics on the Vercel project to collect data. */}
+        <Analytics />
       </body>
     </html>
   );
