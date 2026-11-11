@@ -1,0 +1,127 @@
+{
+  "privacy": {
+    "title": "Privacy Policy",
+    "updated": "Last updated: May 2024",
+    "sections": [
+      {
+        "h": "1. Who We Are",
+        "p": "ZYXEN is a software engineering studio based in Greece. We provide Umbraco platform engineering, Flutter applications, commerce systems, and AI integration services. Contact: hello@zyxen.gr"
+      },
+      {
+        "h": "2. Data We Collect",
+        "p": "We collect information you voluntarily submit via our contact form: your name, email address, and project details. We do not collect sensitive personal data, financial information, or data from minors."
+      },
+      {
+        "h": "3. How We Use Your Data",
+        "p": "We use submitted information solely to: (a) respond to your project inquiry, (b) send a confirmation email, and (c) follow up regarding your project scope. We do not use your data for marketing without explicit consent."
+      },
+      {
+        "h": "4. Data Storage & Retention",
+        "p": "Form submissions are processed via our secure systems. We retain inquiry data for up to 24 months after the last meaningful contact, after which it is permanently deleted. You may request deletion at any time."
+      },
+      {
+        "h": "5. Data Sharing",
+        "p": "We do not sell, trade, or share your personal data with third parties for commercial purposes. Data may be processed by our email service providers under data processing agreements."
+      },
+      {
+        "h": "6. Your GDPR Rights",
+        "p": "Under GDPR, you have the right to: access your data, correct inaccurate data, request deletion, restrict processing, and object to processing. To exercise these rights, contact: hello@zyxen.gr"
+      },
+      {
+        "h": "7. Cookies",
+        "p": "We use cookies as described in our Cookie Policy. Non-essential cookies are only set with your consent. See our Cookie Policy for details."
+      },
+      {
+        "h": "8. Security",
+        "p": "We implement appropriate technical and organizational measures to protect your data against unauthorized access, alteration, or disclosure."
+      },
+      {
+        "h": "9. Changes to This Policy",
+        "p": "We may update this policy periodically. Material changes will be communicated via our website. Continued use constitutes acceptance of the updated policy."
+      },
+      {
+        "h": "10. Contact",
+        "p": "For any privacy-related queries: hello@zyxen.gr | ZYXEN, Greece"
+      }
+    ],
+    "description": "ZYXEN Privacy Policy — GDPR compliant data handling and privacy practices."
+  },
+  "cookies": {
+    "title": "Cookie Policy",
+    "updated": "Last updated: May 2024",
+    "sections": [
+      {
+        "h": "What Are Cookies",
+        "p": "Cookies are small text files stored on your device when you visit a website. They help sites remember your preferences and understand how you use them."
+      },
+      {
+        "h": "Types We Use",
+        "p": "Necessary: Essential for the site to function (session management, security). Analytics: Help us understand visitor behavior anonymously. Functional: Remember your language and preferences. Marketing: Used only with explicit consent for targeted content."
+      },
+      {
+        "h": "Third-Party Cookies",
+        "p": "We may use analytics tools (e.g., privacy-first analytics) under their respective data processing agreements. No social media tracking pixels are active without consent."
+      },
+      {
+        "h": "Your Consent",
+        "p": "When you first visit ZYXEN, a consent banner appears. You can accept all, reject non-essential, or manage individual categories. Your choice is stored locally and respected on all subsequent visits."
+      },
+      {
+        "h": "How to Manage Cookies",
+        "p": "You can update your preferences at any time by clearing the \"zyxen_cookie_consent\" key from your browser localStorage, or via your browser settings. You can also disable cookies entirely in your browser, though this may affect site functionality."
+      },
+      {
+        "h": "Contact",
+        "p": "Questions about our cookie use: hello@zyxen.gr"
+      }
+    ],
+    "description": "ZYXEN Cookie Policy — how we use cookies and how to manage your preferences."
+  },
+  "terms": {
+    "title": "Terms of Use",
+    "updated": "Last updated: May 2024",
+    "sections": [
+      {
+        "h": "1. Acceptance",
+        "p": "By accessing and using zyxen.gr, you accept these Terms of Use. If you disagree, please discontinue use of the website."
+      },
+      {
+        "h": "2. Intellectual Property",
+        "p": "All content on this website — including text, design, logos, graphics, code, and animations — is the intellectual property of ZYXEN unless otherwise stated. Project references are contribution-based and all referenced brand names remain property of their respective owners."
+      },
+      {
+        "h": "3. Use of Website",
+        "p": "You may use this website for lawful purposes only. You may not reproduce, distribute, or create derivative works without written permission from ZYXEN. Automated scraping or systematic data collection is prohibited."
+      },
+      {
+        "h": "4. Contact Forms",
+        "p": "Information submitted via our contact form is used solely for responding to your inquiry. Spam, abusive, or malicious submissions are prohibited and will be reported to relevant authorities if necessary."
+      },
+      {
+        "h": "5. External Links",
+        "p": "Our website may contain links to third-party sites. ZYXEN is not responsible for the content, privacy practices, or reliability of external websites. Links are provided as references only."
+      },
+      {
+        "h": "6. Disclaimer",
+        "p": "This website is provided \"as is\" without warranties of any kind. ZYXEN makes no guarantees regarding accuracy, completeness, or continuous availability. We reserve the right to modify or discontinue any part of the site at any time."
+      },
+      {
+        "h": "7. Limitation of Liability",
+        "p": "To the maximum extent permitted by law, ZYXEN shall not be liable for any indirect, incidental, or consequential damages arising from use of this website."
+      },
+      {
+        "h": "8. Governing Law",
+        "p": "These terms are governed by the laws of Greece and the European Union. Any disputes shall be subject to the exclusive jurisdiction of Greek courts."
+      },
+      {
+        "h": "9. Changes",
+        "p": "We may update these Terms periodically. Continued use of the website constitutes acceptance of updated terms."
+      },
+      {
+        "h": "10. Contact",
+        "p": "Questions about these Terms: hello@zyxen.gr"
+      }
+    ],
+    "description": "ZYXEN Terms of Use — website usage, intellectual property, and liability."
+  }
+}
