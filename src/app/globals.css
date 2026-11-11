@@ -277,6 +277,31 @@
     }
   }
 
+  /* Phone menu: the sheet fades in, the links rise in one after another. */
+  .menu-sheet {
+    animation: menu-in 0.35s var(--ease-out) both;
+  }
+  .menu-link {
+    animation: menu-link-in 0.7s var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 50ms + 80ms);
+  }
+  .menu-link[aria-current='page'] .display {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
+  }
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes menu-link-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+
   .skip-link {
     position: absolute;
     left: var(--gutter);
