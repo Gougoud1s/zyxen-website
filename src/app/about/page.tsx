@@ -69,6 +69,8 @@ export default function About() {
           ZYXEN is a software studio for businesses that want more from their website than a brochure. Design, engineering
           and delivery sit in one team — so what we promise is what gets built, and what gets built keeps working.
         </p>
+        {/* A People section (portrait and role) returns once the photo and role are supplied. */}
+        <p className="m-0 text-[17px] text-soft">ZYXEN is led by Iraklis Gkougkoudis, from Athens.</p>
       </section>
 
       <section className="flex flex-wrap gap-x-20 gap-y-8 px-gutter pb-10 pt-20">
@@ -121,19 +123,6 @@ export default function About() {
               </li>
             ))}
           </ul>
-        </div>
-      </section>
-
-      <section className="flex flex-col gap-7 px-gutter pb-10 pt-24">
-        <h2 className="label">(06) People</h2>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,340px))] gap-6">
-          <figure className="m-0 flex flex-col gap-3">
-            <div className="placeholder aspect-[4/5]">Placeholder: portrait photo (owner to supply)</div>
-            <figcaption className="flex justify-between gap-3">
-              <span>Iraklis Gkougkoudis</span>
-              <span className="text-muted">[Role — owner to supply]</span>
-            </figcaption>
-          </figure>
         </div>
       </section>
 

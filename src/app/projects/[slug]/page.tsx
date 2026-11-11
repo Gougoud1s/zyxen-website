@@ -136,7 +136,6 @@ export default async function CaseStudy({ params }: Props) {
             <p className="m-0 text-[18px]">{p.tech.join(' · ')}</p>
           </div>
           <div className="flex flex-[2_1_480px] flex-col gap-4">
-            <p className="placeholder m-0 justify-start py-3 text-left">Placeholder: one measurable result for {p.en.name} (owner to supply, real numbers only).</p>
             <Disclaimer />
           </div>
         </div>

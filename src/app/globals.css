@@ -210,19 +210,6 @@
       0 0 8px rgb(10 10 11 / 0.5);
   }
 
-  /* Content the owner still has to supply (brief section 10). */
-  .placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    background: var(--panel);
-    border: 1px dashed var(--line-strong);
-    color: var(--muted);
-    font-size: 14px;
-    text-align: center;
-  }
-
   /* Form fields. */
   .zx-in {
     width: 100%;

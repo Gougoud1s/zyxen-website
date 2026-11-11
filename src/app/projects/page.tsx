@@ -67,7 +67,6 @@ export default function Projects() {
                 Read the full case study <span aria-hidden="true">→</span>
               </Link>
             </div>
-            <p className="placeholder m-0 justify-start py-3 text-left">Placeholder: one measurable result for {p.en.name} (owner to supply, real numbers only).</p>
           </article>
         ))}
         <Disclaimer />
