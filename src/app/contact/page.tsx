@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Suspense } from 'react';
 import AthensClock from '@/components/AthensClock';
 import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
@@ -40,9 +39,7 @@ export default function Contact() {
             label="The ZYXEN sculpture. It opens up as you type and lights up when you send."
           />
           <div className="relative z-[1]">
-          <Suspense>
-            <ContactForm />
-          </Suspense>
+          <ContactForm />
           </div>
         </div>
       </section>

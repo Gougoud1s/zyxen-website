@@ -27,7 +27,7 @@ export default function Projects() {
     <>
       <WorkHero items={items} />
       <p className="m-0 max-w-[640px] px-gutter pt-16 text-[17px] text-soft">
-        Real projects. Clearly credited. Platforms we have contributed to across hospitality, industry, public information
+        Real projects. Clearly credited. Explore platforms we have contributed to across hospitality, industry, public information
         and commerce. Each case study describes our role and credits the lead agency where supplied.
       </p>
 
@@ -46,6 +46,7 @@ export default function Projects() {
               <div className="flex max-w-[360px] flex-col gap-1.5 text-[15px]">
                 <p className="m-0">Our contribution: {p.en.focus}</p>
                 {p.leadAgency && <p className="m-0 text-muted">Lead agency: {p.leadAgency.name}</p>}
+                <p className="m-0 text-[13px] text-muted">{p.tech.join(' · ')}</p>
               </div>
             </div>
             <Link href={`/projects/${p.slug}`} className="block bg-panel" aria-label={`${p.en.name} case study`}>
@@ -61,7 +62,7 @@ export default function Projects() {
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <p className="m-0 max-w-[640px] text-soft">{summary(p)}</p>
               <Link className="zx-link text-[15px]" href={`/projects/${p.slug}`}>
-                Read the case study <span aria-hidden="true">→</span>
+                Read the full case study <span aria-hidden="true">→</span>
               </Link>
             </div>
             <p className="placeholder m-0 justify-start py-3 text-left">Placeholder: one measurable result for {p.en.name} (owner to supply, real numbers only).</p>

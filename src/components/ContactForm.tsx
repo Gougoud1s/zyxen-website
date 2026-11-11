@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
 import { markSent, pulseMark } from './three/events';
+import { useClientValue } from './useClientValue';
 
 const services = [
   'Business website',
@@ -27,7 +27,9 @@ const offers: Record<string, { service: string; budget?: string; details: string
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 export default function ContactForm() {
-  const params = useSearchParams();
+  // Read after hydration, so the form itself is in the static HTML (useSearchParams would make it client-only).
+  const search = useClientValue(() => location.search, '');
+  const params = new URLSearchParams(search);
   const offer = offers[params.get('offer') ?? ''];
   const care = params.get('care') === 'yes' ? ' With optional website care.' : '';
   const [status, setStatus] = useState<Status>('idle');
@@ -75,7 +77,7 @@ export default function ContactForm() {
 
   const field = 'flex flex-col gap-1 text-[13px] text-muted';
   return (
-    <form onSubmit={submit} onInput={pulseMark} className="flex flex-col gap-[22px]">
+    <form key={search} onSubmit={submit} onInput={pulseMark} className="flex flex-col gap-[22px]">
       {offer?.service === 'Business website' && (
         <p className="m-0 border-l border-accent pl-4 text-[14px] text-soft">
           Business website with up to 5 pages. Scope, schedule and cost are agreed before starting. An enquiry is not an

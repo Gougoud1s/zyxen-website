@@ -52,18 +52,18 @@ export default async function ServiceDetail({ params }: Props) {
         <h1 className="display m-0 max-w-[16ch] text-[clamp(48px,7.4vw,124px)] leading-[0.88]">{s.en.name}</h1>
         <div className="flex flex-wrap items-end justify-between gap-8">
           <p className="m-0 max-w-[640px] text-[18px] text-soft">{s.en.description}</p>
-          <p className="m-0 text-[13px] text-muted">{s.tech.join(' · ')}</p>
+          <p className="m-0 text-[13px] text-muted">Technology stack: {s.tech.join(' · ')}</p>
         </div>
       </section>
 
       <section className="flex flex-col gap-20 px-gutter pt-20">
         <List n={1} title="Core deliverables" items={s.en.subServices} />
-        <List n={2} title="Use cases" items={s.en.useCases} numbered />
-        <List n={3} title="Business impact" items={s.en.benefits} />
+        <List n={2} title="Enterprise use cases" items={s.en.useCases} numbered />
+        <List n={3} title="Key business impact" items={s.en.benefits} />
 
         {related.length > 0 && (
           <div className="flex flex-col gap-4">
-            <p className="label">Case studies using this stack</p>
+            <p className="label">Case studies utilising this stack</p>
             <ul className="m-0 flex list-none flex-col border-t border-line p-0">
               {related.map((p) => (
                 <li key={p.slug}>

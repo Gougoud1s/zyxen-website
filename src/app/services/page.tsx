@@ -62,6 +62,24 @@ export default function Services() {
         ))}
       </section>
 
+      <section className="flex flex-wrap items-end justify-between gap-8 px-gutter pb-10 pt-24">
+        <div className="flex max-w-[640px] flex-col gap-3.5">
+          <p className="label">(For small businesses)</p>
+          <h2 className={h2}>
+            Your business.
+            <br />
+            A proper website.
+          </h2>
+          <p className="m-0 text-[18px] text-soft">
+            Up to 5 pages. Mobile-ready. A clear scope, with optional care after launch. A focused starting point for your
+            business, with a defined scope and a clear handover.
+          </p>
+        </div>
+        <Link className="zx-cta" href="/websites">
+          Explore the website package <span aria-hidden="true">→</span>
+        </Link>
+      </section>
+
       <section className="flex flex-col gap-12 px-gutter pb-10 pt-24">
         <div className="flex max-w-[820px] flex-col gap-3.5">
           <p className="label">(Ways to work together)</p>

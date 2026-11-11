@@ -87,7 +87,13 @@ export default function Home() {
         <nav aria-label="Selected work" className="flex w-full max-w-[820px] flex-col border-t border-line">
           {selected.map((p) => (
             <Link key={p.slug} href={`/projects/${p.slug}`} className="zx-row flex-wrap items-baseline gap-x-5 gap-y-1.5 py-[22px]">
-              <span className="display flex-[1_1_360px] text-[clamp(30px,3.8vw,58px)] leading-none tracking-[-0.045em]">{p.en.name}</span>
+              <span className="flex flex-[1_1_360px] flex-col gap-2">
+                <span className="display text-[clamp(30px,3.8vw,58px)] leading-none tracking-[-0.045em]">{p.en.name}</span>
+                <span className="legible text-[14px] text-muted">
+                  {p.en.focus}
+                  {p.leadAgency && ` · Lead agency: ${p.leadAgency.name}`}
+                </span>
+              </span>
               <span className="text-[13px] text-muted">{p.en.category}</span>
             </Link>
           ))}
