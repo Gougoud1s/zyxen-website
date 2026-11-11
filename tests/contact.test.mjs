@@ -95,6 +95,36 @@ test('a failed owner email is reported to the visitor', async () => {
   assert.match((await res.json()).error, /could not be sent/);
 });
 
+// Regression tests carried over from the #1 fix (a bad visitor address must never discard the lead).
+test('a rejected visitor confirmation (mistyped address) must not discard the lead', async () => {
+  mock.fail.confirmation = true;
+  const res = await post(valid);
+  assert.equal(res.status, 200);
+  assert.ok(mock.calls.emails.some((e) => e.to.includes('i.gougoudis@zyxen.gr')), 'owner still notified');
+});
+
+test('both sends failing still surfaces a single 502, not a crash', async () => {
+  mock.fail.owner = true;
+  mock.fail.confirmation = true;
+  assert.equal((await post(valid)).status, 502);
+});
+
+test('exactly one owner notification and one confirmation per submission', async () => {
+  await post(valid);
+  assert.equal(mock.calls.emails.filter((e) => e.to.includes('i.gougoudis@zyxen.gr')).length, 1);
+  const visitor = mock.calls.emails.filter((e) => e.to.includes('maria@zyxen.gr'));
+  assert.equal(visitor.length, 1);
+  assert.equal(visitor[0].reply_to ?? visitor[0].replyTo, 'hello@zyxen.gr');
+});
+
+test('user content is escaped in the subject and email body', async () => {
+  await post({ ...valid, name: '<script>x</script>' });
+  const owner = mock.calls.emails.find((e) => e.to.includes('i.gougoudis@zyxen.gr'));
+  assert.ok(!owner.subject.includes('<script>'));
+  assert.ok(owner.subject.includes('&lt;script&gt;'));
+  assert.ok(!owner.html.includes('<script>x'));
+});
+
 test('honeypot: looks successful, sends nothing', async () => {
   assert.equal((await post({ ...valid, nickname: 'bot' })).status, 200);
   assert.equal(mock.calls.emails.length, 0);
