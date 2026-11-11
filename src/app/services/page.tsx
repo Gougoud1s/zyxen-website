@@ -4,6 +4,8 @@ import ServicesHero from '@/components/ServicesHero';
 import { serviceOffers } from '@/lib/serviceOffers.js';
 import { serviceQuestions } from '@/lib/serviceQuestions.js';
 import { getService, pad, pageMeta, serviceGroups } from '@/lib/site';
+import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
+import { faqPageSchema } from '@/lib/structuredData.js';
 
 export const metadata = pageMeta(
   '/services',
@@ -23,6 +25,8 @@ const h2 = 'display m-0 text-[clamp(36px,4.6vw,72px)] leading-[0.95] tracking-[-
 export default function Services() {
   return (
     <>
+      <Breadcrumbs trail={[['Services', '/services']]} />
+      <JsonLd data={faqPageSchema(serviceQuestions)} />
       <ServicesHero />
       <p className="m-0 max-w-[640px] px-gutter pt-16 text-[17px] text-soft">
         Software that solves the right problem. Build a better website, connect your business systems or make everyday work
@@ -49,7 +53,7 @@ export default function Services() {
                     <Link key={slug} href={`/services/${slug}`} className="zx-row gap-4 py-4">
                       <span className="zx-dot" aria-hidden="true" />
                       <span className="flex flex-1 flex-col">
-                        <span className="text-[18px]">{s.en.name}</span>
+                        <span className="text-[18px] text-soft">{s.en.name}</span>
                         <span className="text-[14px] text-muted">{s.en.short}</span>
                       </span>
                       <span aria-hidden="true">→</span>

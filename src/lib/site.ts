@@ -74,8 +74,9 @@ export function pageMeta(path: string, title: string, description: string): Meta
     title: { absolute: title },
     description,
     alternates: { canonical: path },
-    openGraph: { title, description, url: path, siteName: 'ZYXEN', type: 'website', locale: 'en_US', images: ['/og-image.jpg'] },
-    twitter: { card: 'summary_large_image', title, description, images: ['/og-image.jpg'] },
+    // Images come from each route's opengraph-image / twitter-image file.
+    openGraph: { title, description, url: path, siteName: 'ZYXEN', type: 'website', locale: 'en_US' },
+    twitter: { card: 'summary_large_image', title, description },
   };
 }
 

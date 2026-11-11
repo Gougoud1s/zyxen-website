@@ -1,39 +1,52 @@
-**Welcome to your Base44 project** 
+# zyxen.gr
 
-**About**
+The ZYXEN website: Next.js (App Router, static pages), TypeScript, Tailwind and React Three Fiber.
+Hosted on Vercel (project `zyxen-digital-flow`).
 
-View and Edit  your app on [Base44.com](http://Base44.com) 
+## Run locally
 
-This project contains everything you need to run your app locally.
-
-**Edit the code in your local development environment**
-
-Any change pushed to the repo will also be reflected in the Base44 Builder.
-
-**Prerequisites:** 
-
-1. Clone the repository using the project's Git URL 
-2. Navigate to the project directory
-3. Install dependencies: `npm install`
-4. Create an `.env.local` file and set the right environment variables
-
-```
-VITE_BASE44_APP_ID=your_app_id
-VITE_BASE44_APP_BASE_URL=your_backend_url
-
-e.g.
-VITE_BASE44_APP_ID=cbef744a8545c389ef439ea6
-VITE_BASE44_APP_BASE_URL=https://my-to-do-list-81bfaad7.base44.app
+```bash
+npm install
+cp .env.example .env.local   # fill in only what you need; the site runs without them
+npm run dev                  # http://localhost:3000
 ```
 
-Run the app: `npm run dev`
+## Content
 
-**Publish your changes**
+Copy and project data live in `src/lib/data.js`, `projectStories.js`, `serviceOffers.js`, `serviceQuestions.js`
+and `legal.json`. Project screenshots are in `public/projects/` (`<slug>.webp` plus a `-640.webp` used on the 3D ring).
 
-Open [Base44.com](http://Base44.com) and click on Publish.
+## 3D scenes
 
-**Docs & Support**
+`src/components/three/` holds the six scenes (Home, Services, Work, Websites, About, Contact) and the shared kit.
+Each scene is loaded after first paint, only when in view, and pauses off-screen. Visitors with reduced motion,
+no WebGL or a low-end phone see a static poster instead.
 
-Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
+After changing a scene's look, re-render its posters (and the social image background):
 
-Support: [https://app.base44.com/support](https://app.base44.com/support)
+```bash
+npm run build && npm start
+npm run posters              # writes public/posters/*.webp and src/assets/og-hero.png
+```
+
+## Contact form
+
+`POST /api/contact` validates the enquiry, then emails both owners and the visitor (Resend) and creates a lead in the
+Notion Leads data source. Notion problems never block the email. Required in Vercel (Preview and Production):
+`RESEND_API_KEY`, `NOTION_TOKEN`, `NOTION_LEADS_DATA_SOURCE_ID` (see `.env.example`).
+
+## Tests
+
+```bash
+npm run build
+npm run test:smoke      # against a running `npm start` (routes, redirects, sitemap)
+npm run test:contact    # contact API against local mocks of Resend and Notion
+npm run test:e2e        # Playwright: every page in Chromium and WebKit at 390-1920px, a11y, links, form, 3D fallbacks
+```
+
+`E2E_BASE_URL=https://<preview-url> npm run test:e2e` runs the browser suite against a deployed preview.
+
+## Deploy
+
+Every push to a branch gets a Vercel preview. Production deploys from `main`.
+Redirects (old `/en` and `/el` URLs, retired pages, apex to www) are in `next.config.ts`.

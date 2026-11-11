@@ -5,6 +5,8 @@ import Disclaimer from '@/components/Disclaimer';
 import PageEnd from '@/components/PageEnd';
 import { projects } from '@/lib/data.js';
 import { getProject, pad, pageMeta, storyFor } from '@/lib/site';
+import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
+import { ORGANIZATION_ID } from '@/lib/seo.js';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -40,6 +42,23 @@ export default async function CaseStudy({ params }: Props) {
 
   return (
     <>
+      <Breadcrumbs trail={[['Work', '/projects'], [p.en.name, `/projects/${p.slug}`]]} />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'CreativeWork',
+          name: p.en.name,
+          headline: story?.headline ?? p.en.overview,
+          description: p.en.overview,
+          url: `https://www.zyxen.gr/projects/${p.slug}`,
+          image: `https://www.zyxen.gr${p.image}`,
+          genre: p.en.category,
+          keywords: p.tech.join(', '),
+          contributor: { '@id': ORGANIZATION_ID },
+          ...(p.leadAgency ? { creator: { '@type': 'Organization', name: p.leadAgency.name, url: p.leadAgency.url } } : {}),
+          isBasedOn: p.url,
+        }}
+      />
       <section className="stage-glow flex min-h-[640px] flex-col justify-end gap-10 px-gutter pb-12 pt-[120px] lg:min-h-[86vh]" style={{ ['--glow-x' as string]: '70%' }}>
         <nav aria-label="Breadcrumb" className="label">
           <Link className="zx-link" href="/projects">Work</Link> <span aria-hidden="true">/</span> {p.en.name}

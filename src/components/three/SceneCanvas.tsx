@@ -58,6 +58,8 @@ type Props = {
 /**
  * Server-rendered poster first, then the live scene fades in over it.
  * Poster only for reduced motion, low-end phones and no WebGL. Pauses off-screen and in hidden tabs.
+ * The live scene starts on the visitor's first interaction (pointer, touch, wheel, scroll or key) after
+ * the page is idle, so page load never pays for WebGL; the poster looks the same until then.
  * `?poster` forces the live scene (used by scripts/render-posters.mjs).
  */
 export default function SceneCanvas({ scene, label, className = '', sceneProps, band }: Props) {
@@ -73,8 +75,9 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
 
     let visible = false;
     let idle = false;
+    let engaged = posterMode;
     const update = () => {
-      if (visible && idle) setLive(true);
+      if (visible && idle && engaged) setLive(true);
       setRunning(visible && !document.hidden);
     };
     const io = new IntersectionObserver(([e]) => {
@@ -89,6 +92,12 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
       update();
     });
     document.addEventListener('visibilitychange', update);
+    const engage = () => {
+      engaged = true;
+      update();
+    };
+    const events = ['pointermove', 'pointerdown', 'touchstart', 'wheel', 'scroll', 'keydown'] as const;
+    for (const e of events) window.addEventListener(e, engage, { once: true, passive: true });
     // A lost GPU context drops back to the poster (the event does not bubble, so listen in capture).
     const lost = () => {
       setLive(false);
@@ -99,6 +108,7 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
       el.removeEventListener('webglcontextlost', lost, true);
       io.disconnect();
       cic(id);
+      for (const e of events) window.removeEventListener(e, engage);
       document.removeEventListener('visibilitychange', update);
     };
   }, [posterMode]);
@@ -124,7 +134,7 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
             src={`/posters/${scene}-desktop.webp`}
             alt=""
             decoding="async"
-            fetchPriority="low"
+            fetchPriority="high"
             className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover transition-opacity duration-700"
             style={{ opacity: ready ? 0 : 1 }}
           />

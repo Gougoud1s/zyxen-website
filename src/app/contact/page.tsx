@@ -4,6 +4,8 @@ import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
 import SceneCanvas from '@/components/three/SceneCanvas';
 import { EMAIL, pageMeta } from '@/lib/site';
+import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
+import { faqPageSchema } from '@/lib/structuredData.js';
 
 export const metadata = pageMeta(
   '/contact',
@@ -12,7 +14,7 @@ export const metadata = pageMeta(
 );
 
 const faq = [
-  ['How much does a website cost?', 'Every project gets a written proposal with a fixed scope and price. Our business website package starts at €1,200 + VAT for up to 5 pages.'],
+  ['How much does a website cost?', 'Every project gets a written proposal with a fixed scope and price before work begins. For smaller businesses, our website package covers up to 5 pages with a clear scope.'],
   ['What is Zyxen’s typical engagement model?', 'We agree on the scope and milestones before starting. Ongoing work can be arranged through a monthly retainer.'],
   ['When can we get started?', 'Discovery typically starts within 3–5 business days after we agree on the initial scope and any confidentiality requirements.'],
   ['Can you support the project after launch?', 'Yes. Maintenance, security updates and performance support are agreed around your project’s needs.'],
@@ -23,6 +25,8 @@ const faq = [
 export default function Contact() {
   return (
     <>
+      <Breadcrumbs trail={[['Contact', '/contact']]} />
+      <JsonLd data={faqPageSchema(faq.map(([q, a]) => ({ q, a })))} />
       <section className="stage-glow relative min-h-screen" style={{ ['--glow-x' as string]: '72%', ['--glow-y' as string]: '48%' }}>
         <div className="over-canvas relative flex max-w-[640px] flex-col gap-9 px-gutter pb-12 pt-[120px] lg:static">
           <p className="label relative z-[1]">(Contact)</p>

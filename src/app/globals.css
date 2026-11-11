@@ -141,7 +141,7 @@
   }
   /* Smaller pick rows (hero lists). */
   .zx-pick {
-    color: var(--dim);
+    color: var(--muted);
     border-bottom: 1px solid var(--line);
     transition:
       color 0.4s var(--ease-draw),
@@ -218,7 +218,7 @@
     padding: 24px;
     background: var(--panel);
     border: 1px dashed var(--line-strong);
-    color: var(--dim);
+    color: var(--muted);
     font-size: 14px;
     text-align: center;
   }

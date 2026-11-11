@@ -62,11 +62,10 @@ export default function WebsitesHero() {
             </p>
           </div>
           <div className="flex flex-col items-start gap-3.5">
-            <p className="label">Defined scope. Clear price.</p>
-            <p className="display m-0 text-[clamp(48px,6vw,88px)] leading-none tracking-[-0.05em]">€1,200</p>
-            <p className="m-0 text-[15px] text-soft">+ VAT · one-off build</p>
+            <p className="label">Defined scope. Fixed price.</p>
+            <p className="m-0 max-w-[300px] text-[17px] text-soft">One-off build, priced in a written proposal before any work begins.</p>
             <Link className="zx-cta mt-2" href="/contact?offer=website">
-              Let’s discuss your website <span aria-hidden="true">→</span>
+              Request a proposal <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

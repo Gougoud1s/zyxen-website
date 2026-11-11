@@ -46,7 +46,7 @@ export default function ServicesHero() {
           <div className="flex max-w-[340px] flex-col gap-2.5 text-[15px]" aria-live="polite">
             <p className="m-0">{cur.text}</p>
             <p className="m-0 text-[13px] text-muted">{cur.tech}</p>
-            <p className="m-0 mt-2 text-[12px] text-dim">Hover a service · drag to rotate</p>
+            <p className="m-0 mt-2 text-[12px] text-muted">Hover a service · drag to rotate</p>
           </div>
         </div>
       </div>

@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Inter_Tight } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import Header from '@/components/Header';
+import JsonLd from '@/components/JsonLd';
+import SmoothScroll from '@/components/SmoothScroll';
+import { organizationSchema, websiteSchema } from '@/lib/seo.js';
 import { SITE_URL } from '@/lib/site';
 import './globals.css';
 
@@ -26,10 +29,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="skip-link">
           Skip to content
         </a>
+        <JsonLd data={[organizationSchema, websiteSchema]} />
+        <SmoothScroll />
         <Header />
         <main id="main">{children}</main>
-        {/* Cookieless (no consent banner needed); enable Web Analytics on the Vercel project to collect data. */}
-        <Analytics />
+        {/* Cookieless, so no consent banner. Its script exists only once Web Analytics is enabled on the Vercel project. */}
+        {process.env.NEXT_PUBLIC_VERCEL_ANALYTICS === '1' && <Analytics />}
       </body>
     </html>
   );

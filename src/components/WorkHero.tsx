@@ -50,7 +50,7 @@ export default function WorkHero({ items }: { items: WorkItem[] }) {
             <Link className="zx-link mt-2 self-start text-[15px] text-accent" href={`/projects/${cur.slug}`}>
               {cur.name} case study <span aria-hidden="true">→</span>
             </Link>
-            <p className="m-0 mt-2.5 text-[12px] text-dim">Drag to turn · click a panel</p>
+            <p className="m-0 mt-2.5 text-[12px] text-muted">Drag to turn · click a panel</p>
           </div>
         </div>
       </div>

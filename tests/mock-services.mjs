@@ -25,6 +25,13 @@ export async function startMockServices(port = 4599) {
       if (fail.notion) return reply(500, { object: 'error', code: 'internal_server_error' });
       return reply(200, { object: 'page', id: 'mock-page' });
     }
+    // Test helpers for the browser suite.
+    if (req.url === '/__calls') return reply(200, calls);
+    if (req.url === '/__reset') {
+      calls.emails.length = 0;
+      calls.notion.length = 0;
+      return reply(200, { ok: true });
+    }
     reply(404, { error: 'not mocked' });
   });
   await new Promise((resolve) => server.listen(port, resolve));

@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import PageEnd from '@/components/PageEnd';
 import { services } from '@/lib/data.js';
 import { clip, getService, groupForService, pad, pageMeta, projectsForService } from '@/lib/site';
+import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
+import { serviceSchema } from '@/lib/structuredData.js';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -44,6 +46,8 @@ export default async function ServiceDetail({ params }: Props) {
 
   return (
     <>
+      <Breadcrumbs trail={[['Services', '/services'], [s.en.name, `/services/${s.slug}`]]} />
+      <JsonLd data={serviceSchema(s, 'en')} />
       <section className="stage-glow flex min-h-[600px] flex-col justify-end gap-10 px-gutter pb-12 pt-[120px] lg:min-h-[80vh]" style={{ ['--glow-x' as string]: '72%' }}>
         <nav aria-label="Breadcrumb" className="label">
           <Link className="zx-link" href="/services">Services</Link> <span aria-hidden="true">/</span>{' '}

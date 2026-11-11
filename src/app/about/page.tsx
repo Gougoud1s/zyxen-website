@@ -2,6 +2,7 @@ import AthensClock from '@/components/AthensClock';
 import PageEnd from '@/components/PageEnd';
 import SceneCanvas from '@/components/three/SceneCanvas';
 import { pad, pageMeta } from '@/lib/site';
+import { Breadcrumbs } from '@/components/JsonLd';
 
 export const metadata = pageMeta(
   '/about',
@@ -35,6 +36,7 @@ const cardTitle = 'display m-0 text-[28px] leading-[1.1] tracking-[-0.035em]';
 export default function About() {
   return (
     <>
+      <Breadcrumbs trail={[['About', '/about']]} />
       <section className="stage-glow relative flex min-h-[700px] flex-col lg:h-screen" style={{ ['--glow-x' as string]: '66%', ['--glow-y' as string]: '48%' }}>
         <div className="over-canvas relative flex flex-1 flex-col justify-between gap-12 px-gutter pb-9 pt-[120px]">
         <p className="label relative z-[1]">(About)</p>
@@ -55,7 +57,7 @@ export default function About() {
               37.9838° N, 23.7275° E — <span className="text-muted"><AthensClock /></span>
             </p>
             <p className="m-0 text-muted">A remote-first studio working with teams internationally.</p>
-            <p className="m-0 mt-2 text-[12px] text-dim">Drag to turn the globe</p>
+            <p className="m-0 mt-2 text-[12px] text-muted">Drag to turn the globe</p>
           </div>
         </div>
         </div>

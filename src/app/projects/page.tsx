@@ -5,6 +5,7 @@ import PageEnd from '@/components/PageEnd';
 import WorkHero, { type WorkItem } from '@/components/WorkHero';
 import { projects } from '@/lib/data.js';
 import { pad, pageMeta, sector, summary } from '@/lib/site';
+import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
 
 export const metadata = pageMeta(
   '/projects',
@@ -25,6 +26,7 @@ const items: WorkItem[] = projects.map((p) => ({
 export default function Projects() {
   return (
     <>
+      <Breadcrumbs trail={[['Work', '/projects']]} />
       <WorkHero items={items} />
       <p className="m-0 max-w-[640px] px-gutter pt-16 text-[17px] text-soft">
         Real projects. Clearly credited. Explore platforms we have contributed to across hospitality, industry, public information

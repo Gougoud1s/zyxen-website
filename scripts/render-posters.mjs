@@ -12,6 +12,7 @@ const views = {
 };
 
 mkdirSync('public/posters', { recursive: true });
+mkdirSync('src/assets', { recursive: true });
 const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 try {
   for (const [name, path] of Object.entries(scenes)) {
@@ -27,6 +28,11 @@ try {
       const file = `public/posters/${name}-${view}.webp`;
       writeFileSync(file, Buffer.from(data.split(',')[1], 'base64'));
       console.log(file, Math.round((data.length * 0.75) / 1024), 'KB', errors.length ? errors : '');
+      if (name === 'hero' && view === 'desktop') {
+        // Open Graph images (next/og) cannot read WebP; keep a PNG of the hero outside public/.
+        const png = await page.$eval('[role=img] canvas', (c) => c.toDataURL('image/png'));
+        writeFileSync('src/assets/og-hero.png', Buffer.from(png.split(',')[1], 'base64'));
+      }
       await context.close();
     }
   }

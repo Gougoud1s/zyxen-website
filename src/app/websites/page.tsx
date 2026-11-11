@@ -2,11 +2,13 @@ import Link from 'next/link';
 import PageEnd from '@/components/PageEnd';
 import WebsitesHero from '@/components/WebsitesHero';
 import { pad, pageMeta } from '@/lib/site';
+import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
+import { ORGANIZATION_ID } from '@/lib/seo.js';
 
 export const metadata = pageMeta(
   '/websites',
-  'Business website for €1,200 + VAT | ZYXEN',
-  'A professional website with up to 5 pages for €1,200 + VAT. Optional €45/month website care. Clear scope, two revision rounds and handover.',
+  'Business Website Package, Up to 5 Pages | ZYXEN',
+  'A professional website with up to 5 pages, adapted to your brand. Optional monthly care, two revision rounds and a clear handover. Fixed price agreed in writing.',
 );
 
 const included = [
@@ -30,6 +32,19 @@ const ask = '/contact?offer=website';
 export default function Websites() {
   return (
     <>
+      <Breadcrumbs trail={[['Websites', '/websites']]} />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'Service',
+          name: 'ZYXEN Business Website',
+          serviceType: 'Website development',
+          description: 'A business presentation website with up to 5 pages in one language, adapted to your brand, with two revision rounds and optional monthly care.',
+          provider: { '@id': ORGANIZATION_ID },
+          areaServed: 'GR',
+          url: 'https://www.zyxen.gr/websites',
+        }}
+      />
       <WebsitesHero />
 
       <section className="flex flex-wrap gap-x-20 gap-y-8 px-gutter pb-10 pt-28">
@@ -41,19 +56,11 @@ export default function Websites() {
           {['Up to 5 pages, in one language', 'Adapted to your brand', 'Two revision rounds'].map((t) => (
             <p key={t} className="hair text-[18px]">{t}</p>
           ))}
-          <p className="hair flex justify-between gap-4 text-[18px]">
-            <span>Add optional care</span>
-            <span className="text-right text-muted">45 € / month + VAT</span>
-          </p>
-          <p className="hair flex justify-between gap-4 text-[18px]">
-            <span>First 12 months</span>
-            <span className="text-right">
-              €1,200 + VAT <span className="text-muted">· €1,740 + VAT with care</span>
-            </span>
-          </p>
+          <p className="hair text-[18px]">Optional monthly care after launch</p>
+          <p className="hair text-[18px]">A fixed price, agreed in writing before work begins</p>
           <p className="mt-4 text-[14px] text-muted">
-            Hosting is arranged separately without care. Domain registration and business email are not included. With
-            care, it is billed monthly, with no annual prepayment required.
+            Hosting is arranged separately without care. Domain registration and business email are not included. Care is
+            billed monthly, with no annual prepayment required.
           </p>
         </div>
       </section>
@@ -101,9 +108,7 @@ export default function Websites() {
         <div className="flex flex-[1_1_420px] flex-col gap-3.5">
           <p className="label">(06) After launch</p>
           <h2 className={h2}>Care, if you need it.</h2>
-          <p className="display m-0 mt-4 text-[48px] leading-none tracking-[-0.05em]">
-            45 € <span className="text-[18px] tracking-normal text-muted">/ month + VAT</span>
-          </p>
+          <p className="m-0 mt-2 text-[18px] text-soft">A simple monthly plan, priced in your proposal.</p>
         </div>
         <div className="flex flex-[1_1_420px] flex-col gap-4 text-[18px] text-soft">
           <p className="m-0">
@@ -140,7 +145,7 @@ export default function Websites() {
             <Link className="zx-link text-ink" href="/services">All services →</Link>
           </p>
           <Link className="zx-cta" href={ask}>
-            Ask about the €1,200 website <span aria-hidden="true">→</span>
+            Ask about the website package <span aria-hidden="true">→</span>
           </Link>
         </div>
       </section>
