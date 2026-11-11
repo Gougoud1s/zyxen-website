@@ -47,7 +47,7 @@ function Sculpture({ poster }: { poster: boolean }) {
 
   useEffect(() => () => disposeTree(built.root), [built]);
 
-  const s = useMemo(() => ({ cx: 0, cy: -4, cs: 0.6, sep: 0, glow: 0, spin: 0, rx: 0, ry: 0, intro: 0, mx: 0, my: 0 }), []);
+  const s = useMemo(() => ({ cx: 0, cy: -4, cs: 0.6, sep: 0, glow: 0, spin: 0, rx: 0, ry: 0, intro: 0, mx: 0, my: 0, snapped: false }), []);
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
@@ -72,8 +72,12 @@ function Sculpture({ poster }: { poster: boolean }) {
     let tsc = lerp(A[2], B[2], u);
     if (narrow) {
       tx = 0;
-      ty = halfH * 0.08; // reference used 0.32, which covered the intro text on phones
-      tsc *= 0.72;
+      ty = halfH * 0.05; // reference used 0.32, which covered the intro text on phones
+      tsc *= 0.62; // reference 0.72; smaller so it fits between the intro and the headline on short phones
+    }
+    // Start exactly where the poster shows the sculpture (no rise-in), so the poster-to-live swap is invisible.
+    if (!s.snapped) {
+      Object.assign(s, { snapped: true, intro: 1, cx: tx, cy: ty, cs: tsc, sep: lerp(A[3], B[3], u), glow: lerp(A[4], B[4], u), spin: lerp(A[5], B[5], u) });
     }
     s.intro = lerp(s.intro, t > 0.2 ? 1 : 0, q(0.035));
     s.cx = lerp(s.cx, tx, q(0.06));

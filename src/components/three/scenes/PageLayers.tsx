@@ -52,7 +52,7 @@ function Layers({ names, active, onSelect }: Props) {
       stack.add(g);
       return { g, lab, lift: 0 };
     });
-    return { root, stack, plates, spread: 0.5 };
+    return { root, stack, plates, spread: 0.5, started: false };
   }, [names]);
   useEffect(() => () => disposeTree(built.root), [built]);
 
@@ -82,11 +82,14 @@ function Layers({ names, active, onSelect }: Props) {
     built.stack.scale.setScalar(narrow ? 0.7 : 1);
     built.stack.rotation.set(0, -0.5 + p.sx * 0.3 + p.dragX, 0);
     built.plates.forEach((pl, i) => {
-      pl.lift = lerp(pl.lift, i === activeRef.current ? 1 : 0, damp(0.1, dt));
+      const lifted = i === activeRef.current ? 1 : 0;
+      // First frame starts with the selected page already lifted, matching the poster.
+      pl.lift = built.started ? lerp(pl.lift, lifted, damp(0.1, dt)) : lifted;
       pl.g.position.set(pl.lift * 1.1, (names.length - 1 - i) * built.spread - 1.4 + Math.sin(t + i) * 0.03, pl.lift * 0.6);
       pl.g.rotation.z = pl.lift * 0.05;
       (pl.lab.material as THREE.MeshBasicMaterial).opacity = 0.35 + 0.65 * pl.lift;
     });
+    built.started = true;
     const hover = p.inside ? pick(p) : null;
     state.gl.domElement.style.cursor = hover ? 'pointer' : 'grab';
   });

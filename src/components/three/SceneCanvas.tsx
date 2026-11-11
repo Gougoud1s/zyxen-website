@@ -6,15 +6,16 @@ import { useClientValue } from '../useClientValue';
 import type { SceneProps } from './types';
 
 // Each scene is its own chunk; three.js loads only after first paint, when the canvas is in view.
-const scenes = {
-  hero: dynamic(() => import('./scenes/HeroSculpture'), { ssr: false }),
-  shapes: dynamic(() => import('./scenes/ShapeMorph'), { ssr: false }),
-  slabs: dynamic(() => import('./scenes/ProjectRing'), { ssr: false }),
-  layers: dynamic(() => import('./scenes/PageLayers'), { ssr: false }),
-  globe: dynamic(() => import('./scenes/GoldGlobe'), { ssr: false }),
-  listen: dynamic(() => import('./scenes/ListeningMark'), { ssr: false }),
+const load = {
+  hero: () => import('./scenes/HeroSculpture'),
+  shapes: () => import('./scenes/ShapeMorph'),
+  slabs: () => import('./scenes/ProjectRing'),
+  layers: () => import('./scenes/PageLayers'),
+  globe: () => import('./scenes/GoldGlobe'),
+  listen: () => import('./scenes/ListeningMark'),
 };
-export type SceneName = keyof typeof scenes;
+export type SceneName = keyof typeof load;
+const scenes = Object.fromEntries(Object.entries(load).map(([k, fn]) => [k, dynamic(fn, { ssr: false })])) as Record<SceneName, ReturnType<typeof dynamic<SceneProps>>>;
 
 /** Keeps the poster if WebGL fails to start (lost or refused context). */
 class Fallback extends Component<{ children: ReactNode; onError: () => void }, { failed: boolean }> {
@@ -32,8 +33,11 @@ class Fallback extends Component<{ children: ReactNode; onError: () => void }, {
 
 function canRunWebGL() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-  // Low-end phones get the poster only.
-  if ((navigator.hardwareConcurrency || 8) <= 4 && matchMedia('(pointer: coarse)').matches) return false;
+  // Only genuinely low-end phones get the poster only. iPhones and many Androids report 4 cores
+  // (Safari caps the number), so "4 or fewer" would wrongly exclude them.
+  const nav = navigator as Navigator & { deviceMemory?: number };
+  const weak = (nav.hardwareConcurrency || 8) < 4 || (nav.deviceMemory ?? 8) <= 2;
+  if (weak && matchMedia('(pointer: coarse)').matches) return false;
   try {
     const c = document.createElement('canvas');
     return !!(c.getContext('webgl2') || c.getContext('webgl'));
@@ -58,8 +62,8 @@ type Props = {
 /**
  * Server-rendered poster first, then the live scene fades in over it.
  * Poster only for reduced motion, low-end phones and no WebGL. Pauses off-screen and in hidden tabs.
- * The live scene starts on the visitor's first interaction (pointer, touch, wheel, scroll or key) after
- * the page is idle, so page load never pays for WebGL; the poster looks the same until then.
+ * The scene's code starts downloading on mount; it goes live once the page is idle (at most ~1 s)
+ * and in view, starting from the same pose as the poster so the swap is seamless.
  * `?poster` forces the live scene (used by scripts/render-posters.mjs).
  */
 export default function SceneCanvas({ scene, label, className = '', sceneProps, band }: Props) {
@@ -72,12 +76,12 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
   useEffect(() => {
     const el = ref.current!;
     if (!posterMode && !canRunWebGL()) return;
+    void load[scene]();
 
     let visible = false;
     let idle = false;
-    let engaged = posterMode;
     const update = () => {
-      if (visible && idle && engaged) setLive(true);
+      if (visible && idle) setLive(true);
       setRunning(visible && !document.hidden);
     };
     const io = new IntersectionObserver(([e]) => {
@@ -87,17 +91,14 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
     io.observe(el);
     const ric = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 200));
     const cic = window.cancelIdleCallback ?? window.clearTimeout;
-    const id = ric(() => {
-      idle = true;
-      update();
-    });
+    const id = ric(
+      () => {
+        idle = true;
+        update();
+      },
+      { timeout: 1000 },
+    );
     document.addEventListener('visibilitychange', update);
-    const engage = () => {
-      engaged = true;
-      update();
-    };
-    const events = ['pointermove', 'pointerdown', 'touchstart', 'wheel', 'scroll', 'keydown'] as const;
-    for (const e of events) window.addEventListener(e, engage, { once: true, passive: true });
     // A lost GPU context drops back to the poster (the event does not bubble, so listen in capture).
     const lost = () => {
       setLive(false);
@@ -108,10 +109,9 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
       el.removeEventListener('webglcontextlost', lost, true);
       io.disconnect();
       cic(id);
-      for (const e of events) window.removeEventListener(e, engage);
       document.removeEventListener('visibilitychange', update);
     };
-  }, [posterMode]);
+  }, [posterMode, scene]);
 
   useEffect(() => {
     if (ready && posterMode) {

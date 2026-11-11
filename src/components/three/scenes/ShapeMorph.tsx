@@ -36,7 +36,7 @@ function Shapes({ active, onSelect }: Props) {
     });
     const shadow = kit.shadow();
     root.add(shadow);
-    return { root, shapes, shadow, spin: 0 };
+    return { root, shapes, shadow, spin: 0, started: false };
   }, []);
   useEffect(() => () => disposeTree(built.root), [built]);
 
@@ -51,12 +51,15 @@ function Shapes({ active, onSelect }: Props) {
     built.spin += dt * 0.25;
     built.shapes.forEach((s, i) => {
       const on = i === activeRef.current;
-      s.sc = lerp(s.sc, on ? (narrow ? 0.7 : 1) : 0.001, damp(on ? 0.06 : 0.12, dt));
+      const target = on ? (narrow ? 0.7 : 1) : 0.001;
+      // First frame starts at full size, matching the poster, instead of growing in.
+      s.sc = built.started ? lerp(s.sc, target, damp(on ? 0.06 : 0.12, dt)) : target;
       s.group.scale.setScalar(Math.max(0.001, s.sc));
       s.group.position.set(ox, oy + Math.sin(t * 0.9) * 0.08, 0);
       s.group.rotation.set(0.45 - p.sy * 0.3 + p.dragY * 0.4, built.spin + p.sx * 0.5 + p.dragX + (on ? 0 : 1.5), 0.1);
       s.core?.rotation.set(t * 0.6, -t * 0.8, 0);
     });
+    built.started = true;
     built.shadow.position.set(ox, oy - 2.4, 0);
     built.shadow.scale.setScalar(narrow ? 0.8 : 1.1);
     state.gl.domElement.style.cursor = p.down ? 'grabbing' : 'grab';

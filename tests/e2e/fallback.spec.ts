@@ -32,9 +32,7 @@ test.describe('reduced motion', () => {
 test('with WebGL the live scene replaces the poster and the list drives it', async ({ page }, info) => {
   test.skip(info.project.name !== 'chromium-1440');
   await page.goto('/projects', { waitUntil: 'networkidle' });
-  // The scene waits for the first interaction; until then the poster shows.
-  await expect(page.locator('[role=img] canvas')).toHaveCount(0);
-  await page.mouse.move(700, 400);
+  // The scene goes live on its own once the page is idle; no interaction needed.
   await expect(page.locator('[role=img] canvas')).toHaveCount(1, { timeout: 15_000 });
   await page.getByRole('button', { name: /^Creta Maris/ }).click();
   await expect(page.getByRole('button', { name: /^Creta Maris/ })).toHaveAttribute('aria-current', 'true');
