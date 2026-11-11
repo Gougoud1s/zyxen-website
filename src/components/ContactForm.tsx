@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
+import { markSent, pulseMark } from './three/events';
 
 const services = [
   'Business website',
@@ -53,6 +54,7 @@ export default function ContactForm() {
         }),
       });
       if (!res.ok) throw new Error();
+      markSent();
       setStatus('sent');
     } catch {
       setStatus('error');
@@ -73,7 +75,7 @@ export default function ContactForm() {
 
   const field = 'flex flex-col gap-1 text-[13px] text-muted';
   return (
-    <form onSubmit={submit} className="flex flex-col gap-[22px]">
+    <form onSubmit={submit} onInput={pulseMark} className="flex flex-col gap-[22px]">
       {offer?.service === 'Business website' && (
         <p className="m-0 border-l border-accent pl-4 text-[14px] text-soft">
           Business website with up to 5 pages. Scope, schedule and cost are agreed before starting. An enquiry is not an

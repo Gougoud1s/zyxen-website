@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import AthensClock from '@/components/AthensClock';
 import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
+import SceneCanvas from '@/components/three/SceneCanvas';
 import { EMAIL, pageMeta } from '@/lib/site';
 
 export const metadata = pageMeta(
@@ -24,17 +25,25 @@ export default function Contact() {
   return (
     <>
       <section className="stage-glow relative min-h-screen" style={{ ['--glow-x' as string]: '72%', ['--glow-y' as string]: '48%' }}>
-        <div className="relative flex max-w-[640px] flex-col gap-9 px-gutter pb-12 pt-[120px]">
-          <p className="label">(Contact)</p>
-          <div className="flex flex-col gap-5">
+        <div className="over-canvas relative flex max-w-[640px] flex-col gap-9 px-gutter pb-12 pt-[120px] lg:static">
+          <p className="label relative z-[1]">(Contact)</p>
+          <div className="relative z-[1] flex flex-col gap-5">
             <h1 className="display m-0 text-[clamp(52px,8vw,132px)] leading-[0.86] tracking-[-0.065em]">Let&apos;s build.</h1>
             <p className="m-0 text-[17px] text-soft">
               What would you like to build or improve? Share your goals and timeline. We’ll respond within one business day.
             </p>
           </div>
+          <SceneCanvas
+            band
+            scene="listen"
+            className="-my-9 h-[320px] lg:my-0"
+            label="The ZYXEN sculpture. It opens up as you type and lights up when you send."
+          />
+          <div className="relative z-[1]">
           <Suspense>
             <ContactForm />
           </Suspense>
+          </div>
         </div>
       </section>
 

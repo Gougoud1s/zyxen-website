@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import PageEnd from '@/components/PageEnd';
+import ServicesHero from '@/components/ServicesHero';
 import { serviceOffers } from '@/lib/serviceOffers.js';
 import { serviceQuestions } from '@/lib/serviceQuestions.js';
 import { getService, pad, pageMeta, serviceGroups } from '@/lib/site';
@@ -22,32 +23,11 @@ const h2 = 'display m-0 text-[clamp(36px,4.6vw,72px)] leading-[0.95] tracking-[-
 export default function Services() {
   return (
     <>
-      <section className="stage-glow relative flex min-h-[700px] flex-col justify-between gap-12 px-gutter pb-9 pt-[120px] lg:h-screen" style={{ ['--glow-x' as string]: '68%' }}>
-        <div className="flex flex-col gap-[18px]">
-          <p className="label">(Services)</p>
-          <h1 className="display m-0 text-[clamp(48px,7.4vw,124px)] leading-[0.88]">
-            Every system
-            <br />
-            has a shape.
-          </h1>
-        </div>
-        <div className="flex flex-wrap items-end justify-between gap-8">
-          <ul className="m-0 flex w-full max-w-[560px] list-none flex-col border-t border-line p-0">
-            {serviceGroups.map((g, i) => (
-              <li key={g.id}>
-                <a href={`#${g.id}`} className="zx-pick flex min-h-[52px] items-baseline gap-[18px] py-2.5">
-                  <span className="w-[22px] text-[12px] text-muted">{pad(i + 1)}</span>
-                  <span className="display text-[clamp(26px,2.8vw,40px)] leading-[1.1] tracking-[-0.04em]">{g.title}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-          <p className="m-0 max-w-[340px] text-[15px] text-soft">
-            Software that solves the right problem. Build a better website, connect your business systems or make everyday
-            work easier.
-          </p>
-        </div>
-      </section>
+      <ServicesHero />
+      <p className="m-0 max-w-[640px] px-gutter pt-16 text-[17px] text-soft">
+        Software that solves the right problem. Build a better website, connect your business systems or make everyday work
+        easier. Explore where we can help.
+      </p>
 
       <section className="flex flex-col gap-28 px-gutter pb-10 pt-28">
         {serviceGroups.map((g, i) => (

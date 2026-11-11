@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import PageEnd from '@/components/PageEnd';
+import WebsitesHero from '@/components/WebsitesHero';
 import { pad, pageMeta } from '@/lib/site';
 
 export const metadata = pageMeta(
@@ -7,14 +8,6 @@ export const metadata = pageMeta(
   'Business website for €1,200 + VAT | ZYXEN',
   'A professional website with up to 5 pages for €1,200 + VAT. Optional €45/month website care. Clear scope, two revision rounds and handover.',
 );
-
-const pages = [
-  ['Home', 'Your first impression: who you are, what you offer and one clear next step.'],
-  ['Services', 'Each service in plain language, with the action you want visitors to take.'],
-  ['About', 'Your story, team and values — the reasons customers choose you.'],
-  ['Work', 'Projects, photos or case studies that prove you deliver.'],
-  ['Contact', 'An enquiry form and your details, set up to reach your inbox.'],
-];
 
 const included = [
   ['Up to 5 pages', 'Home, about, services, work and contact — adapted to your business.'],
@@ -37,41 +30,7 @@ const ask = '/contact?offer=website';
 export default function Websites() {
   return (
     <>
-      <section className="stage-glow relative flex min-h-[720px] flex-col justify-between gap-12 px-gutter pb-9 pt-[120px] lg:h-screen" style={{ ['--glow-x' as string]: '68%', ['--glow-y' as string]: '50%' }}>
-        <div className="flex max-w-[760px] flex-col gap-[18px]">
-          <p className="label">(Business websites)</p>
-          <h1 className="display m-0 text-[clamp(48px,7.4vw,124px)] leading-[0.88]">
-            A website,
-            <br />
-            ready to work.
-          </h1>
-          <p className="m-0 mt-1.5 max-w-[440px] text-[17px] text-soft">
-            Your business deserves a proper website. Show what you do, share your work and give customers an easy way to
-            find and contact you.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-end justify-between gap-8">
-          <ol className="m-0 flex w-full max-w-[460px] list-none flex-col border-t border-line p-0">
-            {pages.map(([name, text], i) => (
-              <li key={name} className="flex flex-col gap-0.5 border-b border-line py-2.5">
-                <span className="flex items-baseline gap-[18px]">
-                  <span className="w-[22px] text-[12px] text-muted">{pad(i + 1)}</span>
-                  <span className="display text-[24px] tracking-[-0.035em]">{name}</span>
-                </span>
-                <span className="pl-10 text-[14px] text-muted">{text}</span>
-              </li>
-            ))}
-          </ol>
-          <div className="flex flex-col items-start gap-3.5">
-            <p className="label">Defined scope. Clear price.</p>
-            <p className="display m-0 text-[clamp(48px,6vw,88px)] leading-none tracking-[-0.05em]">€1,200</p>
-            <p className="m-0 text-[15px] text-soft">+ VAT · one-off build</p>
-            <Link className="zx-cta mt-2" href={ask}>
-              Let’s discuss your website <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-        </div>
-      </section>
+      <WebsitesHero />
 
       <section className="flex flex-wrap gap-x-20 gap-y-8 px-gutter pb-10 pt-28">
         <div className="flex flex-[1_1_420px] flex-col gap-3.5">

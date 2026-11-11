@@ -1,5 +1,6 @@
 import AthensClock from '@/components/AthensClock';
 import PageEnd from '@/components/PageEnd';
+import SceneCanvas from '@/components/three/SceneCanvas';
 import { pad, pageMeta } from '@/lib/site';
 
 export const metadata = pageMeta(
@@ -34,9 +35,16 @@ const cardTitle = 'display m-0 text-[28px] leading-[1.1] tracking-[-0.035em]';
 export default function About() {
   return (
     <>
-      <section className="stage-glow relative flex min-h-[700px] flex-col justify-between gap-12 px-gutter pb-9 pt-[120px] lg:h-screen" style={{ ['--glow-x' as string]: '66%', ['--glow-y' as string]: '48%' }}>
-        <p className="label">(About)</p>
-        <div className="flex flex-wrap items-end justify-between gap-8">
+      <section className="stage-glow relative flex min-h-[700px] flex-col lg:h-screen" style={{ ['--glow-x' as string]: '66%', ['--glow-y' as string]: '48%' }}>
+        <div className="over-canvas relative flex flex-1 flex-col justify-between gap-12 px-gutter pb-9 pt-[120px]">
+        <p className="label relative z-[1]">(About)</p>
+        <SceneCanvas
+          band
+          scene="globe"
+          className="-my-12 lg:my-0"
+          label="A gold globe with Athens glowing orange and arcs reaching cities around the world. Drag to turn it."
+        />
+        <div className="relative z-[1] flex flex-wrap items-end justify-between gap-8">
           <h1 className="display m-0 text-[clamp(52px,9vw,150px)] leading-[0.86] tracking-[-0.065em]">
             Athens.
             <br />
@@ -47,7 +55,9 @@ export default function About() {
               37.9838° N, 23.7275° E — <span className="text-muted"><AthensClock /></span>
             </p>
             <p className="m-0 text-muted">A remote-first studio working with teams internationally.</p>
+            <p className="m-0 mt-2 text-[12px] text-dim">Drag to turn the globe</p>
           </div>
+        </div>
         </div>
       </section>
 

@@ -2,6 +2,8 @@ import Link from 'next/link';
 import AthensClock from '@/components/AthensClock';
 import Footer from '@/components/Footer';
 import RevealLines from '@/components/RevealLines';
+import StatementReveal from '@/components/StatementReveal';
+import SceneCanvas from '@/components/three/SceneCanvas';
 import { getProject, pageMeta, pad, serviceGroups, EMAIL } from '@/lib/site';
 
 export const metadata = pageMeta(
@@ -31,10 +33,15 @@ const section = 'relative z-[1] flex min-h-screen flex-col justify-center gap-7 
 export default function Home() {
   return (
     <>
-      {/* Stage: the 3D hero sculpture mounts here in phase 2. */}
-      <div aria-hidden="true" className="stage-glow sticky top-0 z-0 -mb-[100vh] h-screen" style={{ ['--glow-y' as string]: '42%' }} />
+      <div className="stage-glow sticky top-0 z-0 -mb-[100vh] h-screen" style={{ ['--glow-y' as string]: '42%' }}>
+        <SceneCanvas
+          scene="hero"
+          label="The ZYXEN mark: a smoked-glass icosahedron in a gold cage around a glowing orange core, moving as the page scrolls."
+          className="pointer-events-none absolute inset-0"
+        />
+      </div>
 
-      <section className="relative z-[1] flex min-h-screen flex-col justify-between px-gutter pb-9 pt-[120px]">
+      <section data-scene-section className="relative z-[1] flex min-h-screen flex-col justify-between px-gutter pb-9 pt-[120px]">
         <p className="m-0 max-w-[320px] text-[14px] text-muted">
           A software studio in Athens. We help businesses serve customers, sell online and reduce manual work through
           websites, apps and connected systems.
@@ -53,16 +60,16 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={`${section} gap-10`}>
+      <section data-scene-section className={`${section} gap-10`}>
         <p className="label">(01) Studio</p>
-        <p className="display m-0 max-w-[980px] text-[clamp(30px,4.3vw,66px)] font-normal leading-[1.08] tracking-[-0.035em]">
-          We design and engineer websites, online stores and software that make businesses easier to find, easier to buy
-          from and simpler to run.
-        </p>
+        <StatementReveal
+          className="display m-0 max-w-[980px] text-[clamp(30px,4.3vw,66px)] font-normal leading-[1.08] tracking-[-0.035em]"
+          text="We design and engineer websites, online stores and software that make businesses easier to find, easier to buy from and simpler to run."
+        />
         <Link className="zx-link self-start text-[15px]" href="/about">About the studio</Link>
       </section>
 
-      <section className={`${section} items-end`}>
+      <section data-scene-section className={`${section} items-end`}>
         <p className="label w-full max-w-[760px]">(02) What we build</p>
         <nav aria-label="What we build" className="flex w-full max-w-[760px] flex-col border-t border-line">
           {serviceGroups.map((g) => (
@@ -75,7 +82,7 @@ export default function Home() {
         </nav>
       </section>
 
-      <section className={section}>
+      <section data-scene-section className={section}>
         <p className="label max-w-[820px]">(03) Selected work</p>
         <nav aria-label="Selected work" className="flex w-full max-w-[820px] flex-col border-t border-line">
           {selected.map((p) => (
@@ -88,7 +95,7 @@ export default function Home() {
         <Link className="zx-link self-start text-[15px]" href="/projects">All projects</Link>
       </section>
 
-      <section className={`${section} gap-12`}>
+      <section data-scene-section className={`${section} gap-12`}>
         <div className="flex max-w-[820px] flex-col gap-4">
           <p className="label">(04) Working together</p>
           <h2 className="display m-0 text-[clamp(40px,5.4vw,88px)] leading-[0.92] tracking-[-0.055em]">
@@ -118,7 +125,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="relative z-[1] flex min-h-screen flex-col justify-between gap-12 px-gutter pb-8 pt-36">
+      <section data-scene-section className="relative z-[1] flex min-h-screen flex-col justify-between gap-12 px-gutter pb-8 pt-36">
         <p className="label">(05) Contact</p>
         <div className="flex flex-col items-center gap-7 text-center">
           <h2 className="display m-0 text-[clamp(64px,12vw,200px)] leading-[0.86] tracking-[-0.065em]">Let&apos;s build.</h2>
