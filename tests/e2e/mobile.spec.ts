@@ -43,3 +43,33 @@ test('desktop keeps the inline navigation', async ({ page }, info) => {
   await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Work' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Menu' })).toBeHidden();
 });
+
+test('heroes play through their items on their own, and Pause or a tap stops them', async ({ page }, info) => {
+  test.skip(!phones.includes(info.project.name), 'phone projects only');
+  await page.goto('/services', { waitUntil: 'load' });
+  const current = () => page.locator('ul[aria-label="Services"] a[aria-current="true"]').innerText();
+  const first = await current();
+  await expect.poll(current, { timeout: 9000 }).not.toBe(first); // advanced without any interaction
+
+  await page.getByRole('button', { name: 'Pause' }).click();
+  const paused = await current();
+  await page.waitForTimeout(5000);
+  expect(await current()).toBe(paused);
+
+  await page.getByRole('button', { name: 'Play' }).click();
+  await page.locator('ul[aria-label="Services"] a').nth(2).dispatchEvent('focus'); // a pick stops auto-play for good
+  await page.waitForTimeout(5000);
+  expect(await current()).toContain('Apps');
+});
+
+test.describe('reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+  test('no auto-play and no pause control', async ({ page }, info) => {
+    test.skip(info.project.name !== 'chromium-390');
+    await page.goto('/services', { waitUntil: 'load' });
+    await expect(page.getByRole('button', { name: 'Pause' })).toHaveCount(0);
+    const first = await page.locator('ul[aria-label="Services"] a[aria-current="true"]').innerText();
+    await page.waitForTimeout(5000);
+    expect(await page.locator('ul[aria-label="Services"] a[aria-current="true"]').innerText()).toBe(first);
+  });
+});

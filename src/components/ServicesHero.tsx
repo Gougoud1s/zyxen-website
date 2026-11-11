@@ -1,15 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { serviceGroups } from '@/lib/site';
 import SceneCanvas from './three/SceneCanvas';
+import { useAutoPlay } from './useAutoPlay';
 
 /** Services hero: hovering or focusing a service changes the sculpture's shape. */
 export default function ServicesHero() {
   const [sel, setSel] = useState(0);
+  const section = useRef<HTMLElement>(null);
+  const auto = useAutoPlay(section, () => setSel((i) => (i + 1) % serviceGroups.length));
+  const pick = (i: number) => {
+    auto.stop();
+    setSel(i);
+  };
   const cur = serviceGroups[sel];
   return (
-    <section className="stage-glow relative flex min-h-[700px] flex-col lg:h-screen" style={{ ['--glow-x' as string]: '68%' }}>
+    <section ref={section} className="stage-glow relative flex min-h-[700px] flex-col lg:h-screen" style={{ ['--glow-x' as string]: '68%' }}>
       <div className="over-canvas relative flex flex-1 flex-col justify-between gap-12 px-gutter pb-9 pt-[120px]">
         <div className="relative z-[1] flex flex-col gap-[18px]">
           <p className="label">(Services)</p>
@@ -24,7 +31,7 @@ export default function ServicesHero() {
           scene="shapes"
           className="-my-12 lg:my-0"
           label="A glass and gold sculpture that changes shape for each service. Drag to rotate it."
-          sceneProps={{ active: sel, onSelect: setSel }}
+          sceneProps={{ active: sel, onSelect: pick }}
         />
         <div className="relative z-[1] flex flex-wrap items-end justify-between gap-8">
           <ul className="m-0 flex w-full max-w-[560px] list-none flex-col border-t border-line p-0" aria-label="Services">
@@ -33,8 +40,8 @@ export default function ServicesHero() {
                 <a
                   href={`#${g.id}`}
                   aria-current={i === sel ? 'true' : undefined}
-                  onMouseEnter={() => setSel(i)}
-                  onFocus={() => setSel(i)}
+                  onMouseEnter={() => pick(i)}
+                  onFocus={() => pick(i)}
                   className={`zx-pick flex min-h-[52px] items-baseline gap-[18px] py-2.5 ${i === sel ? '!text-ink' : ''}`}
                 >
                   <span className="w-[22px] text-[12px] text-muted">{String(i + 1).padStart(2, '0')}</span>
@@ -43,10 +50,17 @@ export default function ServicesHero() {
               </li>
             ))}
           </ul>
-          <div className="flex max-w-[340px] flex-col gap-2.5 text-[15px]" aria-live="polite">
+          <div className="flex max-w-[340px] flex-col gap-2.5 text-[15px]" aria-live={auto.playing ? 'off' : 'polite'}>
             <p className="m-0">{cur.text}</p>
             <p className="m-0 text-[13px] text-muted">{cur.tech}</p>
-            <p className="m-0 mt-2 text-[12px] text-muted">Hover a service · drag to rotate</p>
+            <p className="m-0 mt-2 text-[12px] text-muted">
+              Pick a service · drag to rotate
+              {auto.enabled && (
+              <button type="button" onClick={auto.toggle} className="zx-link ml-2 bg-transparent p-0 text-[12px] text-ink ">
+                {auto.playing ? 'Pause' : 'Play'}
+              </button>
+            )}
+            </p>
           </div>
         </div>
       </div>

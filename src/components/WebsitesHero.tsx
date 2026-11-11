@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import SceneCanvas from './three/SceneCanvas';
+import { useAutoPlay } from './useAutoPlay';
 
 const pages = [
   ['Home', 'Your first impression: who you are, what you offer and one clear next step.'],
@@ -16,8 +17,14 @@ const names = pages.map(([n]) => n);
 /** Websites hero: each page of the package lifts out of the glass stack. */
 export default function WebsitesHero() {
   const [sel, setSel] = useState(0);
+  const section = useRef<HTMLElement>(null);
+  const auto = useAutoPlay(section, () => setSel((i) => (i + 1) % pages.length));
+  const pick = (i: number) => {
+    auto.stop();
+    setSel(i);
+  };
   return (
-    <section className="stage-glow relative flex min-h-[720px] flex-col lg:h-screen" style={{ ['--glow-x' as string]: '68%', ['--glow-y' as string]: '50%' }}>
+    <section ref={section} className="stage-glow relative flex min-h-[720px] flex-col lg:h-screen" style={{ ['--glow-x' as string]: '68%', ['--glow-y' as string]: '50%' }}>
       <div className="over-canvas relative flex flex-1 flex-col justify-between gap-12 px-gutter pb-9 pt-[120px]">
         <div className="relative z-[1] flex max-w-[760px] flex-col gap-[18px]">
           <p className="label">(Business websites)</p>
@@ -36,7 +43,7 @@ export default function WebsitesHero() {
           scene="layers"
           className="-my-12 lg:my-0"
           label="Five glass panels stacked like the pages of a website. Pick a page name to lift it out."
-          sceneProps={{ names, active: sel, onSelect: setSel }}
+          sceneProps={{ names, active: sel, onSelect: pick }}
         />
         <div className="relative z-[1] flex flex-wrap items-end justify-between gap-8">
           <div className="flex w-full max-w-[420px] flex-col">
@@ -46,9 +53,9 @@ export default function WebsitesHero() {
                   <button
                     type="button"
                     aria-pressed={i === sel}
-                    onClick={() => setSel(i)}
-                    onMouseEnter={() => setSel(i)}
-                    onFocus={() => setSel(i)}
+                    onClick={() => pick(i)}
+                    onMouseEnter={() => pick(i)}
+                    onFocus={() => pick(i)}
                     className={`zx-pick flex min-h-[46px] w-full cursor-pointer items-baseline gap-[18px] border-x-0 border-t-0 bg-transparent py-2 text-left ${i === sel ? '!text-ink' : ''}`}
                   >
                     <span className="w-[22px] text-[12px] text-muted">{String(i + 1).padStart(2, '0')}</span>
@@ -57,9 +64,19 @@ export default function WebsitesHero() {
                 </li>
               ))}
             </ul>
-            <p className="m-0 mt-3.5 min-h-12 text-[15px] text-soft" aria-live="polite">
+            <p className="m-0 mt-3.5 min-h-12 text-[15px] text-soft" aria-live={auto.playing ? 'off' : 'polite'}>
               {pages[sel][1]}
             </p>
+            {auto.enabled && (
+              <p className="m-0 text-[12px] text-muted">
+                Pages play in turn
+                {auto.enabled && (
+              <button type="button" onClick={auto.toggle} className="zx-link ml-2 bg-transparent p-0 text-[12px] text-ink ">
+                {auto.playing ? 'Pause' : 'Play'}
+              </button>
+            )}
+              </p>
+            )}
           </div>
           <div className="flex flex-col items-start gap-3.5">
             <p className="label">Defined scope. Fixed price.</p>
