@@ -22,16 +22,19 @@ export function faqPageSchema(faqs) {
 
 /**
  * Build a schema.org Service from a data.js service object.
+ * `title` is the search-facing name (see serviceSeo.js); without it the service's own name is used.
  */
-export function serviceSchema(service, lang) {
+export function serviceSchema(service, lang, title) {
   const s = service[lang] || {};
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: s.name,
+    name: title || s.name,
+    ...(title ? { alternateName: s.name } : {}),
     description: s.description,
-    serviceType: s.name,
-    areaServed: 'GR',
+    serviceType: title || s.name,
+    // Based in Greece, working with clients abroad too.
+    areaServed: [{ '@type': 'Country', name: 'Greece' }, { '@type': 'Place', name: 'Worldwide' }],
     provider: { '@id': ORGANIZATION_ID },
     url: `${BASE}/services/${service.slug}`,
   };

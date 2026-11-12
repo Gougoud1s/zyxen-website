@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { projects, services } from './data.js';
 import { projectStories } from './projectStories.js';
+import { serviceSeo } from './serviceSeo.js';
 
 export const SITE_URL = 'https://www.zyxen.gr';
 export const EMAIL = 'hello@zyxen.gr';
@@ -17,6 +18,8 @@ export type Service = (typeof services)[number];
 
 export const getProject = (slug: string) => projects.find((p) => p.slug === slug);
 export const getService = (slug: string) => services.find((s) => s.slug === slug);
+/** Search-facing heading, meta tags and FAQs for a service page. */
+export const seoFor = (slug: string) => (serviceSeo as Record<string, (typeof serviceSeo)['flutter-web-mobile']>)[slug];
 export const storyFor = (slug: string) =>
   (projectStories as Record<string, (typeof projectStories)['led7'] | undefined>)[slug];
 
@@ -69,13 +72,20 @@ export const projectsForService = (s: Service) =>
 
 export const pad = (n: number) => String(n).padStart(2, '0');
 
-export function pageMeta(path: string, title: string, description: string): Metadata {
+type MetaOptions = {
+  /** hreflang alternates, e.g. { en: '/websites', el: '/kataskevi-istoselidon' }. */
+  languages?: Record<string, string>;
+  /** Open Graph locale; English unless the page is written in another language. */
+  locale?: string;
+};
+
+export function pageMeta(path: string, title: string, description: string, { languages, locale = 'en_US' }: MetaOptions = {}): Metadata {
   return {
     title: { absolute: title },
     description,
-    alternates: { canonical: path },
+    alternates: { canonical: path, ...(languages ? { languages } : {}) },
     // Images come from each route's opengraph-image / twitter-image file.
-    openGraph: { title, description, url: path, siteName: 'ZYXEN', type: 'website', locale: 'en_US' },
+    openGraph: { title, description, url: path, siteName: 'ZYXEN', type: 'website', locale },
     twitter: { card: 'summary_large_image', title, description },
   };
 }
