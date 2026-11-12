@@ -4,11 +4,14 @@
 
 Official website: https://www.zyxen.gr/
 Contact: hello@zyxen.gr
-The website is in English.
+The website is in English, with Greek pages for the main services.
 
 ## Services
 - [Services and project scopes](https://www.zyxen.gr/services): Deliverables, client inputs and scope boundaries.
 - [Business websites](https://www.zyxen.gr/websites): The website package, inclusions and optional care.
+- [Κατασκευή ιστοσελίδων (website development, in Greek)](https://www.zyxen.gr/kataskevi-istoselidon)
+- [Κατασκευή e-shop (e-commerce development, in Greek)](https://www.zyxen.gr/kataskevi-eshop)
+- [Κατασκευή εφαρμογών (mobile app development, in Greek)](https://www.zyxen.gr/kataskevi-efarmogon)
 - [Umbraco development](https://www.zyxen.gr/services/umbraco-platform-engineering)
 - [Web development and technical SEO](https://www.zyxen.gr/services/web-experiences-seo)
 - [E-commerce](https://www.zyxen.gr/services/commerce-nopcommerce)

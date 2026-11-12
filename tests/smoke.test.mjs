@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { projects, services } from '../src/lib/data.js';
+import { greekPages } from '../src/lib/greekPages.js';
 
 const base = process.env.SITE_TEST_URL || 'http://localhost:3000';
 
@@ -11,6 +12,7 @@ const routes = [
   '/privacy-policy', '/cookie-policy', '/terms',
   ...projects.map((p) => `/projects/${p.slug}`),
   ...services.map((s) => `/services/${s.slug}`),
+  ...greekPages.map((p) => p.path),
 ];
 
 test('every page renders with one h1, a unique title and its own canonical', async () => {
@@ -25,6 +27,29 @@ test('every page renders with one h1, a unique title and its own canonical', asy
     assert.ok(!titles.has(title), `${path}: duplicate title ${title}`);
     titles.add(title);
   }
+});
+
+test('Greek service pages are in Greek and paired with their English page', async () => {
+  const alternate = (lang, path) => `<link rel="alternate" hrefLang="${lang}" href="https://www.zyxen.gr${path}"/>`;
+  for (const p of greekPages) {
+    const greek = await (await fetch(base + p.path)).text();
+    assert.ok(greek.includes(`>${p.h1}</h1>`), `${p.path}: Greek h1`);
+    assert.ok(greek.includes('<div lang="el">'), `${p.path}: content marked as Greek`);
+    assert.ok(greek.includes('"@type":"FAQPage"'), `${p.path}: FAQ structured data`);
+    const english = await (await fetch(base + p.enPath)).text();
+    // Both pages of a pair must list both languages, or Google ignores the hreflang.
+    for (const html of [greek, english]) {
+      assert.ok(html.includes(alternate('el', p.path)), `${p.path}: hreflang el`);
+      assert.ok(html.includes(alternate('en', p.enPath)), `${p.path}: hreflang en`);
+    }
+  }
+});
+
+test('service pages lead with what buyers search for', async () => {
+  const html = await (await fetch(`${base}/services/flutter-web-mobile`)).text();
+  assert.match(html, /<title>Mobile App Development/);
+  assert.ok(html.includes(">Mobile app development for iOS, Android and web</h1>"));
+  assert.ok(html.includes('"@type":"FAQPage"'));
 });
 
 test('old URLs redirect permanently to the right page', async () => {

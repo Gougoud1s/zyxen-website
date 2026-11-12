@@ -2,9 +2,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import PageEnd from '@/components/PageEnd';
 import { services } from '@/lib/data.js';
-import { clip, getService, groupForService, pad, pageMeta, projectsForService } from '@/lib/site';
+import { getService, groupForService, pad, pageMeta, projectsForService, seoFor } from '@/lib/site';
+import { greekPathFor, languagesFor } from '@/lib/greekPages.js';
 import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
-import { serviceSchema } from '@/lib/structuredData.js';
+import { faqPageSchema, serviceSchema } from '@/lib/structuredData.js';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -14,7 +15,9 @@ export const generateStaticParams = () => services.map((s) => ({ slug: s.slug })
 export async function generateMetadata({ params }: Props) {
   const s = getService((await params).slug);
   if (!s) return {};
-  return pageMeta(`/services/${s.slug}`, `${s.en.name} | ZYXEN Engineering`, clip(s.en.description));
+  const seo = seoFor(s.slug);
+  const path = `/services/${s.slug}`;
+  return pageMeta(path, seo.metaTitle, seo.metaDescription, { languages: languagesFor(path) });
 }
 
 function List({ n, title, items, numbered }: { n: number; title: string; items: string[]; numbered?: boolean }) {
@@ -39,6 +42,8 @@ function List({ n, title, items, numbered }: { n: number; title: string; items: 
 export default async function ServiceDetail({ params }: Props) {
   const s = getService((await params).slug);
   if (!s) notFound();
+  const seo = seoFor(s.slug);
+  const greek = greekPathFor(`/services/${s.slug}`);
   const group = groupForService(s.slug);
   const related = projectsForService(s);
   const index = services.indexOf(s);
@@ -47,16 +52,24 @@ export default async function ServiceDetail({ params }: Props) {
   return (
     <>
       <Breadcrumbs trail={[['Services', '/services'], [s.en.name, `/services/${s.slug}`]]} />
-      <JsonLd data={serviceSchema(s, 'en')} />
+      <JsonLd data={[serviceSchema(s, 'en', seo.title), faqPageSchema(seo.faq)]} />
       <section className="stage-glow flex min-h-[600px] flex-col justify-end gap-10 px-gutter pb-12 pt-[120px] lg:min-h-[80vh]" style={{ ['--glow-x' as string]: '72%' }}>
         <nav aria-label="Breadcrumb" className="label">
           <Link className="zx-link" href="/services">Services</Link> <span aria-hidden="true">/</span>{' '}
-          <Link className="zx-link" href={`/services#${group.id}`}>{group.title}</Link>
+          <Link className="zx-link" href={`/services#${group.id}`}>{group.title}</Link> <span aria-hidden="true">/</span> {s.en.name}
         </nav>
-        <h1 className="display m-0 max-w-[16ch] text-[clamp(48px,7.4vw,124px)] leading-[0.88]">{s.en.name}</h1>
+        {/* The heading uses the words buyers search with; the service's own name sits in the trail above. */}
+        <h1 className="display m-0 max-w-[18ch] text-[clamp(44px,6.6vw,112px)] leading-[0.9]">{seo.title}</h1>
         <div className="flex flex-wrap items-end justify-between gap-8">
           <p className="m-0 max-w-[640px] text-[18px] text-soft">{s.en.description}</p>
-          <p className="m-0 text-[13px] text-muted">Technology stack: {s.tech.join(' · ')}</p>
+          <div className="flex flex-col gap-1.5 text-[13px] text-muted">
+            <p className="m-0">Technology stack: {s.tech.join(' · ')}</p>
+            {greek && (
+              <Link className="zx-link self-start" href={greek} lang="el" hrefLang="el">
+                Διαβάστε το στα ελληνικά
+              </Link>
+            )}
+          </div>
         </div>
       </section>
 
@@ -81,6 +94,21 @@ export default async function ServiceDetail({ params }: Props) {
             </ul>
           </div>
         )}
+
+        <div className="flex flex-wrap gap-x-20 gap-y-4 border-t border-line pt-7">
+          <div className="flex flex-[1_1_280px] flex-col gap-2">
+            <p className="label">({pad(4)})</p>
+            <h2 className="display m-0 text-[clamp(28px,3vw,44px)] leading-[1] tracking-[-0.04em]">Common questions</h2>
+          </div>
+          <dl className="m-0 flex flex-[2_1_480px] flex-col">
+            {seo.faq.map(({ q, a }) => (
+              <div key={q} className="hair flex flex-col gap-2">
+                <dt className="text-[18px]">{q}</dt>
+                <dd className="m-0 text-soft">{a}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
 
         <div className="flex flex-wrap items-end justify-between gap-6 border-t border-line pt-7">
           <h2 className="display m-0 text-[clamp(28px,3vw,44px)] leading-[1] tracking-[-0.04em]">Discuss your project specification.</h2>

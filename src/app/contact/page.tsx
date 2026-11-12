@@ -9,7 +9,7 @@ import { faqPageSchema } from '@/lib/structuredData.js';
 
 export const metadata = pageMeta(
   '/contact',
-  'Start a Project | ZYXEN',
+  'Contact ZYXEN — Start a Website, Store or App Project',
   'Tell ZYXEN what you want to build or improve. Websites, commerce, mobile apps and automation, from Athens to your team.',
 );
 

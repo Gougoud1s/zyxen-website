@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { projects, services } from '@/lib/data.js';
+import { greekPages } from '@/lib/greekPages.js';
 import { SITE_URL } from '@/lib/site';
 
 export const dynamic = 'force-static';
@@ -13,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/contact',
     '/about',
     ...services.map((s) => `/services/${s.slug}`),
+    ...greekPages.map((p) => p.path),
     ...projects.map((p) => `/projects/${p.slug}`),
     '/privacy-policy',
     '/cookie-policy',

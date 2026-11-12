@@ -4,11 +4,13 @@ import WebsitesHero from '@/components/WebsitesHero';
 import { pad, pageMeta } from '@/lib/site';
 import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
 import { ORGANIZATION_ID } from '@/lib/seo.js';
+import { greekPathFor, languagesFor } from '@/lib/greekPages.js';
 
 export const metadata = pageMeta(
   '/websites',
-  'Business Website Package, Up to 5 Pages | ZYXEN',
-  'A professional website with up to 5 pages, adapted to your brand. Optional monthly care, two revision rounds and a clear handover. Fixed price agreed in writing.',
+  'Business Website Design & Development in Greece | ZYXEN',
+  'A professional business website with up to 5 pages, adapted to your brand. Optional monthly care, two revision rounds and a clear handover. Fixed price agreed in writing.',
+  { languages: languagesFor('/websites') },
 );
 
 const included = [
@@ -148,6 +150,9 @@ export default function Websites() {
             Ask about the website package <span aria-hidden="true">→</span>
           </Link>
         </div>
+        <Link className="zx-link self-start text-[14px] text-muted" href={greekPathFor('/websites')!} lang="el" hrefLang="el">
+          Κατασκευή ιστοσελίδων: διαβάστε το στα ελληνικά
+        </Link>
       </section>
 
       <PageEnd href="/about" label="About" />

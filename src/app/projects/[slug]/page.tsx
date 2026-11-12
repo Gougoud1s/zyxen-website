@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import Disclaimer from '@/components/Disclaimer';
 import PageEnd from '@/components/PageEnd';
 import { projects } from '@/lib/data.js';
-import { getProject, pad, pageMeta, storyFor } from '@/lib/site';
+import { clip, getProject, pad, pageMeta, storyFor } from '@/lib/site';
 import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
 import { ORGANIZATION_ID } from '@/lib/seo.js';
 
@@ -17,7 +17,9 @@ export async function generateMetadata({ params }: Props) {
   const p = getProject((await params).slug);
   if (!p) return {};
   const lead = p.leadAgency ? ` Lead agency: ${p.leadAgency.name}.` : '';
-  return pageMeta(`/projects/${p.slug}`, `${p.en.name} — Project Contribution | ZYXEN`, `ZYXEN’s work on ${p.en.name}: ${p.en.focus}.${lead}`);
+  // Our part and the lead agency come first, so they survive when the overview is clipped to snippet length.
+  const description = clip(`ZYXEN’s work on ${p.en.name}: ${p.en.focus}.${lead} ${p.en.overview}`, 158);
+  return pageMeta(`/projects/${p.slug}`, `${p.en.name} — Project Contribution | ZYXEN`, description);
 }
 
 function Block({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
