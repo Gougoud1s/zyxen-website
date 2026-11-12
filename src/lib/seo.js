@@ -13,8 +13,11 @@ export const organizationSchema = {
   '@type': ['Organization', 'ProfessionalService'],
   '@id': ORGANIZATION_ID,
   name: 'ZYXEN',
+  // Spelled-out variants help Google treat the brand as its own name rather than a typo of a similar word.
+  alternateName: ['Zyxen', 'ZYXEN Software Studio', 'zyxen.gr'],
   url: `${SITE_URL}/`,
-  logo: `${SITE_URL}/favicon.svg`,
+  // Google ignores SVG logos in structured data; this is the favicon rendered at 512px.
+  logo: `${SITE_URL}/logo.png`,
   image: `${SITE_URL}/og-image.jpg`,
   email: 'hello@zyxen.gr',
   description: 'ZYXEN is a software studio based in Greece, building business websites, e-commerce platforms, mobile applications and business automation.',
@@ -27,6 +30,7 @@ export const websiteSchema = {
   '@type': 'WebSite',
   '@id': `${SITE_URL}/#website`,
   name: 'ZYXEN',
+  alternateName: ['Zyxen', 'zyxen.gr'],
   url: `${SITE_URL}/`,
   publisher: { '@id': ORGANIZATION_ID },
   inLanguage: 'en',

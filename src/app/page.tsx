@@ -8,7 +8,7 @@ import { getProject, pageMeta, pad, serviceGroups, EMAIL } from '@/lib/site';
 
 export const metadata = pageMeta(
   '/',
-  'Websites, E-commerce & Custom Software | ZYXEN Greece',
+  'ZYXEN — Software Studio in Greece | Websites, E-commerce, Apps',
   'ZYXEN is a software studio in Greece building business websites, e-commerce, mobile apps and automation. Explore our services and real project contributions.',
 );
 
