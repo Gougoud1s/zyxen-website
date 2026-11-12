@@ -7,7 +7,10 @@ export function canonicalPath(pathname) {
   return path.replace(/^\/(en|el)(?=\/|$)/, '') || '/';
 }
 
-// No sameAs: the repo lists no social profiles. Add them here once they exist.
+// ZYXEN's own profiles elsewhere. Listing them ties those pages to this brand for search engines;
+// add new ones (Google Business Profile, Clutch, GoodFirms) here as they are created.
+export const PROFILES = ['https://www.linkedin.com/company/zyxen-gr/', 'https://www.instagram.com/zyxen.gr/'];
+
 export const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': ['Organization', 'ProfessionalService'],
@@ -23,6 +26,7 @@ export const organizationSchema = {
   description: 'ZYXEN is a software studio based in Greece, building business websites, e-commerce platforms, mobile applications and business automation.',
   address: { '@type': 'PostalAddress', addressLocality: 'Athens', addressCountry: 'GR' },
   areaServed: 'Worldwide',
+  sameAs: PROFILES,
 };
 
 export const websiteSchema = {
