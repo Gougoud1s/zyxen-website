@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { greekPages } from '@/lib/greekPages.js';
-import { EMAIL } from '@/lib/site';
+import { EMAIL, PHONE } from '@/lib/site';
 
 /** One-line footer used on every page. */
 export default function Footer({ className = '' }: { className?: string }) {
@@ -9,6 +9,9 @@ export default function Footer({ className = '' }: { className?: string }) {
       <span>© 2026 ZYXEN</span>
       <a className="zx-link" href={`mailto:${EMAIL}`}>
         {EMAIL}
+      </a>
+      <a className="zx-link" href={PHONE.href}>
+        {PHONE.display}
       </a>
       <span>Systems, engineered.</span>
       <nav aria-label="Στα ελληνικά" lang="el" className="flex flex-wrap gap-x-5 gap-y-1">

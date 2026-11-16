@@ -5,6 +5,8 @@ import { serviceSeo } from './serviceSeo.js';
 
 export const SITE_URL = 'https://www.zyxen.gr';
 export const EMAIL = 'hello@zyxen.gr';
+// Same number as the Google Business Profile; Google matches the two when they are identical.
+export const PHONE = { display: '+30 694 442 1297', href: 'tel:+306944421297' };
 
 export const nav = [
   { href: '/projects', label: 'Work' },
