@@ -8,12 +8,13 @@ export function canonicalPath(pathname) {
 }
 
 // ZYXEN's own profiles elsewhere. Listing them ties those pages to this brand for search engines;
-// add new ones (Clutch, GoodFirms) here as they are created.
+// add new ones (GoodFirms, vrisko.gr, xo.gr) here once their listings are public.
 export const PROFILES = [
   'https://www.linkedin.com/company/zyxen-gr/',
   'https://www.instagram.com/zyxen.gr/',
   // Google Business Profile, by its Knowledge Graph id (the stable form of the profile's share link).
   'https://www.google.com/search?kgmid=/g/11z_g8k5np',
+  'https://clutch.co/profile/zyxen',
 ];
 
 // The Business Profile's own share link, used as the company's map listing.
