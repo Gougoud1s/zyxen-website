@@ -8,8 +8,16 @@ export function canonicalPath(pathname) {
 }
 
 // ZYXEN's own profiles elsewhere. Listing them ties those pages to this brand for search engines;
-// add new ones (Google Business Profile, Clutch, GoodFirms) here as they are created.
-export const PROFILES = ['https://www.linkedin.com/company/zyxen-gr/', 'https://www.instagram.com/zyxen.gr/'];
+// add new ones (Clutch, GoodFirms) here as they are created.
+export const PROFILES = [
+  'https://www.linkedin.com/company/zyxen-gr/',
+  'https://www.instagram.com/zyxen.gr/',
+  // Google Business Profile, by its Knowledge Graph id (the stable form of the profile's share link).
+  'https://www.google.com/search?kgmid=/g/11z_g8k5np',
+];
+
+// The Business Profile's own share link, used as the company's map listing.
+export const BUSINESS_PROFILE_URL = 'https://share.google/W6mwQ9aW3yaJ24eED';
 
 export const organizationSchema = {
   '@context': 'https://schema.org',
@@ -28,6 +36,7 @@ export const organizationSchema = {
   address: { '@type': 'PostalAddress', addressLocality: 'Athens', addressCountry: 'GR' },
   areaServed: 'Worldwide',
   sameAs: PROFILES,
+  hasMap: BUSINESS_PROFILE_URL,
 };
 
 export const websiteSchema = {
