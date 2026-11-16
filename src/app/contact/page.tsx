@@ -3,7 +3,7 @@ import AthensClock from '@/components/AthensClock';
 import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
 import SceneCanvas from '@/components/three/SceneCanvas';
-import { EMAIL, pageMeta } from '@/lib/site';
+import { EMAIL, PHONE, pageMeta } from '@/lib/site';
 import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
 import { faqPageSchema } from '@/lib/structuredData.js';
 
@@ -53,6 +53,9 @@ export default function Contact() {
           <h2 className="label">(Direct)</h2>
           <a className="zx-link display self-start text-[clamp(30px,3.4vw,52px)] tracking-[-0.04em]" href={`mailto:${EMAIL}`}>
             {EMAIL}
+          </a>
+          <a className="zx-link self-start text-[22px] tracking-[-0.02em]" href={PHONE.href}>
+            {PHONE.display}
           </a>
           <p className="m-0 text-soft">
             Athens, Greece (EEST / UTC+3) — remote-first, working with teams internationally. Athens time: <AthensClock />.

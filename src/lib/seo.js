@@ -23,6 +23,7 @@ export const organizationSchema = {
   logo: `${SITE_URL}/logo.png`,
   image: `${SITE_URL}/og-image.jpg`,
   email: 'hello@zyxen.gr',
+  telephone: '+30 694 442 1297',
   description: 'ZYXEN is a software studio based in Greece, building business websites, e-commerce platforms, mobile applications and business automation.',
   address: { '@type': 'PostalAddress', addressLocality: 'Athens', addressCountry: 'GR' },
   areaServed: 'Worldwide',
