@@ -53,6 +53,8 @@ whole time; the hero's 3D scene waits for the intro to finish so the two do not 
 - `MobileCta` (in the layout) keeps a "Start a project" button within thumb reach below 768px: it appears after the hero,
   steps aside near the footer and is not rendered on `/contact`.
 - `HomeStage` dims the home sculpture behind the text sections on phones, where it would otherwise sit under the lists.
+- `CollapseOnPhones` folds secondary detail behind a tappable row below 640px (the offers on `/services`); it is a native
+  `<details>` rendered open, so wider screens, crawlers and no-JavaScript visitors see everything.
 - Text links (`.zx-link`) get a larger touch area on touch screens without changing how they look.
 
 ## Contact form
