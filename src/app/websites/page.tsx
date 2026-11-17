@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Kinetic from '@/components/motion/Kinetic';
+import { StepBadge } from '@/components/motion/Mark';
 import PageEnd from '@/components/PageEnd';
 import WebsitesHero from '@/components/WebsitesHero';
 import { pad, pageMeta } from '@/lib/site';
@@ -52,9 +54,11 @@ export default function Websites() {
       <section className="flex flex-wrap gap-x-20 gap-y-8 px-gutter pb-10 pt-28">
         <div className="flex flex-[1_1_420px] flex-col gap-3.5">
           <p className="label">(01) The package</p>
-          <h2 className={h2}>Everything a small business needs to look and sell like a big one.</h2>
+          <h2 className={h2}>
+            <Kinetic when="view" lines={['Everything a small business needs to look and sell like a big one.']} />
+          </h2>
         </div>
-        <div className="flex flex-[1_1_360px] flex-col self-end border-t border-line">
+        <div data-kx="stagger" className="flex flex-[1_1_360px] flex-col self-end border-t border-line">
           {['Up to 5 pages, in one language', 'Adapted to your brand', 'Two revision rounds'].map((t) => (
             <p key={t} className="hair text-[18px]">{t}</p>
           ))}
@@ -70,11 +74,13 @@ export default function Websites() {
       <section className="flex flex-col gap-10 px-gutter pb-10 pt-24">
         <div className="flex flex-col gap-3.5">
           <p className="label">(02) What is included</p>
-          <h2 className={h2}>Everything for a considered start.</h2>
+          <h2 className={h2}>
+            <Kinetic when="view" lines={['Everything for a considered start.']} />
+          </h2>
         </div>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-x-10 gap-y-12">
+        <div data-kx="stagger" className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-x-10 gap-y-12">
           {included.map(([title, text], i) => (
-            <div key={title} className="flex flex-col gap-2.5 border-t border-line pt-5">
+            <div key={title} className="kx-rule flex flex-col gap-2.5 pt-5">
               <span className="text-[13px] text-muted">({pad(i + 1)})</span>
               <h3 className="display m-0 text-[28px] leading-[1.1] tracking-[-0.035em]">{title}</h3>
               <p className="m-0 text-soft">{text}</p>
@@ -88,7 +94,7 @@ export default function Websites() {
         </p>
       </section>
 
-      <section className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-12 px-gutter pb-10 pt-24">
+      <section data-kx="stagger" className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-12 px-gutter pb-10 pt-24">
         <div className="flex flex-col gap-3 border-t border-line pt-[22px]">
           <p className="label">(03) What we need from you</p>
           <p className="m-0 text-[18px] leading-[1.45]">Your services, brand assets, available copy and images, and the action you want visitors to take.</p>
@@ -109,7 +115,9 @@ export default function Websites() {
       <section className="flex flex-wrap gap-x-20 gap-y-8 px-gutter pb-10 pt-24">
         <div className="flex flex-[1_1_420px] flex-col gap-3.5">
           <p className="label">(06) After launch</p>
-          <h2 className={h2}>Care, if you need it.</h2>
+          <h2 className={h2}>
+            <Kinetic when="view" lines={['Care, if you need it.']} />
+          </h2>
           <p className="m-0 mt-2 text-[18px] text-soft">A simple monthly plan, priced in your proposal.</p>
         </div>
         <div className="flex flex-[1_1_420px] flex-col gap-4 text-[18px] text-soft">
@@ -130,12 +138,14 @@ export default function Websites() {
       <section className="flex flex-col gap-10 px-gutter pb-10 pt-24">
         <div className="flex flex-col gap-3.5">
           <p className="label">(07) How we start</p>
-          <h2 className={h2}>A short conversation. A clear plan.</h2>
+          <h2 className={h2}>
+            <Kinetic when="view" lines={['A short conversation. A clear plan.']} underline={[0]} />
+          </h2>
         </div>
-        <ol className="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-10 p-0">
+        <ol data-kx="stagger" className="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-10 p-0">
           {steps.map(([title, text], i) => (
-            <li key={title} className="flex flex-col gap-2.5 border-t border-line pt-5">
-              <span className="text-[13px] text-muted">({pad(i + 1)})</span>
+            <li key={title} className="kx-rule flex flex-col gap-2.5 pt-5">
+              <StepBadge n={i + 1} />
               <h3 className="display m-0 text-[28px] leading-[1.1] tracking-[-0.035em]">{title}</h3>
               <p className="m-0 text-soft">{text}</p>
             </li>

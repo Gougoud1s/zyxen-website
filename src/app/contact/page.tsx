@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Kinetic from '@/components/motion/Kinetic';
 import AthensClock from '@/components/AthensClock';
 import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
@@ -31,7 +32,9 @@ export default function Contact() {
         <div className="over-canvas relative flex max-w-[640px] flex-col gap-9 px-gutter pb-12 pt-[120px] lg:static">
           <p className="label relative z-[1]">(Contact)</p>
           <div className="relative z-[1] flex flex-col gap-5">
-            <h1 className="display m-0 text-[clamp(52px,8vw,132px)] leading-[0.86] tracking-[-0.065em]">Let&apos;s build.</h1>
+            <h1 className="display m-0 text-[clamp(52px,8vw,132px)] leading-[0.86] tracking-[-0.065em]">
+              <Kinetic lines={["Let's build."]} slam={['build.']} />
+            </h1>
             <p className="m-0 text-[17px] text-soft">
               What would you like to build or improve? Share your goals and timeline. We’ll respond within one business day.
             </p>
@@ -49,7 +52,7 @@ export default function Contact() {
       </section>
 
       <section className="flex flex-wrap gap-x-20 gap-y-12 px-gutter pb-10 pt-28">
-        <div className="flex flex-[1_1_360px] flex-col gap-[22px]">
+        <div data-kx="stagger" className="flex flex-[1_1_360px] flex-col gap-[22px]">
           <h2 className="label">(Direct)</h2>
           <a className="zx-link display self-start text-[clamp(30px,3.4vw,52px)] tracking-[-0.04em]" href={`mailto:${EMAIL}`}>
             {EMAIL}
@@ -64,7 +67,7 @@ export default function Contact() {
             An engineer will review your enquiry and discuss scope options and next steps within one business day.
           </p>
         </div>
-        <div className="flex flex-[1_1_480px] flex-col border-t border-line">
+        <div data-kx="rise" className="kx-rule flex flex-[1_1_480px] flex-col">
           <h2 className="label mb-1.5 pt-[18px]">(Questions) Before you get in touch</h2>
           {faq.map(([q, a]) => (
             <details key={q} className="border-b border-line py-[18px]">

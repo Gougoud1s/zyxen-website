@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Kinetic from '@/components/motion/Kinetic';
 import PageEnd from '@/components/PageEnd';
 import ServicesHero from '@/components/ServicesHero';
 import { serviceOffers } from '@/lib/serviceOffers.js';
@@ -35,10 +36,12 @@ export default function Services() {
 
       <section className="flex flex-col gap-28 px-gutter pb-10 pt-28">
         {serviceGroups.map((g, i) => (
-          <article key={g.id} id={g.id} className="flex scroll-mt-24 flex-wrap gap-x-20 gap-y-8 border-t border-line pt-7">
+          <article key={g.id} id={g.id} data-kx="rise" className="kx-rule flex scroll-mt-24 flex-wrap gap-x-20 gap-y-8 pt-7">
             <div className="flex min-w-0 flex-[1_1_420px] flex-col gap-3.5">
               <p className="label">({pad(i + 1)})</p>
-              <h2 className="display m-0 text-[clamp(40px,5.4vw,88px)] leading-[0.92] tracking-[-0.055em]">{g.title}</h2>
+              <h2 className="display m-0 text-[clamp(40px,5.4vw,88px)] leading-[0.92] tracking-[-0.055em]">
+                <Kinetic when="view" lines={[g.title]} />
+              </h2>
               <p className="m-0 max-w-[520px] text-[18px] text-soft">{g.text}</p>
             </div>
             <div className="flex min-w-0 flex-[1_1_360px] flex-col">
@@ -70,9 +73,7 @@ export default function Services() {
         <div className="flex max-w-[640px] flex-col gap-3.5">
           <p className="label">(For small businesses)</p>
           <h2 className={h2}>
-            Your business.
-            <br />
-            A proper website.
+            <Kinetic when="view" lines={['Your business.', 'A proper website.']} underline={[1]} />
           </h2>
           <p className="m-0 text-[18px] text-soft">
             Up to 5 pages. Mobile-ready. A clear scope, with optional care after launch. A focused starting point for your
@@ -87,14 +88,16 @@ export default function Services() {
       <section className="flex flex-col gap-12 px-gutter pb-10 pt-24">
         <div className="flex max-w-[820px] flex-col gap-3.5">
           <p className="label">(Ways to work together)</p>
-          <h2 className={h2}>A clear starting point.</h2>
+          <h2 className={h2}>
+            <Kinetic when="view" lines={['A clear starting point.']} />
+          </h2>
           <p className="m-0 max-w-[560px] text-[18px] text-soft">
             Choose the work you need. Explore the proposed deliverables, what we need from you and where the scope starts
             and ends.
           </p>
         </div>
         {serviceOffers.map((o, i) => (
-          <article key={o.id} className="flex flex-wrap gap-x-20 gap-y-8 border-t border-line pt-7">
+          <article key={o.id} data-kx="rise" className="kx-rule flex flex-wrap gap-x-20 gap-y-8 pt-7">
             <div className="flex min-w-0 flex-[1_1_380px] flex-col gap-3">
               <p className="label">
                 ({pad(i + 1)}) {o.name}
@@ -139,9 +142,11 @@ export default function Services() {
       <section className="flex flex-wrap gap-x-20 gap-y-8 px-gutter pb-10 pt-24">
         <div className="flex flex-[1_1_420px] flex-col gap-3.5">
           <p className="label">(In every project)</p>
-          <h2 className={h2}>The engineering you don&apos;t see.</h2>
+          <h2 className={h2}>
+            <Kinetic when="view" lines={["The engineering you don't see."]} />
+          </h2>
         </div>
-        <div className="flex flex-[1_1_360px] flex-col border-t border-line">
+        <div data-kx="stagger" className="flex flex-[1_1_360px] flex-col border-t border-line">
           {unseen.map(([a, b]) => (
             <p key={a} className="hair flex justify-between gap-4">
               <span>{a}</span>
@@ -154,7 +159,9 @@ export default function Services() {
       <section className="flex flex-wrap gap-x-20 gap-y-8 px-gutter pb-10 pt-24">
         <div className="flex flex-[1_1_420px] flex-col gap-3.5">
           <p className="label">(Questions)</p>
-          <h2 className={h2}>Before we start.</h2>
+          <h2 className={h2}>
+            <Kinetic when="view" lines={['Before we start.']} />
+          </h2>
           <p className="m-0 text-soft">Practical answers about our services, proposals and project experience.</p>
         </div>
         <div className="flex flex-[1_1_480px] flex-col border-t border-line">

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Kinetic from '@/components/motion/Kinetic';
 import { notFound } from 'next/navigation';
 import Disclaimer from '@/components/Disclaimer';
 import PageEnd from '@/components/PageEnd';
@@ -24,10 +25,12 @@ export async function generateMetadata({ params }: Props) {
 
 function Block({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-wrap gap-x-20 gap-y-4 border-t border-line pt-7">
+    <div data-kx="rise" className="kx-rule flex flex-wrap gap-x-20 gap-y-4 pt-7">
       <div className="flex flex-[1_1_280px] flex-col gap-2">
         <p className="label">({pad(n)})</p>
-        <h2 className="display m-0 text-[clamp(28px,3vw,44px)] leading-[1] tracking-[-0.04em]">{title}</h2>
+        <h2 className="display m-0 text-[clamp(28px,3vw,44px)] leading-[1] tracking-[-0.04em]">
+          <Kinetic when="view" lines={[title]} />
+        </h2>
       </div>
       <div className="flex flex-[2_1_480px] flex-col gap-5 text-[18px] text-soft">{children}</div>
     </div>
@@ -67,7 +70,9 @@ export default async function CaseStudy({ params }: Props) {
         </nav>
         <div className="flex flex-col gap-5">
           <p className="label">{p.en.category} — project contribution</p>
-          <h1 className="display page-title m-0 max-w-[14ch]">{p.en.name}</h1>
+          <h1 className="display page-title m-0 max-w-[14ch]">
+            <Kinetic lines={[p.en.name]} />
+          </h1>
         </div>
         <div className="flex flex-wrap items-end justify-between gap-8">
           <p className="m-0 max-w-[620px] text-[18px] text-soft">{p.en.overview}</p>
@@ -110,7 +115,7 @@ export default async function CaseStudy({ params }: Props) {
       <section className="flex flex-col gap-20 px-gutter pt-28">
         {story ? (
           <>
-            <p className="display m-0 max-w-[1080px] text-[clamp(28px,3.8vw,58px)] font-normal leading-[1.1] tracking-[-0.035em]">
+            <p data-kx="rise" className="display m-0 max-w-[1080px] text-[clamp(28px,3.8vw,58px)] font-normal leading-[1.1] tracking-[-0.035em]">
               {story.headline}
             </p>
             <Block n={1} title="The business"><p className="m-0">{story.context}</p></Block>
@@ -146,7 +151,9 @@ export default async function CaseStudy({ params }: Props) {
         <div className="flex flex-wrap items-end justify-between gap-6 border-t border-line pt-7">
           <div className="flex flex-col gap-2">
             <p className="label">Your next project</p>
-            <h2 className="display m-0 text-[clamp(28px,3vw,44px)] leading-[1] tracking-[-0.04em]">Working on a similar challenge?</h2>
+            <h2 className="display m-0 text-[clamp(28px,3vw,44px)] leading-[1] tracking-[-0.04em]">
+              <Kinetic when="view" lines={['Working on a similar challenge?']} underline={[0]} />
+            </h2>
             <p className="m-0 text-soft">Explore the scope of our services, then tell us what your business needs.</p>
           </div>
           <Link className="zx-cta" href="/services">
@@ -156,7 +163,7 @@ export default async function CaseStudy({ params }: Props) {
 
         <div className="flex flex-col gap-4">
           <p className="label">More case studies</p>
-          <ul className="m-0 flex list-none flex-col border-t border-line p-0">
+          <ul data-kx="stagger" className="m-0 flex list-none flex-col border-t border-line p-0">
             {more.map((m) => (
               <li key={m.slug}>
                 <Link href={`/projects/${m.slug}`} className="zx-row flex-wrap items-baseline gap-x-5 py-5">

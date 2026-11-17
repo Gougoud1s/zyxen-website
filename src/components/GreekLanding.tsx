@@ -1,10 +1,22 @@
+import { Inter, Inter_Tight } from 'next/font/google';
 import Link from 'next/link';
 import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
+import Kinetic from '@/components/motion/Kinetic';
+import { StepBadge } from '@/components/motion/Mark';
+import Wipe from '@/components/motion/Wipe';
 import PageEnd from '@/components/PageEnd';
 import { getGreekPage, greekPages } from '@/lib/greekPages.js';
 import { ORGANIZATION_ID } from '@/lib/seo.js';
 import { EMAIL, SITE_URL, getProject, pad, pageMeta } from '@/lib/site';
 import { faqPageSchema } from '@/lib/structuredData.js';
+
+/*
+ * The site preloads only Latin glyphs (layout.tsx). On these pages the text is Greek, so the Greek files are
+ * preloaded here; otherwise they arrive after first paint and the headline re-wraps (a visible layout shift).
+ * Same families and weights as the layout, scoped to the Greek content through the same CSS variables.
+ */
+const greekDisplay = Inter_Tight({ subsets: ['greek'], weight: ['400', '500', '600'], display: 'swap', variable: '--font-display' });
+const greekText = Inter({ subsets: ['greek'], weight: ['400', '500'], display: 'swap', variable: '--font-text' });
 
 type GreekPage = (typeof greekPages)[number];
 
@@ -35,7 +47,7 @@ export default function GreekLanding({ path }: { path: string }) {
 
   return (
     <>
-    <div lang="el">
+    <div lang="el" className={`${greekDisplay.variable} ${greekText.variable}`}>
       <Breadcrumbs trail={[[p.label, p.path]]} />
       <JsonLd
         data={[
@@ -56,7 +68,9 @@ export default function GreekLanding({ path }: { path: string }) {
 
       <section className="stage-glow flex min-h-[560px] flex-col justify-end gap-10 px-gutter pb-12 pt-[120px] lg:min-h-[72vh]" style={{ ['--glow-x' as string]: '72%' }}>
         <p className="label">{p.label} · ZYXEN, Αθήνα</p>
-        <h1 className="display m-0 max-w-[18ch] text-[clamp(40px,6.4vw,104px)] leading-[0.95] tracking-[-0.04em]">{p.h1}</h1>
+        <h1 className="display m-0 max-w-[18ch] text-[clamp(40px,6.4vw,104px)] leading-[0.95] tracking-[-0.04em]">
+          <Kinetic lines={[p.h1]} />
+        </h1>
         <div className="flex flex-wrap items-end justify-between gap-8">
           <p className="m-0 max-w-[680px] text-[18px] text-soft">{p.intro}</p>
           <Link className="zx-cta" href={contact}>
@@ -68,9 +82,11 @@ export default function GreekLanding({ path }: { path: string }) {
       <section className="flex flex-wrap gap-x-20 gap-y-8 px-gutter pb-10 pt-24">
         <div className="flex flex-[1_1_420px] flex-col gap-3.5">
           <p className="label">(01) Με λίγα λόγια</p>
-          <h2 className={h2}>{p.includedTitle}</h2>
+          <h2 className={h2}>
+            <Kinetic when="view" lines={[p.includedTitle]} />
+          </h2>
         </div>
-        <ul className="m-0 flex flex-[1_1_360px] list-none flex-col self-end border-t border-line p-0">
+        <ul data-kx="stagger" className="m-0 flex flex-[1_1_360px] list-none flex-col self-end border-t border-line p-0">
           {p.points.map((t) => (
             <li key={t} className="hair text-[18px]">{t}</li>
           ))}
@@ -79,9 +95,9 @@ export default function GreekLanding({ path }: { path: string }) {
 
       <section className="flex flex-col gap-10 px-gutter pb-10 pt-24">
         <p className="label">(02) Τι περιλαμβάνει</p>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-x-10 gap-y-12">
+        <div data-kx="stagger" className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-x-10 gap-y-12">
           {p.included.map(([title, text], i) => (
-            <div key={title} className="flex flex-col gap-2.5 border-t border-line pt-5">
+            <div key={title} className="kx-rule flex flex-col gap-2.5 pt-5">
               <span className="text-[13px] text-muted">({pad(i + 1)})</span>
               <h3 className={h3}>{title}</h3>
               <p className="m-0 text-soft">{text}</p>
@@ -91,15 +107,18 @@ export default function GreekLanding({ path }: { path: string }) {
         <p className="m-0 max-w-[760px] text-[15px] text-muted">{p.note}</p>
       </section>
 
+      <Wipe />
       <section className="flex flex-col gap-10 px-gutter pb-10 pt-24">
         <div className="flex flex-col gap-3.5">
           <p className="label">(03) Η διαδικασία</p>
-          <h2 className={h2}>{p.stepsTitle}</h2>
+          <h2 className={h2}>
+            <Kinetic when="view" lines={[p.stepsTitle]} />
+          </h2>
         </div>
-        <ol className="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-10 p-0">
+        <ol data-kx="stagger" className="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-10 p-0">
           {p.steps.map(([title, text], i) => (
-            <li key={title} className="flex flex-col gap-2.5 border-t border-line pt-5">
-              <span className="text-[13px] text-muted">({pad(i + 1)})</span>
+            <li key={title} className="kx-rule flex flex-col gap-2.5 pt-5">
+              <StepBadge n={i + 1} />
               <h3 className={h3}>{title}</h3>
               <p className="m-0 text-soft">{text}</p>
             </li>
@@ -109,7 +128,7 @@ export default function GreekLanding({ path }: { path: string }) {
 
       <section className="flex flex-col gap-4 px-gutter pb-10 pt-24">
         <p className="label">(04) Έργα στα οποία έχουμε δουλέψει</p>
-        <ul className="m-0 flex list-none flex-col border-t border-line p-0">
+        <ul data-kx="stagger" className="m-0 flex list-none flex-col border-t border-line p-0">
           {p.projects.map(([slug, text]) => {
             const project = getProject(slug)!;
             return (
@@ -131,7 +150,9 @@ export default function GreekLanding({ path }: { path: string }) {
       <section className="flex flex-wrap gap-x-20 gap-y-8 px-gutter pb-10 pt-24">
         <div className="flex flex-[1_1_280px] flex-col gap-3.5">
           <p className="label">(05) Συχνές ερωτήσεις</p>
-          <h2 className={h2}>Ό,τι μας ρωτούν πιο συχνά.</h2>
+          <h2 className={h2}>
+            <Kinetic when="view" lines={['Ό,τι μας ρωτούν πιο συχνά.']} />
+          </h2>
         </div>
         <dl className="m-0 flex flex-[2_1_480px] flex-col border-t border-line">
           {p.faq.map(({ q, a }) => (
@@ -144,9 +165,11 @@ export default function GreekLanding({ path }: { path: string }) {
       </section>
 
       <section className="flex flex-col gap-8 px-gutter pt-24">
-        <div className="flex flex-wrap items-end justify-between gap-6 border-t border-line pt-7">
+        <div data-kx="rise" className="kx-rule flex flex-wrap items-end justify-between gap-6 pt-7">
           <div className="flex max-w-[640px] flex-col gap-3">
-            <h2 className={h2}>Πείτε μας τι χρειάζεστε.</h2>
+            <h2 className={h2}>
+              <Kinetic when="view" lines={['Πείτε μας τι χρειάζεστε.']} underline={[0]} />
+            </h2>
             <p className="m-0 text-soft">
               Η φόρμα επικοινωνίας είναι στα αγγλικά, αλλά μπορείτε να μας γράψετε στα ελληνικά, εκεί ή στο{' '}
               <a className="zx-link text-ink" href={`mailto:${EMAIL}`}>{EMAIL}</a>.

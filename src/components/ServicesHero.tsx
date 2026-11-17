@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { serviceGroups } from '@/lib/site';
+import Kinetic from './motion/Kinetic';
 import SceneCanvas from './three/SceneCanvas';
 import { useAutoPlay } from './useAutoPlay';
 
@@ -21,9 +22,7 @@ export default function ServicesHero() {
         <div className="relative z-[1] flex flex-col gap-[18px]">
           <p className="label">(Services)</p>
           <h1 className="display m-0 text-[clamp(48px,7.4vw,124px)] leading-[0.88]">
-            Every system
-            <br />
-            has a shape.
+            <Kinetic lines={['Every system', 'has a shape.']} />
           </h1>
         </div>
         <SceneCanvas

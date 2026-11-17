@@ -15,6 +15,9 @@ const routes = [
   ...greekPages.map((p) => p.path),
 ];
 
+/** The page's h1 as a reader sees it: headline words are wrapped in spans for the kinetic reveal. */
+const h1Text = (html) => html.match(/<h1[^>]*>(.*?)<\/h1>/s)[1].replace(/<!--.*?-->|<[^>]+>/g, '');
+
 test('every page renders with one h1, a unique title and its own canonical', async () => {
   const titles = new Set();
   for (const path of routes) {
@@ -33,8 +36,8 @@ test('Greek service pages are in Greek and paired with their English page', asyn
   const alternate = (lang, path) => `<link rel="alternate" hrefLang="${lang}" href="https://www.zyxen.gr${path}"/>`;
   for (const p of greekPages) {
     const greek = await (await fetch(base + p.path)).text();
-    assert.ok(greek.includes(`>${p.h1}</h1>`), `${p.path}: Greek h1`);
-    assert.ok(greek.includes('<div lang="el">'), `${p.path}: content marked as Greek`);
+    assert.equal(h1Text(greek), p.h1, `${p.path}: Greek h1`);
+    assert.ok(greek.includes('<div lang="el" '), `${p.path}: content marked as Greek`);
     assert.ok(greek.includes('"@type":"FAQPage"'), `${p.path}: FAQ structured data`);
     const english = await (await fetch(base + p.enPath)).text();
     // Both pages of a pair must list both languages, or Google ignores the hreflang.
@@ -48,7 +51,7 @@ test('Greek service pages are in Greek and paired with their English page', asyn
 test('service pages lead with what buyers search for', async () => {
   const html = await (await fetch(`${base}/services/flutter-web-mobile`)).text();
   assert.match(html, /<title>Mobile App Development/);
-  assert.ok(html.includes(">Mobile app development for iOS, Android and web</h1>"));
+  assert.equal(h1Text(html), 'Mobile app development for iOS, Android and web');
   assert.ok(html.includes('"@type":"FAQPage"'));
 });
 

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Kinetic from '@/components/motion/Kinetic';
 import Disclaimer from '@/components/Disclaimer';
 import PageEnd from '@/components/PageEnd';
 import WorkHero, { type WorkItem } from '@/components/WorkHero';
@@ -42,7 +43,9 @@ export default function Projects() {
                   ({pad(i + 1)}) {p.en.category}
                 </p>
                 <h2 className="display m-0 text-[clamp(44px,7vw,112px)] leading-[0.9]">
-                  <Link href={`/projects/${p.slug}`} className="zx-big">{p.en.name}</Link>
+                  <Link href={`/projects/${p.slug}`} className="zx-big">
+                    <Kinetic when="view" lines={[p.en.name]} />
+                  </Link>
                 </h2>
               </div>
               <div className="flex max-w-[360px] flex-col gap-1.5 text-[15px]">
@@ -51,7 +54,7 @@ export default function Projects() {
                 <p className="m-0 text-[13px] text-muted">{p.tech.join(' · ')}</p>
               </div>
             </div>
-            <Link href={`/projects/${p.slug}`} className="block bg-panel" aria-label={`${p.en.name} case study`}>
+            <Link href={`/projects/${p.slug}`} data-kx="rise" className="block bg-panel" aria-label={`${p.en.name} case study`}>
               <Image
                 src={p.image}
                 alt={`${p.en.name} website screenshot`}
