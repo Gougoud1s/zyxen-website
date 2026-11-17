@@ -92,6 +92,25 @@ export const projects = [
     }
   },
   {
+    slug: 'flameverse',
+    leadAgency: { name: 'Career Flame', url: 'https://careerflame.gr' },
+    url: 'https://www.flameverse.ai/',
+    image: '/projects/flameverse.webp',
+    imageWidth: 1280,
+    imageHeight: 800,
+    tech: ['Node.js', 'Express', 'Firebase', 'AI APIs'],
+    previewType: 'browser',
+    en: {
+      name: 'FlameVerse AI',
+      category: 'EdTech / AI',
+      focus: 'Backend engineering and API access control',
+      overview: 'AI-powered career guidance platform that uses story-driven missions to surface emerging and lesser-known career paths.',
+      challenge: 'A platform that combines user accounts, payments and AI-generated career insights needs an API where every privileged action is protected on the server.',
+      solution: 'Our contribution is backend engineering on the platform API, including server-side enforcement of privileged access, delivered through pull requests in the product team’s own repository.',
+      results: 'An ongoing vendor collaboration on the FlameVerse AI API, with Career Flame leading the product.'
+    }
+  },
+  {
     slug: 'ips',
     leadAgency: { name: 'Redirect', url: 'https://redirect.gr' },
     url: 'https://ips.com.gr/',

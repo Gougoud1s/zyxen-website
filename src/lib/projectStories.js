@@ -26,6 +26,19 @@ export const projectStories = {
     caption: 'The Artisti Shop storefront: clothing, footwear and accessories across a multi-brand catalogue.',
     offer: 'commerce',
   },
+  flameverse: {
+    headline: 'Backend engineering for an AI career guidance platform.',
+    context: 'FlameVerse AI, built by Career Flame, rethinks career guidance as an interactive experience. Users play through story-driven missions and career hubs, and their choices are analysed by AI to suggest emerging and lesser-known roles.',
+    need: 'Behind the experience sits an API that handles accounts, sign-in, payments, file uploads and AI analysis. As the product grows, every privileged action has to be checked on the server, not only hidden in the interface.',
+    work: [
+      { title: 'API engineering', text: 'Backend work on the Node.js and Express API, following the product team’s own conventions and review process.' },
+      { title: 'Access control', text: 'Server-side enforcement of privileged access, so restricted operations are authorised by the API itself.' },
+      { title: 'Pull-request delivery', text: 'Changes delivered as reviewed pull requests into the FlameVerse repository, alongside the in-house team.' },
+    ],
+    outcome: 'This is an ongoing vendor collaboration on the platform’s backend. Career Flame owns and leads the product; our role is backend engineering support, not the design or build of the platform as a whole.',
+    caption: 'The FlameVerse AI homepage: career guidance through AI, gaming and storytelling. Product by Career Flame.',
+    offer: 'custom',
+  },
   ips: {
     headline: 'Making industrial product information easier to navigate.',
     context: 'IPS Industrial Plastic Solutions operates in an industrial B2B setting. Its website needs to communicate the business and organise product information for professional buyers.',
