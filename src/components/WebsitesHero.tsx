@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useRef, useState } from 'react';
+import Kinetic from './motion/Kinetic';
 import SceneCanvas from './three/SceneCanvas';
 import { useAutoPlay } from './useAutoPlay';
 
@@ -29,9 +30,7 @@ export default function WebsitesHero() {
         <div className="relative z-[1] flex max-w-[760px] flex-col gap-[18px]">
           <p className="label">(Business websites)</p>
           <h1 className="display m-0 text-[clamp(48px,7.4vw,124px)] leading-[0.88]">
-            A website,
-            <br />
-            ready to work.
+            <Kinetic lines={['A website,', 'ready to work.']} />
           </h1>
           <p className="m-0 mt-1.5 max-w-[440px] text-[17px] text-soft">
             Your business deserves a proper website. Show what you do, share your work and give customers an easy way to

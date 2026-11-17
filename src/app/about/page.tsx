@@ -1,7 +1,10 @@
 import AthensClock from '@/components/AthensClock';
+import Counter from '@/components/motion/Counter';
+import Kinetic from '@/components/motion/Kinetic';
+import { StepBadge } from '@/components/motion/Mark';
 import PageEnd from '@/components/PageEnd';
 import SceneCanvas from '@/components/three/SceneCanvas';
-import { pad, pageMeta } from '@/lib/site';
+import { pageMeta } from '@/lib/site';
 import { Breadcrumbs } from '@/components/JsonLd';
 
 export const metadata = pageMeta(
@@ -30,7 +33,7 @@ const partners = [
   { name: 'AI Convert It', url: 'https://aiconvert.it', role: 'Document processing and AI workflows, by Alpdev' },
 ];
 
-const card = 'flex flex-col gap-2.5 border-t border-line pt-5';
+const card = 'kx-rule flex flex-col gap-2.5 pt-5';
 const cardTitle = 'display m-0 text-[28px] leading-[1.1] tracking-[-0.035em]';
 
 export default function About() {
@@ -48,13 +51,11 @@ export default function About() {
         />
         <div className="relative z-[1] flex flex-wrap items-end justify-between gap-8">
           <h1 className="display m-0 text-[clamp(52px,9vw,150px)] leading-[0.86] tracking-[-0.065em]">
-            Athens.
-            <br />
-            Worldwide.
+            <Kinetic lines={['Athens.', 'Worldwide.']} />
           </h1>
           <div className="flex max-w-[320px] flex-col gap-2.5 text-[15px]">
             <p className="m-0">
-              37.9838° N, 23.7275° E — <span className="text-muted"><AthensClock /></span>
+              <Counter value={37.9838} decimals={4} />° N, <Counter value={23.7275} decimals={4} />° E — <span className="text-muted"><AthensClock /></span>
             </p>
             <p className="m-0 text-muted">A remote-first studio working with teams internationally.</p>
             <p className="m-0 mt-2 text-[12px] text-muted">Drag to turn the globe</p>
@@ -65,7 +66,7 @@ export default function About() {
 
       <section className="flex flex-col gap-10 px-gutter pb-16 pt-36">
         <p className="label">(01) Studio</p>
-        <p className="display m-0 max-w-[1080px] text-[clamp(28px,3.8vw,58px)] font-normal leading-[1.1] tracking-[-0.035em]">
+        <p data-kx="rise" className="display m-0 max-w-[1080px] text-[clamp(28px,3.8vw,58px)] font-normal leading-[1.1] tracking-[-0.035em]">
           ZYXEN is a software studio for businesses that want more from their website than a brochure. Design, engineering
           and delivery sit in one team — so what we promise is what gets built, and what gets built keeps working.
         </p>
@@ -77,7 +78,7 @@ export default function About() {
         <div className="flex-[1_1_360px]">
           <h2 className="label">(02) How we work</h2>
         </div>
-        <div className="grid flex-[2_1_560px] grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-x-10 gap-y-12">
+        <div data-kx="stagger" className="grid flex-[2_1_560px] grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-x-10 gap-y-12">
           {principles.map(([title, text]) => (
             <div key={title} className={card}>
               <h3 className={cardTitle}>{title}</h3>
@@ -90,12 +91,14 @@ export default function About() {
       <section className="flex flex-wrap gap-x-20 gap-y-8 px-gutter pb-10 pt-24">
         <div className="flex flex-[1_1_360px] flex-col gap-3.5">
           <p className="label">(03) Method</p>
-          <h2 className="display m-0 text-[clamp(36px,4.6vw,72px)] leading-[0.95] tracking-[-0.05em]">From concept to production.</h2>
+          <h2 className="display m-0 text-[clamp(36px,4.6vw,72px)] leading-[0.95] tracking-[-0.05em]">
+            <Kinetic when="view" lines={['From concept to production.']} underline={[0]} />
+          </h2>
         </div>
-        <ol className="m-0 grid flex-[2_1_560px] list-none grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-x-10 gap-y-12 p-0">
+        <ol data-kx="stagger" className="m-0 grid flex-[2_1_560px] list-none grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-x-10 gap-y-12 p-0">
           {method.map(([title, text], i) => (
             <li key={title} className={card}>
-              <span className="text-[13px] text-muted">({pad(i + 1)})</span>
+              <StepBadge n={i + 1} />
               <h3 className={cardTitle}>{title}</h3>
               <p className="m-0 text-soft">{text}</p>
             </li>
@@ -106,14 +109,14 @@ export default function About() {
       <section className="flex flex-wrap gap-x-20 gap-y-12 px-gutter pb-10 pt-24">
         <div className="flex flex-[1_1_420px] flex-col gap-[18px]">
           <h2 className="label">(04) Stack</h2>
-          <p className="display m-0 text-[clamp(30px,3.4vw,52px)] leading-[1.08] tracking-[-0.04em] text-dim">
+          <p data-kx="rise" className="display m-0 text-[clamp(30px,3.4vw,52px)] leading-[1.08] tracking-[-0.04em] text-dim">
             <span className="text-ink">Umbraco</span> · .NET / C# · <span className="text-ink">nopCommerce</span> · Flutter ·{' '}
             <span className="text-ink">AI integrations</span> · Jenkins · Bitbucket Pipelines
           </p>
         </div>
         <div className="flex flex-[1_1_420px] flex-col gap-[18px]">
           <h2 className="label">(05) Partners</h2>
-          <ul className="m-0 flex list-none flex-col border-t border-line p-0">
+          <ul data-kx="stagger" className="m-0 flex list-none flex-col border-t border-line p-0">
             {partners.map((p) => (
               <li key={p.name} className="hair flex flex-wrap justify-between gap-x-4 gap-y-2 py-[18px]">
                 <a className="zx-link text-[20px]" href={p.url} rel="noopener" target="_blank">

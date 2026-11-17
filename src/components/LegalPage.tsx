@@ -1,6 +1,7 @@
 import legal from '@/lib/legal.json';
 import { pageMeta } from '@/lib/site';
 import { Breadcrumbs } from './JsonLd';
+import Kinetic from './motion/Kinetic';
 import PageEnd from './PageEnd';
 
 type Doc = keyof typeof legal;
@@ -18,7 +19,9 @@ export default function LegalPage({ doc }: { doc: Doc }) {
       <Breadcrumbs trail={[[c.title, paths[doc]]]} />
       <section className="flex flex-col gap-5 px-gutter pb-16 pt-[160px]">
         <p className="label">(Legal)</p>
-        <h1 className="display m-0 text-[clamp(48px,7.4vw,124px)] leading-[0.88]">{c.title}</h1>
+        <h1 className="display m-0 text-[clamp(48px,7.4vw,124px)] leading-[0.88]">
+          <Kinetic lines={[c.title]} />
+        </h1>
         <p className="label">{c.updated}</p>
       </section>
       <section className="flex flex-col px-gutter">

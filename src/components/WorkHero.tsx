@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useRef, useState } from 'react';
+import Kinetic from './motion/Kinetic';
 import SceneCanvas from './three/SceneCanvas';
 import { useAutoPlay } from './useAutoPlay';
 
@@ -24,9 +25,7 @@ export default function WorkHero({ items }: { items: WorkItem[] }) {
         <div className="flex flex-wrap items-end justify-between gap-8">
           <div className="flex min-w-0 flex-col gap-7">
             <h1 className="display page-title relative z-[1] m-0">
-              Selected
-              <br />
-              work
+              <Kinetic lines={['Selected', 'work']} />
             </h1>
             <SceneCanvas
               band

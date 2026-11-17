@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Kinetic from '@/components/motion/Kinetic';
 import { notFound } from 'next/navigation';
 import PageEnd from '@/components/PageEnd';
 import { services } from '@/lib/data.js';
@@ -22,10 +23,12 @@ export async function generateMetadata({ params }: Props) {
 
 function List({ n, title, items, numbered }: { n: number; title: string; items: string[]; numbered?: boolean }) {
   return (
-    <div className="flex flex-wrap gap-x-20 gap-y-4 border-t border-line pt-7">
+    <div data-kx="rise" className="kx-rule flex flex-wrap gap-x-20 gap-y-4 pt-7">
       <div className="flex flex-[1_1_280px] flex-col gap-2">
         <p className="label">({pad(n)})</p>
-        <h2 className="display m-0 text-[clamp(28px,3vw,44px)] leading-[1] tracking-[-0.04em]">{title}</h2>
+        <h2 className="display m-0 text-[clamp(28px,3vw,44px)] leading-[1] tracking-[-0.04em]">
+          <Kinetic when="view" lines={[title]} />
+        </h2>
       </div>
       <ul className="m-0 flex flex-[2_1_480px] list-none flex-col p-0">
         {items.map((it, i) => (
@@ -59,7 +62,9 @@ export default async function ServiceDetail({ params }: Props) {
           <Link className="zx-link" href={`/services#${group.id}`}>{group.title}</Link> <span aria-hidden="true">/</span> {s.en.name}
         </nav>
         {/* The heading uses the words buyers search with; the service's own name sits in the trail above. */}
-        <h1 className="display m-0 max-w-[18ch] text-[clamp(44px,6.6vw,112px)] leading-[0.9]">{seo.title}</h1>
+        <h1 className="display m-0 max-w-[18ch] text-[clamp(44px,6.6vw,112px)] leading-[0.9]">
+          <Kinetic lines={[seo.title]} />
+        </h1>
         <div className="flex flex-wrap items-end justify-between gap-8">
           <p className="m-0 max-w-[640px] text-[18px] text-soft">{s.en.description}</p>
           <div className="flex flex-col gap-1.5 text-[13px] text-muted">
@@ -81,7 +86,7 @@ export default async function ServiceDetail({ params }: Props) {
         {related.length > 0 && (
           <div className="flex flex-col gap-4">
             <p className="label">Case studies utilising this stack</p>
-            <ul className="m-0 flex list-none flex-col border-t border-line p-0">
+            <ul data-kx="stagger" className="m-0 flex list-none flex-col border-t border-line p-0">
               {related.map((p) => (
                 <li key={p.slug}>
                   <Link href={`/projects/${p.slug}`} className="zx-row flex-wrap items-baseline gap-x-5 py-5">
@@ -95,7 +100,7 @@ export default async function ServiceDetail({ params }: Props) {
           </div>
         )}
 
-        <div className="flex flex-wrap gap-x-20 gap-y-4 border-t border-line pt-7">
+        <div data-kx="rise" className="kx-rule flex flex-wrap gap-x-20 gap-y-4 pt-7">
           <div className="flex flex-[1_1_280px] flex-col gap-2">
             <p className="label">({pad(4)})</p>
             <h2 className="display m-0 text-[clamp(28px,3vw,44px)] leading-[1] tracking-[-0.04em]">Common questions</h2>
@@ -110,8 +115,10 @@ export default async function ServiceDetail({ params }: Props) {
           </dl>
         </div>
 
-        <div className="flex flex-wrap items-end justify-between gap-6 border-t border-line pt-7">
-          <h2 className="display m-0 text-[clamp(28px,3vw,44px)] leading-[1] tracking-[-0.04em]">Discuss your project specification.</h2>
+        <div data-kx="rise" className="kx-rule flex flex-wrap items-end justify-between gap-6 pt-7">
+          <h2 className="display m-0 text-[clamp(28px,3vw,44px)] leading-[1] tracking-[-0.04em]">
+            <Kinetic when="view" lines={['Discuss your project specification.']} underline={[0]} />
+          </h2>
           <Link className="zx-cta" href="/contact">
             Schedule technical discovery <span aria-hidden="true">→</span>
           </Link>
