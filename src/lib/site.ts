@@ -7,6 +7,8 @@ export const SITE_URL = 'https://www.zyxen.gr';
 export const EMAIL = 'hello@zyxen.gr';
 // Same number as the Google Business Profile; Google matches the two when they are identical.
 export const PHONE = { display: '+30 694 442 1297', href: 'tel:+306944421297' };
+/** Image quality for project screenshots (mostly text); must be listed in images.qualities in next.config.ts. */
+export const SCREENSHOT_QUALITY = 90;
 
 export const nav = [
   { href: '/projects', label: 'Work' },

@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import Disclaimer from '@/components/Disclaimer';
 import PageEnd from '@/components/PageEnd';
 import { projects } from '@/lib/data.js';
-import { clip, getProject, pad, pageMeta, storyFor } from '@/lib/site';
+import { clip, getProject, pad, pageMeta, SCREENSHOT_QUALITY, storyFor } from '@/lib/site';
 import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
 import { ORGANIZATION_ID } from '@/lib/seo.js';
 
@@ -99,6 +99,7 @@ export default async function CaseStudy({ params }: Props) {
             width={p.imageWidth}
             height={p.imageHeight}
             sizes="100vw"
+            quality={SCREENSHOT_QUALITY}
             className="h-auto w-full"
             priority
           />

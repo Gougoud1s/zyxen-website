@@ -60,7 +60,7 @@ export const projects = [
     url: 'https://led7.gr/',
     image: '/projects/led7.webp',
     imageWidth: 1280,
-    imageHeight: 889,
+    imageHeight: 800,
     tech: ['E-commerce', 'SEO', 'Google Ads'],
     previewType: 'browser',
     en: {
@@ -78,7 +78,7 @@ export const projects = [
     url: 'https://artistishop.gr/',
     image: '/projects/artistishop.webp',
     imageWidth: 1280,
-    imageHeight: 889,
+    imageHeight: 800,
     tech: ['E-commerce', 'Google Ads', 'Merchant Center'],
     previewType: 'browser',
     en: {
@@ -116,7 +116,7 @@ export const projects = [
     url: 'https://ips.com.gr/',
     image: '/projects/ips.webp',
     imageWidth: 1280,
-    imageHeight: 577,
+    imageHeight: 800,
     favicon: '/projects/ips-favicon.png',
     tech: ['Umbraco', '.NET/C#', 'SEO'],
     metrics: [
@@ -141,7 +141,7 @@ export const projects = [
     url: 'https://www.victoriadeborbon.com/',
     image: '/projects/victoria-de-borbon.webp',
     imageWidth: 1280,
-    imageHeight: 577,
+    imageHeight: 800,
     favicon: '/projects/victoria-de-borbon-favicon.png',
     tech: ['Umbraco', 'Custom Design', 'Animation'],
     metrics: [
@@ -166,7 +166,7 @@ export const projects = [
     url: 'https://paxisarkiakaipaidi.gov.gr/',
     image: '/projects/paxisarkia.webp',
     imageWidth: 1280,
-    imageHeight: 577,
+    imageHeight: 800,
     favicon: '/projects/paxisarkia-favicon.png',
     tech: ['Umbraco', '.NET', 'Accessibility', 'Mobile-first'],
     metrics: [
@@ -191,7 +191,7 @@ export const projects = [
     url: 'https://www.cretamaris.gr/',
     image: '/projects/creta-maris-clean.webp',
     imageWidth: 1280,
-    imageHeight: 720,
+    imageHeight: 800,
     favicon: '/projects/creta-maris-favicon.png',
     tech: ['Umbraco', 'SEO', 'Performance'],
     metrics: [
@@ -215,7 +215,7 @@ export const projects = [
     url: 'https://inartio.com/',
     image: '/projects/inartio.webp',
     imageWidth: 1280,
-    imageHeight: 577,
+    imageHeight: 800,
     favicon: '/projects/inartio-favicon.png',
     tech: ['nopCommerce', 'Flutter', '.NET/C#'],
     metrics: [
@@ -240,7 +240,7 @@ export const projects = [
     url: 'https://b2b.astrazeneca.gr/',
     image: '/projects/astrazeneca.webp',
     imageWidth: 1280,
-    imageHeight: 577,
+    imageHeight: 800,
     favicon: '/projects/astrazeneca-favicon.png',
     tech: ['.NET/C#', 'Enterprise Auth', 'B2B Commerce'],
     metrics: [
@@ -265,7 +265,7 @@ export const projects = [
     url: 'https://dannemann-group.com/',
     image: '/projects/dannemann.webp',
     imageWidth: 1280,
-    imageHeight: 577,
+    imageHeight: 800,
     favicon: '/projects/dannemann-favicon.png',
     tech: ['Umbraco', 'Corporate UX', 'International'],
     metrics: [
