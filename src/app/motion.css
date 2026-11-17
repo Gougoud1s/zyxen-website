@@ -1,0 +1,576 @@
+/*
+ * ZYXEN motion system. One vocabulary, shared with the social reels: words that rise out of a mask,
+ * key words that slam in, hairlines and annotations that draw themselves, and an orange wipe between sections.
+ *
+ * How it switches on:
+ * - `html[data-kx]` is set before first paint by the inline script in layout.tsx, never under reduced motion.
+ * - Elements opt in with `data-kx="<effect>"`; MotionRuntime adds `data-in` when they scroll into view.
+ * - Without JavaScript, or with reduced motion, nothing here hides content: every rule below that hides
+ *   something is scoped to `html[data-kx]`.
+ */
+
+:root {
+  --kx-stagger: 70ms;
+  --kx-rise: 1s;
+  --kx-slam: 0.55s;
+  --kx-draw: 0.9s;
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------- Kinetic headline: words rise out of a mask, slam words punch in ---------- */
+
+.kx-line {
+  display: block;
+}
+.kx-w {
+  display: inline-block;
+  /* A mask that leaves room for descenders and the blur, and hides the word while it waits below the line. */
+  clip-path: inset(-0.12em -0.2em -0.22em -0.2em);
+}
+.kx-w > span {
+  display: inline-block;
+}
+.kx-w.kx-slam {
+  clip-path: none;
+}
+.kx-w.kx-slam > span {
+  transform-origin: left center;
+}
+
+@keyframes kx-rise {
+  from {
+    transform: translateY(135%);
+    filter: blur(10px);
+  }
+  60% {
+    filter: blur(0);
+  }
+  to {
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+/* Same motion under a second name, so the home hero can replay it once the intro hands off. */
+@keyframes kx-rise-again {
+  from {
+    transform: translateY(135%);
+    filter: blur(10px);
+  }
+  60% {
+    filter: blur(0);
+  }
+  to {
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+/* Opacity starts just above zero so the browser still counts the headline as painted content. */
+@keyframes kx-slam {
+  0% {
+    opacity: 0.01;
+    transform: scale(1.22);
+    filter: blur(14px);
+    text-shadow:
+      -0.05em 0 0 var(--accent),
+      0.05em 0 0 var(--gold);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+    text-shadow:
+      0.03em 0 0 var(--accent),
+      -0.03em 0 0 var(--gold);
+  }
+  60% {
+    text-shadow:
+      -0.015em 0 0 var(--accent),
+      0.015em 0 0 var(--gold);
+  }
+  75%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+    text-shadow: 0 0 0 transparent;
+  }
+}
+@keyframes kx-slam-again {
+  0% {
+    opacity: 0.01;
+    transform: scale(1.22);
+    filter: blur(14px);
+    text-shadow:
+      -0.05em 0 0 var(--accent),
+      0.05em 0 0 var(--gold);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+    text-shadow:
+      0.03em 0 0 var(--accent),
+      -0.03em 0 0 var(--gold);
+  }
+  60% {
+    text-shadow:
+      -0.015em 0 0 var(--accent),
+      0.015em 0 0 var(--gold);
+  }
+  75%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+    text-shadow: 0 0 0 transparent;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* On load (page heroes): plain CSS, starts with the first paint. */
+  .kx-load .kx-w > span {
+    animation: kx-rise var(--kx-rise) var(--ease-expo) both;
+    animation-delay: calc(var(--kx-delay, 100ms) + var(--i, 0) * var(--kx-stagger));
+  }
+  .kx-load .kx-w.kx-slam > span {
+    animation-name: kx-slam;
+    animation-duration: var(--kx-slam);
+    animation-timing-function: var(--ease-expo);
+  }
+
+  /* On scroll: waits below the mask until the element is in view. */
+  html[data-kx] [data-kx='words']:not([data-in]) .kx-w > span {
+    transform: translateY(135%);
+  }
+  html[data-kx] [data-kx='words']:not([data-in]) .kx-w.kx-slam > span {
+    transform: none;
+    opacity: 0;
+  }
+  [data-kx='words'][data-in] .kx-w > span {
+    animation: kx-rise var(--kx-rise) var(--ease-expo) both;
+    animation-delay: calc(var(--i, 0) * var(--kx-stagger));
+  }
+  [data-kx='words'][data-in] .kx-w.kx-slam > span {
+    animation-name: kx-slam;
+    animation-duration: var(--kx-slam);
+  }
+
+  /* ---------- Section reveals ---------- */
+
+  /* A block rises into place. */
+  html[data-kx] [data-kx='rise']:not([data-in]),
+  html[data-kx] [data-kx='stagger']:not([data-in]) > * {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  [data-kx='rise'][data-in],
+  [data-kx='stagger'][data-in] > * {
+    animation: kx-block 0.9s var(--ease-expo) both;
+    animation-delay: calc(var(--kx-delay, 0ms) + var(--i, 0) * var(--kx-stagger));
+  }
+  [data-kx='stagger'] > :nth-child(2) { --i: 1; }
+  [data-kx='stagger'] > :nth-child(3) { --i: 2; }
+  [data-kx='stagger'] > :nth-child(4) { --i: 3; }
+  [data-kx='stagger'] > :nth-child(5) { --i: 4; }
+  [data-kx='stagger'] > :nth-child(6) { --i: 5; }
+  [data-kx='stagger'] > :nth-child(7) { --i: 6; }
+  [data-kx='stagger'] > :nth-child(n + 8) { --i: 7; }
+
+  /* The hairline above a block draws in orange from the left, then settles to the rule colour. */
+  html[data-kx] [data-kx='stagger']:not([data-in]) > .kx-rule::before,
+  html[data-kx] .kx-rule[data-kx]:not([data-in])::before {
+    transform: scaleX(0);
+  }
+  [data-kx='stagger'][data-in] > .kx-rule::before,
+  .kx-rule[data-kx][data-in]::before {
+    animation: kx-rule 1.1s var(--ease-draw) both;
+    animation-delay: calc(var(--kx-delay, 0ms) + var(--i, 0) * var(--kx-stagger));
+  }
+
+  /* ---------- Self-drawing annotations ---------- */
+
+  html[data-kx] [data-kx='draw']:not([data-in]) .kx-stroke {
+    stroke-dashoffset: var(--kx-mark-dash);
+  }
+  html[data-kx] [data-kx='stagger']:not([data-in]) .kx-stroke {
+    stroke-dashoffset: 1;
+  }
+  [data-kx='draw'][data-in] .kx-stroke {
+    animation: kx-mark-draw 1.8s linear 0.45s both;
+  }
+  [data-kx='stagger'][data-in] .kx-stroke {
+    animation: kx-draw var(--kx-draw) var(--ease-draw) both;
+    animation-delay: calc(var(--kx-delay, 350ms) + var(--i, 0) * var(--kx-stagger));
+  }
+
+  /* ---------- Orange wipe between sections ---------- */
+
+  .kx-wipe[data-in] > span {
+    animation: kx-wipe 0.95s var(--ease-draw) both;
+  }
+
+  /* ---------- Buttons: magnetic pull and an orange fill that sweeps in ---------- */
+
+  @media (hover: hover) and (pointer: fine) {
+    .zx-cta {
+      transform: translate(var(--mx, 0px), var(--my, 0px));
+      transition:
+        transform 0.45s var(--ease-expo),
+        color 0.35s ease,
+        border-color 0.35s ease;
+    }
+    .zx-cta > span[aria-hidden='true'] {
+      display: inline-block;
+      transition: transform 0.45s var(--ease-expo);
+    }
+    .zx-cta:hover > span[aria-hidden='true'] {
+      transform: translateX(5px);
+    }
+  }
+}
+
+@keyframes kx-block {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes kx-rule {
+  from {
+    transform: scaleX(0);
+    background: var(--accent);
+  }
+  60% {
+    transform: scaleX(1);
+    background: var(--accent);
+  }
+  to {
+    transform: scaleX(1);
+    background: var(--line);
+  }
+}
+@keyframes kx-mark-draw {
+  from {
+    stroke-dashoffset: var(--kx-mark-dash);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes kx-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+/* A slanted orange panel crosses the section boundary left to right and leaves nothing behind. */
+@keyframes kx-wipe {
+  from {
+    clip-path: polygon(0% 0, 0% 0, -6% 100%, -6% 100%);
+  }
+  50% {
+    clip-path: polygon(0% 0, 106% 0, 100% 100%, -6% 100%);
+  }
+  to {
+    clip-path: polygon(106% 0, 106% 0, 100% 100%, 100% 100%);
+  }
+}
+
+/* Hairline that can draw itself (replaces `border-t border-line` where the rule animates). */
+.kx-rule {
+  position: relative;
+}
+.kx-rule::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--line);
+  transform-origin: left;
+}
+
+/* Annotation drawn around or under a phrase. The stroke sits behind the text and never affects layout. */
+.kx-mark {
+  position: relative;
+  display: inline-block;
+}
+.kx-mark > svg {
+  position: absolute;
+  overflow: visible;
+  pointer-events: none;
+}
+.kx-mark-underline > svg {
+  left: -1%;
+  width: 102%;
+  /* Below the descenders, so the stroke never crosses a g or a p. */
+  bottom: -0.26em;
+  height: 0.2em;
+}
+.kx-mark-circle > svg {
+  left: -7%;
+  width: 114%;
+  top: -22%;
+  height: 144%;
+}
+.kx-stroke {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+/*
+ * Annotations stretch with their phrase, so their stroke keeps a constant width (non-scaling) and its dash is
+ * measured in screen pixels: one dash longer than any annotation, pulled back to draw the line.
+ */
+.kx-mark .kx-stroke {
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: var(--kx-mark-dash);
+  --kx-mark-dash: 2400px;
+}
+
+/* Step number inside a circle that draws itself (process steps only: they are a real sequence). */
+.kx-badge {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  font-size: 13px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.kx-badge > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: rotate(-90deg);
+}
+.kx-badge .kx-stroke {
+  stroke-width: 1.5;
+}
+
+.kx-wipe {
+  position: relative;
+  z-index: 2;
+  height: 0;
+  pointer-events: none;
+}
+.kx-wipe > span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--kx-wipe-h) / -2);
+  height: var(--kx-wipe-h);
+  --kx-wipe-h: clamp(44px, 7vw, 112px);
+  z-index: 5;
+  background: var(--accent);
+  clip-path: polygon(106% 0, 106% 0, 100% 100%, 100% 100%);
+}
+
+/* Pill button fill: the accent sweeps in from the left behind the label. */
+.zx-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.zx-cta::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  background: var(--accent);
+  transform: translateX(-102%) skewX(-14deg);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-draw);
+}
+.zx-cta:hover::before,
+.zx-cta:focus-visible::before {
+  transform: translateX(0) skewX(0deg);
+}
+.zx-cta:hover,
+.zx-cta:focus-visible {
+  background: transparent;
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+/* Reading progress: a hairline at the top that fills as the page scrolls (CSS scroll timeline, no script). */
+.kx-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .kx-progress {
+      display: block;
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 40;
+      height: 2px;
+      background: var(--accent);
+      transform-origin: left;
+      transform: scaleX(0);
+      animation: kx-progress linear both;
+      animation-timeline: scroll(root);
+      pointer-events: none;
+    }
+  }
+}
+@keyframes kx-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------- Home intro: the mark draws itself, the wordmark resolves, an orange wipe hands off ---------- */
+/* Timings come from introTimeline.ts as custom properties on the overlay's <style> tag. */
+
+.zx-intro,
+.zx-intro-wipe {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-intro] .zx-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: clamp(20px, 4vh, 40px);
+    background: var(--bg);
+    cursor: pointer;
+  }
+  html[data-intro='play'] .zx-intro {
+    animation: zx-intro-hide 1ms linear var(--intro-cover) forwards;
+  }
+  html[data-intro='skip'] .zx-intro {
+    animation: zx-intro-fade 0.3s ease forwards;
+  }
+
+  .zx-intro-mark {
+    width: min(46vw, 34vh, 300px);
+    height: auto;
+    overflow: visible;
+    animation: zx-intro-mark var(--intro-draw) var(--ease-expo) both;
+  }
+  .zx-intro-mark line {
+    stroke: var(--accent);
+    /* In viewBox units: the mark is about 4 units across. */
+    stroke-width: 0.03;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    animation: kx-draw 0.5s var(--ease-draw) both;
+    animation-delay: calc(var(--intro-lead) + var(--i) * var(--intro-edge-gap));
+  }
+
+  .zx-intro-word {
+    display: flex;
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(34px, 7vw, 84px);
+    letter-spacing: 0.14em;
+    /* Optical centring: tracking adds space after the last letter. */
+    margin-right: -0.14em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .zx-intro-word > span {
+    display: inline-block;
+    transform-origin: center;
+    animation: kx-slam var(--kx-slam) var(--ease-expo) both;
+    animation-delay: calc(var(--intro-word) + var(--i) * 60ms);
+  }
+
+  .zx-intro-hint {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    margin: 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    animation: kx-block 0.6s ease 0.6s both;
+  }
+
+  /* The orange panel rises over the dark overlay, the overlay goes while it is covered, the panel leaves. */
+  html[data-intro='play'] .zx-intro-wipe {
+    display: block;
+    position: fixed;
+    inset: -12% 0;
+    z-index: 101;
+    background: var(--accent);
+    pointer-events: none;
+    transform: translateY(115%) skewY(-6deg);
+    animation: zx-intro-wipe var(--intro-wipe-ms) var(--ease-draw) var(--intro-wipe) forwards;
+  }
+
+  /* Home hero: plays under the overlay (so the headline paints early), then replays at the hand-off. */
+  html[data-intro='play'] [data-intro-hero] .kx-w > span {
+    animation:
+      kx-rise var(--kx-rise) var(--ease-expo) both,
+      kx-rise-again var(--kx-rise) var(--ease-expo) forwards;
+    animation-delay:
+      calc(100ms + var(--i, 0) * var(--kx-stagger)),
+      calc(var(--intro-cover) + var(--i, 0) * var(--kx-stagger));
+  }
+  html[data-intro='play'] [data-intro-hero] .kx-w.kx-slam > span {
+    animation-name: kx-slam, kx-slam-again;
+    animation-duration: var(--kx-slam);
+  }
+  html[data-intro='skip'] [data-intro-hero] .kx-w > span {
+    animation: kx-rise-again var(--kx-rise) var(--ease-expo) both;
+    animation-delay: calc(60ms + var(--i, 0) * var(--kx-stagger));
+  }
+  html[data-intro='skip'] [data-intro-hero] .kx-w.kx-slam > span {
+    animation-name: kx-slam-again;
+    animation-duration: var(--kx-slam);
+  }
+}
+
+/* Hidden for the whole (1ms) animation and held there: a single "to" frame never quite reaches 100%. */
+@keyframes zx-intro-hide {
+  from,
+  to {
+    visibility: hidden;
+  }
+}
+@keyframes zx-intro-fade {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@keyframes zx-intro-mark {
+  from {
+    transform: scale(0.86);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes zx-intro-wipe {
+  from {
+    transform: translateY(115%) skewY(-6deg);
+  }
+  50% {
+    transform: translateY(0) skewY(-6deg);
+  }
+  to {
+    transform: translateY(-115%) skewY(-6deg);
+  }
+}
