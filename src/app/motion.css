@@ -574,3 +574,77 @@
     transform: translateY(-115%) skewY(-6deg);
   }
 }
+
+/* ---------- Questions that open: a plus that turns into a cross, so it is clear the row can be tapped ---------- */
+
+details > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 44px;
+}
+details > summary::after {
+  content: '+';
+  flex: none;
+  font-family: var(--font-text), system-ui, sans-serif;
+  font-weight: 400;
+  color: var(--accent);
+  transition: transform 0.4s var(--ease-expo);
+}
+details[open] > summary::after {
+  transform: rotate(45deg);
+}
+
+/* ---------- Touch screens: text links keep their look but get a finger-sized touch area ---------- */
+
+@media (pointer: coarse) {
+  .zx-link::before {
+    content: '';
+    position: absolute;
+    inset: -12px -8px;
+  }
+}
+
+/* ---------- Phones: the next step stays within thumb reach (see MobileCta) ---------- */
+
+.mobile-cta {
+  display: none;
+}
+@media (max-width: 767px) {
+  .mobile-cta {
+    position: fixed;
+    right: var(--gutter);
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 0 24px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    background: var(--accent);
+    color: var(--bg);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.45);
+    transition:
+      transform 0.5s var(--ease-expo),
+      opacity 0.3s ease,
+      visibility 0s linear 0s;
+  }
+  .mobile-cta:hover,
+  .mobile-cta:active {
+    color: var(--bg);
+  }
+  .mobile-cta[data-shown='false'] {
+    transform: translateY(160%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      transform 0.5s var(--ease-expo),
+      opacity 0.3s ease,
+      visibility 0s linear 0.5s;
+  }
+}
