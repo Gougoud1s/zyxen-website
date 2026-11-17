@@ -4,7 +4,7 @@ import Disclaimer from '@/components/Disclaimer';
 import PageEnd from '@/components/PageEnd';
 import WorkHero, { type WorkItem } from '@/components/WorkHero';
 import { projects } from '@/lib/data.js';
-import { pad, pageMeta, sector, summary } from '@/lib/site';
+import { pad, pageMeta, SCREENSHOT_QUALITY, sector, summary } from '@/lib/site';
 import JsonLd, { Breadcrumbs } from '@/components/JsonLd';
 
 export const metadata = pageMeta(
@@ -18,7 +18,7 @@ const items: WorkItem[] = projects.map((p) => ({
   name: p.en.name,
   tag: sector(p),
   short: p.en.category,
-  image: p.image.replace(/\.webp$/, '-640.webp'),
+  image: p.image.replace(/\.webp$/, '-1024.webp'),
   role: `Our contribution: ${p.en.focus}.`,
   partner: p.leadAgency ? `Lead agency: ${p.leadAgency.name}` : undefined,
 }));
@@ -58,6 +58,7 @@ export default function Projects() {
                 width={p.imageWidth}
                 height={p.imageHeight}
                 sizes="(min-width: 1280px) 1280px, 100vw"
+                quality={SCREENSHOT_QUALITY}
                 className="h-auto w-full"
               />
             </Link>

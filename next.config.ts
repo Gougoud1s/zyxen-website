@@ -3,7 +3,8 @@ import type { NextConfig } from 'next';
 const lang = ':lang(en|el)';
 
 const config: NextConfig = {
-  images: { formats: ['image/avif', 'image/webp'] },
+  // 90 is SCREENSHOT_QUALITY in src/lib/site.ts: project screenshots are mostly text, which blurs at the default 75.
+  images: { formats: ['image/avif', 'image/webp'], qualities: [75, 90] },
   async redirects() {
     return [
       // Apex → www (canonical host).
