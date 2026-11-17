@@ -3,6 +3,7 @@ import { Inter, Inter_Tight } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import Header from '@/components/Header';
 import JsonLd from '@/components/JsonLd';
+import MobileCta from '@/components/MobileCta';
 import SmoothScroll from '@/components/SmoothScroll';
 import { organizationSchema, websiteSchema } from '@/lib/seo.js';
 import { SITE_URL } from '@/lib/site';
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MotionRuntime />
         <Header />
         <main id="main">{children}</main>
+        <MobileCta />
         {/* Cookieless, so no consent banner. Its script exists only once Web Analytics is enabled on the Vercel project. */}
         {process.env.NEXT_PUBLIC_VERCEL_ANALYTICS === '1' && <Analytics />}
       </body>

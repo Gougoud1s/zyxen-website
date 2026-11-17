@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import AthensClock from '@/components/AthensClock';
 import Footer from '@/components/Footer';
+import HomeStage from '@/components/HomeStage';
 import StatementReveal from '@/components/StatementReveal';
 import HomeIntro from '@/components/motion/HomeIntro';
 import Kinetic from '@/components/motion/Kinetic';
@@ -31,19 +32,20 @@ const groupTags: Record<string, string> = {
   automation: 'AI · Integrations',
 };
 
-const section = 'relative z-[1] flex min-h-screen flex-col justify-center gap-7 px-gutter pb-16 pt-32 sm:pt-36';
+// On phones a section takes the room its content needs; from tablets up each one fills the screen.
+const section = 'relative z-[1] flex min-h-[72svh] flex-col justify-center gap-7 px-gutter pb-16 pt-24 sm:min-h-screen sm:pt-36';
 
 export default function Home() {
   return (
     <>
       <HomeIntro />
-      <div className="stage-glow sticky top-0 z-0 -mb-[100vh] h-screen" style={{ ['--glow-y' as string]: '42%' }}>
+      <HomeStage>
         <SceneCanvas
           scene="hero"
           label="The ZYXEN mark: a smoked-glass icosahedron in a gold cage around a glowing orange core, moving as the page scrolls."
           className="pointer-events-none absolute inset-0"
         />
-      </div>
+      </HomeStage>
 
       <section data-scene-section className="relative z-[1] flex min-h-screen flex-col justify-between px-gutter pb-9 pt-[120px]">
         <p className="m-0 max-w-[320px] text-[14px] text-muted">
@@ -56,9 +58,13 @@ export default function Home() {
           </h1>
           <div className="flex flex-wrap justify-between gap-x-8 gap-y-3 text-[13px] text-muted">
             <span>Athens, Greece — working worldwide</span>
-            <span className="flex gap-6">
-              <Link className="zx-link text-ink" href="/contact">Start a project</Link>
-              <Link className="zx-link text-ink" href="/projects">View our work</Link>
+            <span className="flex items-center gap-6">
+              {/* Phones get a real button for the main action; wider screens keep the quiet text link. */}
+              <Link className="zx-cta text-[15px] sm:hidden" href="/contact">
+                Start a project <span aria-hidden="true">→</span>
+              </Link>
+              <Link className="zx-link hidden text-ink sm:inline" href="/contact">Start a project</Link>
+              <Link className="zx-link inline-flex min-h-11 items-center text-ink sm:min-h-0" href="/projects">View our work</Link>
             </span>
           </div>
         </div>
@@ -77,10 +83,10 @@ export default function Home() {
         <p className="label w-full max-w-[760px]">(02) What we build</p>
         <nav aria-label="What we build" data-kx="stagger" className="flex w-full max-w-[760px] flex-col border-t border-line">
           {serviceGroups.map((g) => (
-            <Link key={g.id} href={`/services#${g.id}`} className="zx-row py-[18px]">
-              <span className="zx-dot" aria-hidden="true" />
+            <Link key={g.id} href={`/services#${g.id}`} className="zx-row py-[18px] max-sm:flex-col max-sm:items-start max-sm:gap-1.5">
+              <span className="zx-dot max-sm:hidden" aria-hidden="true" />
               <span className="display flex-1 text-[clamp(36px,5.4vw,84px)] leading-none tracking-[-0.05em]">{g.title}</span>
-              <span className="max-w-[200px] text-right text-[13px] text-muted">{groupTags[g.id]}</span>
+              <span className="max-w-[200px] text-right text-[13px] text-muted max-sm:text-left">{groupTags[g.id]}</span>
             </Link>
           ))}
         </nav>
@@ -135,7 +141,7 @@ export default function Home() {
       </section>
 
       <Wipe />
-      <section data-scene-section className="relative z-[1] flex min-h-screen flex-col justify-between gap-12 px-gutter pb-8 pt-36">
+      <section data-scene-section className="relative z-[1] flex min-h-[80svh] flex-col justify-between gap-12 px-gutter pb-8 pt-24 sm:min-h-screen sm:pt-36">
         <p className="label">(05) Contact</p>
         <div className="flex flex-col items-center gap-7 text-center">
           <h2 className="display m-0 text-[clamp(64px,12vw,200px)] leading-[0.86] tracking-[-0.065em]">

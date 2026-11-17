@@ -48,6 +48,13 @@ orange wipe hands off to the hero, in 2.5s. It plays once per browser session, i
 plays under reduced motion, for crawlers or in automated browsers (`navigator.webdriver`). The page underneath is complete the
 whole time; the hero's 3D scene waits for the intro to finish so the two do not compete for the main thread.
 
+## Phones
+
+- `MobileCta` (in the layout) keeps a "Start a project" button within thumb reach below 768px: it appears after the hero,
+  steps aside near the footer and is not rendered on `/contact`.
+- `HomeStage` dims the home sculpture behind the text sections on phones, where it would otherwise sit under the lists.
+- Text links (`.zx-link`) get a larger touch area on touch screens without changing how they look.
+
 ## Contact form
 
 `POST /api/contact` validates the enquiry, then emails both owners and the visitor (Resend) and creates a lead in the
