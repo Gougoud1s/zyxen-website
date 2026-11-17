@@ -42,7 +42,7 @@ export default function Contact() {
           <SceneCanvas
             band
             scene="listen"
-            className="-my-9 h-[320px] lg:my-0"
+            className="-my-9 h-[320px] max-sm:!h-[240px] lg:my-0"
             label="The ZYXEN sculpture. It opens up as you type and lights up when you send."
           />
           <div className="relative z-[1]">

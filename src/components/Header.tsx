@@ -56,7 +56,7 @@ export default function Header() {
       className="sticky top-0 z-30 -mb-[84px] flex h-[84px] items-center justify-between gap-4 px-gutter"
       style={{ background: 'linear-gradient(var(--bg) 0%, color-mix(in srgb, var(--bg) 70%, transparent) 55%, transparent 100%)' }}
     >
-      <Link href="/" className="font-display text-[15px] font-semibold tracking-[0.08em] text-ink hover:text-ink">
+      <Link href="/" className="inline-flex min-h-11 items-center font-display text-[15px] font-semibold tracking-[0.08em] text-ink hover:text-ink">
         ZYXEN
       </Link>
 

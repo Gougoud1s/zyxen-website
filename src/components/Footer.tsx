@@ -5,7 +5,7 @@ import { EMAIL, PHONE } from '@/lib/site';
 /** One-line footer used on every page. */
 export default function Footer({ className = '' }: { className?: string }) {
   return (
-    <footer className={`flex flex-wrap justify-between gap-x-8 gap-y-2.5 border-t border-line pt-[22px] text-[13px] text-muted ${className}`}>
+    <footer className={`flex flex-wrap justify-between gap-x-8 gap-y-2.5 border-t border-line pt-[22px] text-[13px] text-muted max-sm:[&_a]:inline-flex max-sm:[&_a]:min-h-11 max-sm:[&_a]:items-center ${className}`}>
       <span>© 2026 ZYXEN</span>
       <a className="zx-link" href={`mailto:${EMAIL}`}>
         {EMAIL}
