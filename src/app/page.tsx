@@ -1,10 +1,13 @@
 import Link from 'next/link';
 import AthensClock from '@/components/AthensClock';
 import Footer from '@/components/Footer';
-import RevealLines from '@/components/RevealLines';
 import StatementReveal from '@/components/StatementReveal';
+import HomeIntro from '@/components/motion/HomeIntro';
+import Kinetic from '@/components/motion/Kinetic';
+import Mark, { StepBadge } from '@/components/motion/Mark';
+import Wipe from '@/components/motion/Wipe';
 import SceneCanvas from '@/components/three/SceneCanvas';
-import { getProject, pageMeta, pad, serviceGroups, EMAIL } from '@/lib/site';
+import { getProject, pageMeta, serviceGroups, EMAIL } from '@/lib/site';
 
 export const metadata = pageMeta(
   '/',
@@ -33,6 +36,7 @@ const section = 'relative z-[1] flex min-h-screen flex-col justify-center gap-7 
 export default function Home() {
   return (
     <>
+      <HomeIntro />
       <div className="stage-glow sticky top-0 z-0 -mb-[100vh] h-screen" style={{ ['--glow-y' as string]: '42%' }}>
         <SceneCanvas
           scene="hero"
@@ -47,8 +51,8 @@ export default function Home() {
           websites, apps and connected systems.
         </p>
         <div className="flex flex-col gap-7">
-          <h1 className="display m-0 text-[clamp(64px,13.6vw,230px)] leading-[0.86] tracking-[-0.065em]">
-            <RevealLines lines={['Systems,', 'engineered.']} indent={[1]} />
+          <h1 data-intro-hero className="display m-0 text-[clamp(64px,13.6vw,230px)] leading-[0.86] tracking-[-0.065em]">
+            <Kinetic lines={['Systems,', 'engineered.']} slam={['engineered.']} indent={[1]} />
           </h1>
           <div className="flex flex-wrap justify-between gap-x-8 gap-y-3 text-[13px] text-muted">
             <span>Athens, Greece — working worldwide</span>
@@ -71,7 +75,7 @@ export default function Home() {
 
       <section data-scene-section className={`${section} items-end`}>
         <p className="label w-full max-w-[760px]">(02) What we build</p>
-        <nav aria-label="What we build" className="flex w-full max-w-[760px] flex-col border-t border-line">
+        <nav aria-label="What we build" data-kx="stagger" className="flex w-full max-w-[760px] flex-col border-t border-line">
           {serviceGroups.map((g) => (
             <Link key={g.id} href={`/services#${g.id}`} className="zx-row py-[18px]">
               <span className="zx-dot" aria-hidden="true" />
@@ -82,9 +86,10 @@ export default function Home() {
         </nav>
       </section>
 
+      <Wipe />
       <section data-scene-section className={section}>
         <p className="label max-w-[820px]">(03) Selected work</p>
-        <nav aria-label="Selected work" className="flex w-full max-w-[820px] flex-col border-t border-line">
+        <nav aria-label="Selected work" data-kx="stagger" className="flex w-full max-w-[820px] flex-col border-t border-line">
           {selected.map((p) => (
             <Link key={p.slug} href={`/projects/${p.slug}`} className="zx-row flex-wrap items-baseline gap-x-5 gap-y-1.5 py-[22px]">
               <span className="flex flex-[1_1_360px] flex-col gap-2">
@@ -105,18 +110,16 @@ export default function Home() {
         <div className="flex max-w-[820px] flex-col gap-4">
           <p className="label">(04) Working together</p>
           <h2 className="display m-0 text-[clamp(40px,5.4vw,88px)] leading-[0.92] tracking-[-0.055em]">
-            Clear scope.
-            <br />
-            Visible progress.
+            <Kinetic when="view" lines={['Clear scope.', 'Visible progress.']} underline={[1]} />
           </h2>
           <p className="m-0 max-w-[520px] text-[18px] text-soft">
             We work with your team in agreed milestones, with a clear handover at launch.
           </p>
         </div>
-        <ol className="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-x-10 gap-y-10 p-0">
+        <ol data-kx="stagger" className="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-x-10 gap-y-10 p-0">
           {steps.map(([title, text], i) => (
-            <li key={title} className="flex flex-col gap-2.5 border-t border-line pt-5">
-              <span className="text-[13px] text-muted">({pad(i + 1)})</span>
+            <li key={title} className="kx-rule flex flex-col gap-2.5 pt-5">
+              <StepBadge n={i + 1} />
               <h3 className="display m-0 text-[28px] leading-[1.1] tracking-[-0.035em]">{title}</h3>
               <p className="m-0 text-soft">{text}</p>
             </li>
@@ -131,19 +134,24 @@ export default function Home() {
         </p>
       </section>
 
+      <Wipe />
       <section data-scene-section className="relative z-[1] flex min-h-screen flex-col justify-between gap-12 px-gutter pb-8 pt-36">
         <p className="label">(05) Contact</p>
         <div className="flex flex-col items-center gap-7 text-center">
-          <h2 className="display m-0 text-[clamp(64px,12vw,200px)] leading-[0.86] tracking-[-0.065em]">Let&apos;s build.</h2>
+          <h2 className="display m-0 text-[clamp(64px,12vw,200px)] leading-[0.86] tracking-[-0.065em]">
+            <Kinetic when="view" lines={["Let's build."]} slam={['build.']} />
+          </h2>
           <p className="m-0 max-w-[460px] text-soft">
             Tell us what you want to build or improve. We’ll discuss the scope and the next steps.
           </p>
-          <a
-            className="display text-[clamp(24px,3vw,44px)] font-normal tracking-[-0.03em] underline decoration-1 underline-offset-8"
-            href={`mailto:${EMAIL}`}
-          >
-            {EMAIL}
-          </a>
+          <Mark shape="circle">
+            <a
+              className="display text-[clamp(24px,3vw,44px)] font-normal tracking-[-0.03em] underline decoration-1 underline-offset-8"
+              href={`mailto:${EMAIL}`}
+            >
+              {EMAIL}
+            </a>
+          </Mark>
           <Link className="zx-link text-[15px] text-muted" href="/contact">Or tell us about your project</Link>
         </div>
         <div className="flex flex-col gap-3">
