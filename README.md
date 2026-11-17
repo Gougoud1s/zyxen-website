@@ -29,6 +29,25 @@ npm run build && npm start
 npm run posters              # writes public/posters/*.webp and src/assets/og-hero.png
 ```
 
+## Motion
+
+The motion vocabulary (shared with the social reels) lives in `src/components/motion/` and `src/app/motion.css`:
+
+- `Kinetic`: headline whose words rise out of a mask; `slam` words punch in. `when="load"` for page heroes, `when="view"` on scroll.
+- `Mark` / `StepBadge`: orange underline, circle or step number that draws itself. Step badges are for real sequences only.
+- `Wipe`: orange panel that crosses the boundary between two sections.
+- `Counter`: number that counts up once (the real value stays in the markup).
+- `data-kx="rise" | "stagger"` on any element, plus `kx-rule` instead of `border-t border-line` for a hairline that draws itself.
+- Pill buttons (`.zx-cta`) follow the pointer slightly and fill with orange; a reading-progress line sits at the top of the page.
+
+`MotionRuntime` (in the layout) marks `[data-kx]` elements with `data-in` when they scroll into view. Nothing is hidden without
+JavaScript or under reduced motion, and if the runtime never starts, everything is shown after 4 seconds.
+
+**Home intro** (`HomeIntro`, `IntroPlayer`, timings in `introTimeline.ts`): the mark draws itself, the wordmark resolves and an
+orange wipe hands off to the hero, in 2.5s. It plays once per browser session, is skipped by any key, click or scroll, and never
+plays under reduced motion, for crawlers or in automated browsers (`navigator.webdriver`). The page underneath is complete the
+whole time; the hero's 3D scene waits for the intro to finish so the two do not compete for the main thread.
+
 ## Contact form
 
 `POST /api/contact` validates the enquiry, then emails both owners and the visitor (Resend) and creates a lead in the
