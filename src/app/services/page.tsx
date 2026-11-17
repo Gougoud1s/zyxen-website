@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Kinetic from '@/components/motion/Kinetic';
+import CollapseOnPhones from '@/components/CollapseOnPhones';
 import PageEnd from '@/components/PageEnd';
 import ServicesHero from '@/components/ServicesHero';
 import { serviceOffers } from '@/lib/serviceOffers.js';
@@ -106,22 +107,24 @@ export default function Services() {
               <p className="m-0 text-soft">{o.audience}</p>
             </div>
             <div className="flex min-w-0 flex-[1_1_420px] flex-col gap-6">
-              <div>
-                <p className="label mb-1">Proposed deliverables</p>
-                {o.deliverables.map((d) => (
-                  <p key={d} className="hair">{d}</p>
-                ))}
-              </div>
-              <div className="grid gap-6 sm:grid-cols-2">
+              <CollapseOnPhones summary="Deliverables and scope">
                 <div>
-                  <p className="label mb-2">What we need from you</p>
-                  <p className="m-0 text-soft">{o.inputs}</p>
+                  <p className="label mb-1">Proposed deliverables</p>
+                  {o.deliverables.map((d) => (
+                    <p key={d} className="hair">{d}</p>
+                  ))}
                 </div>
-                <div>
-                  <p className="label mb-2">Scope & options</p>
-                  <p className="m-0 text-soft">{o.scope}</p>
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <div>
+                    <p className="label mb-2">What we need from you</p>
+                    <p className="m-0 text-soft">{o.inputs}</p>
+                  </div>
+                  <div>
+                    <p className="label mb-2">Scope & options</p>
+                    <p className="m-0 text-soft">{o.scope}</p>
+                  </div>
                 </div>
-              </div>
+              </CollapseOnPhones>
               <p className="m-0">{o.next}</p>
               <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
                 <Link className="zx-cta" href={o.href}>
