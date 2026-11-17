@@ -255,28 +255,6 @@
     outline-offset: 3px;
   }
 
-  /* Hero headline lines reveal upward on load. */
-  .reveal {
-    display: block;
-    overflow: hidden;
-    /* Room for descenders (the g in "engineered") without changing the line rhythm. */
-    padding-bottom: 0.14em;
-    margin-bottom: -0.09em;
-  }
-  .reveal > span {
-    display: block;
-    animation: reveal-up 1.2s var(--ease-out) both;
-    animation-delay: calc(var(--i, 0) * 80ms + 100ms);
-  }
-  @keyframes reveal-up {
-    from {
-      transform: translateY(110%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
-
   /* Phone menu: the sheet fades in, the links rise in one after another. */
   .menu-sheet {
     animation: menu-in 0.35s var(--ease-out) both;

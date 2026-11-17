@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { Component, useEffect, useRef, useState, type ReactNode } from 'react';
+import { INTRO_RELEASE_EVENT, introIsPlaying } from '../motion/introTimeline';
 import { useClientValue } from '../useClientValue';
 import type { SceneProps } from './types';
 
@@ -83,13 +84,22 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
   useEffect(() => {
     const el = ref.current!;
     if (!posterMode && !canRun()) return;
-    void load[scene]();
+    // The home intro owns the first seconds: loading and starting a scene there would make it stutter.
+    // The poster is already underneath, so the scene simply goes live once the intro releases it.
+    let held = introIsPlaying();
+    if (!held) void load[scene]();
 
     let visible = false;
     const update = () => {
-      if (visible) setLive(true);
+      if (visible && !held) setLive(true);
       setRunning(visible && !document.hidden);
     };
+    const release = () => {
+      held = false;
+      void load[scene]();
+      update();
+    };
+    window.addEventListener(INTRO_RELEASE_EVENT, release);
     const io = new IntersectionObserver(([e]) => {
       visible = e.isIntersecting;
       update();
@@ -103,6 +113,7 @@ export default function SceneCanvas({ scene, label, className = '', sceneProps, 
     };
     el.addEventListener('webglcontextlost', lost, true);
     return () => {
+      window.removeEventListener(INTRO_RELEASE_EVENT, release);
       el.removeEventListener('webglcontextlost', lost, true);
       io.disconnect();
       document.removeEventListener('visibilitychange', update);
