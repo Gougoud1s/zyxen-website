@@ -10,6 +10,8 @@ import type { SceneProps } from '../types';
 
 /* Services: one sculpture that changes shape per service (zx-scenes.js `S.shapes`). */
 type Props = { active: number; onSelect?: (i: number) => void; poster: boolean };
+/** Inactive shapes rest at a sub-pixel scale; below this one they are skipped instead of drawn. */
+const DRAWN_ABOVE_SCALE = 0.004;
 
 function Shapes({ active, onSelect }: Props) {
   const { halfW, halfH, narrow, centred } = useHalfExtents();
@@ -55,6 +57,7 @@ function Shapes({ active, onSelect }: Props) {
       // First frame starts at full size, matching the poster, instead of growing in.
       s.sc = built.started ? lerp(s.sc, target, damp(on ? 0.06 : 0.12, dt)) : target;
       s.group.scale.setScalar(Math.max(0.001, s.sc));
+      s.group.visible = s.sc > DRAWN_ABOVE_SCALE;
       s.group.position.set(ox, oy + Math.sin(t * 0.9) * 0.08, 0);
       s.group.rotation.set(0.45 - p.sy * 0.3 + p.dragY * 0.4, built.spin + p.sx * 0.5 + p.dragX + (on ? 0 : 1.5), 0.1);
       s.core?.rotation.set(t * 0.6, -t * 0.8, 0);
