@@ -22,11 +22,22 @@ and `legal.json`. Project screenshots are in `public/projects/` (`<slug>.webp` p
 Each scene is loaded after first paint, only when in view, and pauses off-screen. Visitors with reduced motion,
 no WebGL or a low-end phone see a static poster instead.
 
+The live scene replaces the poster only after its first frames are drawn. Before that, `Stage.tsx` loads the
+prebuilt studio environment map, links the shaders without blocking the page and uploads the textures, each in its
+own idle task; if any of that fails the poster stays.
+
 After changing a scene's look, re-render its posters (and the social image background):
 
 ```bash
 npm run build && npm start
 npm run posters              # writes public/posters/*.webp and src/assets/og-hero.png
+```
+
+The studio lighting the gold and glass reflect is built offline, not in the browser. After changing the room in
+`src/components/three/studioRoom.ts`, rebuild the map and then the posters:
+
+```bash
+npm run bake:environment     # writes public/environment/studio-{128,256}.png, needs no running server
 ```
 
 ## Motion
