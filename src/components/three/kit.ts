@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 
 /*
  * Shared materials and builders, ported from docs/redesign/3d-reference (three r149).
@@ -20,33 +21,6 @@ export const smooth = (t: number) => {
 };
 /** Frame-rate-independent damping factor: 1 - (1 - k)^(dt * 60). */
 export const damp = (k: number, dt: number) => 1 - Math.pow(1 - k, dt * 60);
-
-/** The studio "panel room" baked into a PMREM environment map. */
-export function studioEnvironment(gl: THREE.WebGLRenderer, size = 256) {
-  const env = new THREE.Scene();
-  env.add(new THREE.Mesh(new THREE.BoxGeometry(30, 20, 30), new THREE.MeshBasicMaterial({ color: 0x050506, side: THREE.BackSide })));
-  const panel = (w: number, h: number, color: number, x: number, y: number, z: number, ry = 0, rx = 0) => {
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide }));
-    m.position.set(x, y, z);
-    m.rotation.set(rx, ry, 0);
-    env.add(m);
-  };
-  panel(10, 6, 0xffffff, -8, 7, 4, Math.PI / 4, Math.PI / 5); // key softbox
-  panel(4, 12, 0xffd9a8, 12, 1, -2, -Math.PI / 2); // warm strip right
-  panel(14, 1.2, 0xff7a1a, 0, -8, -6, 0, -Math.PI / 3); // orange floor bounce
-  panel(2, 10, 0x9fb4ff, -13, 0, -6, Math.PI / 2); // cool rim left
-  panel(8, 2, 0xffffff, 3, 9.5, -3, 0, Math.PI / 2); // top strip
-  const pm = new THREE.PMREMGenerator(gl);
-  const texture = pm.fromScene(env, 0.035, 0.1, 100, { size }).texture;
-  pm.dispose();
-  env.traverse((o) => {
-    if (o instanceof THREE.Mesh) {
-      o.geometry.dispose();
-      (o.material as THREE.Material).dispose();
-    }
-  });
-  return texture;
-}
 
 export function createKit() {
   const gold = new THREE.MeshStandardMaterial({ color: 0xd9ae5f, metalness: 1, roughness: 0.22, envMapIntensity: 1.3 });
@@ -74,34 +48,39 @@ export function createKit() {
     });
 
   const up = new THREE.Vector3(0, 1, 0);
-  const rod = (a: THREE.Vector3, b: THREE.Vector3, r: number, segments = 8) => {
-    const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, a.distanceTo(b), segments), gold);
-    m.position.copy(a).add(b).multiplyScalar(0.5);
-    m.quaternion.setFromUnitVectors(up, b.clone().sub(a).normalize());
-    return m;
+  const rodGeometry = (a: THREE.Vector3, b: THREE.Vector3, r: number, segments = 8) => {
+    const middle = a.clone().add(b).multiplyScalar(0.5);
+    return new THREE.CylinderGeometry(r, r, a.distanceTo(b), segments)
+      .applyQuaternion(new THREE.Quaternion().setFromUnitVectors(up, b.clone().sub(a).normalize()))
+      .translate(middle.x, middle.y, middle.z);
   };
+  const rod = (a: THREE.Vector3, b: THREE.Vector3, r: number, segments = 8) => new THREE.Mesh(rodGeometry(a, b, r, segments), gold);
 
-  /** Gold rods along every edge, with ball joints at the vertices. */
+  /**
+   * Gold rods along every edge, with ball joints at the vertices.
+   * Merged into one mesh: a frame is a single draw call instead of one per rod and joint.
+   */
   const frame = (geo: THREE.BufferGeometry, r: number, joints = true, opts: { scale?: number; jointR?: number; segments?: number } = {}) => {
-    const g = new THREE.Group();
+    const parts: THREE.BufferGeometry[] = [];
     const e = new THREE.EdgesGeometry(geo, 1).getAttribute('position');
     const seen = new Set<string>();
     const s = opts.scale ?? 1;
     for (let i = 0; i < e.count; i += 2) {
       const a = new THREE.Vector3().fromBufferAttribute(e, i).multiplyScalar(s);
       const b = new THREE.Vector3().fromBufferAttribute(e, i + 1).multiplyScalar(s);
-      g.add(rod(a, b, r, opts.segments));
+      parts.push(rodGeometry(a, b, r, opts.segments));
       if (!joints) continue;
       for (const v of [a, b]) {
         const key = v.toArray().map((n) => n.toFixed(3)).join(',');
         if (seen.has(key)) continue;
         seen.add(key);
-        const ball = new THREE.Mesh(new THREE.SphereGeometry(opts.jointR ?? r * 2.4, 12, 10), gold);
-        ball.position.copy(v);
-        g.add(ball);
+        parts.push(new THREE.SphereGeometry(opts.jointR ?? r * 2.4, 12, 10).translate(v.x, v.y, v.z));
       }
     }
-    return g;
+    const merged = mergeGeometries(parts);
+    for (const part of parts) part.dispose();
+    if (!merged) throw new Error('Frame rods and joints could not be merged into one geometry');
+    return new THREE.Mesh(merged, gold);
   };
 
   /** Smoked glass body + gold frame + optional orange core. */
@@ -178,6 +157,19 @@ export function labelTexture(lines: Line[], w: number, h: number, background?: (
   draw();
   document.fonts?.ready.then(draw);
   return { texture: tex, redraw: draw };
+}
+
+/** Every colour map used under an object, so they can be uploaded before the first frame. */
+export function sceneTextures(root: THREE.Object3D) {
+  const textures = new Set<THREE.Texture>();
+  root.traverse((o) => {
+    const material = (o as THREE.Mesh).material;
+    for (const mat of Array.isArray(material) ? material : material ? [material] : []) {
+      const map = (mat as THREE.MeshBasicMaterial).map;
+      if (map) textures.add(map);
+    }
+  });
+  return textures;
 }
 
 /** Dispose every geometry, material and texture under an object. */

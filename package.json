@@ -12,6 +12,7 @@
     "test:smoke": "node --test tests/smoke.test.mjs",
     "test:contact": "node --test tests/contact.test.mjs",
     "posters": "node scripts/render-posters.mjs",
+    "bake:environment": "node scripts/bake-studio-environment.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {
