@@ -1,5 +1,7 @@
+import { after } from 'next/server';
 import { Resend } from 'resend';
-import { autoReplyHtml, esc, ownerHtml, type Lead } from '@/lib/contact/emails';
+import { draftReply } from '@/lib/contact/draft';
+import { autoReplyHtml, draftHtml, esc, ownerHtml, type Lead } from '@/lib/contact/emails';
 import { createNotionLead } from '@/lib/contact/notion';
 import { MIN_FILL_MS } from '@/lib/contact/options';
 import { allow, clientIp } from '@/lib/contact/rateLimit';
@@ -7,6 +9,8 @@ import { contactSchema } from '@/lib/contact/schema';
 import { SITE_URL } from '@/lib/site';
 
 export const runtime = 'nodejs';
+// Room for the reply draft, which is written after the visitor already has their answer.
+export const maxDuration = 60;
 
 // Repo fact (kept over the brief's single address): both owners receive every enquiry.
 const OWNER_EMAILS = ['i.gougoudis@zyxen.gr', 't.martinis@zyxen.gr'];
@@ -83,5 +87,19 @@ export async function POST(request: Request) {
     console.error('Owner notification failed:', (ownerError as Error).message ?? ownerError);
     return json(502, { error: 'Your message could not be sent. Please try again, or email hello@zyxen.gr directly.' });
   }
+
+  // The lead is delivered. A reply draft follows in its own email, without keeping the visitor waiting.
+  after(async () => {
+    const draft = await draftReply(lead);
+    if (!draft) return;
+    const { error } = await resend.emails.send({
+      from: 'ZYXEN Website <no-reply@zyxen.gr>',
+      to: OWNER_EMAILS,
+      replyTo: lead.email,
+      subject: `Draft reply: ${esc(lead.name)} — ${esc(lead.service)}`,
+      html: draftHtml(lead, draft),
+    });
+    if (error) console.warn('Draft reply email failed:', error.message);
+  });
   return json(200, { success: true });
 }

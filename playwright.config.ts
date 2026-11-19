@@ -28,6 +28,7 @@ export default defineConfig({
             NOTION_TOKEN: 'secret_test_mock',
             NOTION_LEADS_DATA_SOURCE_ID: 'ds-e2e',
             NOTION_API_URL: MOCK,
+            ANTHROPIC_API_KEY: '', // no reply drafts in the browser suite
           },
         },
       ],
