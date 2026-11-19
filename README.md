@@ -74,6 +74,10 @@ whole time; the hero's 3D scene waits for the intro to finish so the two do not 
 Notion Leads data source. Notion problems never block the email. Required in Vercel (Preview and Production):
 `RESEND_API_KEY`, `NOTION_TOKEN`, `NOTION_LEADS_DATA_SOURCE_ID` (see `.env.example`).
 
+With `ANTHROPIC_API_KEY` set, Claude then drafts a reply (`src/lib/contact/draft.ts`) and the owners get it in a second
+email, "Draft reply: ...", with a button that opens it in their mail program. It is written after the visitor has their
+answer, nothing is sent to the visitor, and a Claude failure only means no draft.
+
 ## Tests
 
 ```bash
